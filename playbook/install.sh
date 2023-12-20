@@ -38,7 +38,8 @@ sudo apt-get install terraform
 git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc
-cd implusapp/
+cd $IMPULSAPP_PATH
+
 
 
 ansible-playbook -i localhost test.yml

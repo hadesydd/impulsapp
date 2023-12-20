@@ -1,6 +1,6 @@
 ---
 - name: Install Mysql 8 on Ubuntu
-  hosts: all
+  hosts: localhost
   become: yes
 
   vars_files:

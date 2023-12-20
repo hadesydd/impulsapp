@@ -1,6 +1,6 @@
 ---
 - name: create db_name
-  hosts: all
+  hosts: localhost
   become: yes
 
   vars_files:
