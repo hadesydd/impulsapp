@@ -39,6 +39,7 @@ git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc
 cd $IMPULSAPP_PATH
+chmod +x *.sh
 
 
 
