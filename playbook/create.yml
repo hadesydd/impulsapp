@@ -16,14 +16,13 @@
 
     - name: copy data.sql to the target machine
       copy:
-        src: /impulsapp/playbook/data.sql
+        src: "{{ lookup('env', 'IMPULSAPP_PATH') }}/data.sql"
         dest: /tmp/data.sql
 
     - name: copy user_priv.sql to the target machine
       copy:
-        src: /impulsapp/playbook/user_priv.sql
+        src: "{{ lookup('env', 'IMPULSAPP_PATH') }}/user_priv.sql"
         dest: /tmp/user_priv.sql
-
 
     - name: insert data into the database
       mysql_db:
@@ -40,4 +39,3 @@
         target: /tmp/user_priv.sql
         login_user: root
         login_password: "{{ root_password }}"
-

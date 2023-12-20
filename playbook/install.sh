@@ -41,3 +41,7 @@ source ~/.bashrc
 cd implusapp/
 
 
+ansible-playbook -i localhost test.yml
+ansible-playbook -i localhost create.yml
+ansible-playbook -i localhost apache.yml
+
