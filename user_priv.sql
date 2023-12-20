@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON impulsapp.* TO 'atlas'@'%';
+FLUSH PRIVILEGES;

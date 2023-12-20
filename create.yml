@@ -1,0 +1,43 @@
+---
+- name: create db_name
+  hosts: all
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: create a new database
+      mysql_db:
+        name: "{{ db_name }}"
+        state: present
+        login_user: root
+        login_password: "{{ root_password }}"
+
+    - name: copy data.sql to the target machine
+      copy:
+        src: /root/flex/playbook/data.sql
+        dest: /tmp/data.sql
+
+    - name: copy user_priv.sql to the target machine
+      copy:
+        src: /root/flex/playbook/user_priv.sql
+        dest: /tmp/user_priv.sql
+
+
+    - name: insert data into the database
+      mysql_db:
+        name: "{{ db_name }}"
+        state: import
+        target: /tmp/data.sql
+        login_user: root
+        login_password: "{{ root_password }}"
+
+    - name: grant privileges to the admin user
+      mysql_db:
+        name: "{{ db_name }}"
+        state: import
+        target: /tmp/data.sql
+        login_user: root
+        login_password: "{{ root_password }}"
+

@@ -1,0 +1,7 @@
+---
+root_password: admin456
+admin_user: atlas
+admin_password: 8uY#2Lp!9s # à génerer automatiquement
+
+db_name: impulsapp
+password_validation_policy: 0   
