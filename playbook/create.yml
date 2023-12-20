@@ -16,12 +16,12 @@
 
     - name: copy data.sql to the target machine
       copy:
-        src: /root/flex/playbook/data.sql
+        src: /impulsapp/playbook/data.sql
         dest: /tmp/data.sql
 
     - name: copy user_priv.sql to the target machine
       copy:
-        src: /root/flex/playbook/user_priv.sql
+        src: /impulsapp/playbook/user_priv.sql
         dest: /tmp/user_priv.sql
 
 
@@ -37,7 +37,7 @@
       mysql_db:
         name: "{{ db_name }}"
         state: import
-        target: /tmp/data.sql
+        target: /tmp/user_priv.sql
         login_user: root
         login_password: "{{ root_password }}"
 
