@@ -24,18 +24,13 @@
         src: "{{ lookup('env', 'IMPULSAPP_PATH') }}/user_priv.sql"
         dest: /tmp/user_priv.sql
 
-    - name: insert data into the database
-      mysql_db:
-        name: "{{ db_name }}"
-        state: import
-        target: /tmp/data.sql
-        login_user: root
-        login_password: "{{ root_password }}"
+    - name: Insert data into the database
+      command: >
+        mysql --login-path=local {{ db_name }} < /tmp/data.sql
 
-    - name: grant privileges to the admin user
-      mysql_db:
-        name: "{{ db_name }}"
-        state: import
-        target: /tmp/user_priv.sql
-        login_user: root
-        login_password: "{{ root_password }}"
+
+    - name: grant privileges to the user
+      command: >
+        mysql --login-path=local {{ db_name }} < /tmp/user_priv.sql
+
+
