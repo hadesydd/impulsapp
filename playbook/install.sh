@@ -34,3 +34,10 @@ sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update
 sudo apt-get install terraform
 
+
+git clone https://github.com/hadesydd/impulsapp.git
+export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
+source ~/.bashrc
+cd implusapp/
+
+
