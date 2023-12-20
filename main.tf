@@ -44,6 +44,8 @@ resource "azurerm_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.test.id]
   vm_size               = "Standard_DS1_v2"
 
+  
+
   storage_os_disk {
     name              = "myosdisk"
     caching           = "ReadWrite"
@@ -62,27 +64,18 @@ resource "azurerm_virtual_machine" "vm" {
     computer_name  = "myvm"
     admin_username = "superuser"
     admin_password = "Admin-456"
+    custom_data = filebase64("custom_data.sh")
+
   }
+
+
 
   os_profile_linux_config {
     disable_password_authentication = false
+
   }
 
   tags = {
     environment = "ansible"
   }
-}
-
-# Add this to your existing Terraform configuration
-resource "null_resource" "ansible_provisioner" {
-  provisioner "local-exec" {
-    command     = <<-EOT
-      ansible-playbook -i ${azurerm_network_interface.test.private_ip_addresses[0]}, test.yml
-      ansible-playbook -i ${azurerm_network_interface.test.private_ip_addresses[0]}, create.yml
-      ansible-playbook -i ${azurerm_network_interface.test.private_ip_addresses[0]}, apache.yml
-    EOT
-    working_dir = "${path.module}/playbook"
-  }
-
-  depends_on = [azurerm_virtual_machine.vm]
 }
