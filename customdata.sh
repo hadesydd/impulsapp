@@ -9,6 +9,7 @@ sudo apt install ansible-core -y
 ansible --version
 
 
+
 git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc

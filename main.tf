@@ -32,7 +32,8 @@ resource "azurerm_network_interface" "test" {
   ip_configuration {
     name                          = "testconfiguration1"
     subnet_id                     = "${data.azurerm_subnet.test.id}"
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.2.0.10" 
     public_ip_address_id          = "${azurerm_public_ip.test.id}"
   }
 }
