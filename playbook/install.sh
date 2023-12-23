@@ -47,3 +47,8 @@ ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
 
+export VHOST_PATH=$(pwd)/impulsapp/vhost
+source ~/.bashrc
+cd $VHOST_PATH
+!!! a finir !!! ne marche pas encore !!!
+
