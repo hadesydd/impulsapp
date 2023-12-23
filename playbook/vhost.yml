@@ -1,0 +1,40 @@
+---
+- name: Configure Apache Virtual Hosts
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Copy and configure first virtual host
+      template:
+        src: templates/000-default.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+      notify:
+        - Reload Apache
+
+    - name: Copy and configure second virtual host
+      template:
+        src: templates/api.conf
+        dest: /etc/apache2/sites-available/api.conf
+      notify:
+        - Reload Apache
+
+    - name: Copy and configure third virtual host
+      template:
+        src: templates/default-ssl.conf
+        dest: /etc/apache2/sites-available/default-ssl.conf
+      notify:
+        - Reload Apache
+
+    - name: Copy and configure fourth virtual host
+      template:
+        src: templates/front.conf
+        dest: /etc/apache2/sites-available/front.conf
+      notify:
+        - Reload Apache
+
+
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
