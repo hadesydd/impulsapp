@@ -11,10 +11,24 @@
       notify:
         - Reload Apache
 
+    - name: Enable first virtual host
+      command: "a2ensite 000-default.conf"
+      args:
+        chdir: /etc/apache2/sites-available/
+      notify:
+        - Reload Apache
+
     - name: Copy and configure second virtual host
       template:
         src: "{{ lookup('env', 'full_path') }}/api.conf"
         dest: /etc/apache2/sites-available/api.conf
+      notify:
+        - Reload Apache
+
+    - name: Enable second virtual host
+      command: "a2ensite api.conf"
+      args:
+        chdir: /etc/apache2/sites-available/
       notify:
         - Reload Apache
 
@@ -25,13 +39,28 @@
       notify:
         - Reload Apache
 
+    - name: Enable third virtual host
+      command: "a2ensite default-ssl.conf"
+      args:
+        chdir: /etc/apache2/sites-available/
+      notify:
+        - Reload Apache
+
     - name: Copy and configure fourth virtual host
       template:
         src: "{{ lookup('env', 'full_path') }}/front.conf"
         dest: /etc/apache2/sites-available/front.conf
       notify:
         - Reload Apache
-# !!!! IL FAUT QUE JE ENABLE LA CONF ET DISSABLE THE DEFAULT !!!!!
+
+    - name: Enable fourth virtual host
+      command: "a2ensite front.conf"
+      args:
+        chdir: /etc/apache2/sites-available/
+      notify:
+        - Reload Apache
+
+
 
   handlers:
     - name: Reload Apache

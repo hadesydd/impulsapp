@@ -18,7 +18,7 @@ chmod +x *.sh
 
 user_home="$HOME"
 vhost_path="impulsapp/vhost"
-full_path="$user_home/$vhost_path"
+export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 
 
