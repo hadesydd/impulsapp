@@ -16,8 +16,16 @@ source ~/.bashrc
 cd $IMPULSAPP_PATH
 chmod +x *.sh
 
+user_home="$HOME"
+vhost_path="impulsapp/vhost"
+full_path="$user_home/$vhost_path"
+source ~/.bashrc
+
+
 
 
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
+ansible-playbook -i localhost vhost.yml
+#echo "admin_password: $(tr -dc A-Za-z0-9 < /dev/urandom | head -c 16)" >> vars.yml

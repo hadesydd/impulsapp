@@ -6,28 +6,28 @@
   tasks:
     - name: Copy and configure first virtual host
       template:
-        src: templates/000-default.conf
+        src: "{{ lookup('env', 'full_path') }}/000-default.conf"
         dest: /etc/apache2/sites-available/000-default.conf
       notify:
         - Reload Apache
 
     - name: Copy and configure second virtual host
       template:
-        src: templates/api.conf
+        src: "{{ lookup('env', 'full_path') }}/api.conf"
         dest: /etc/apache2/sites-available/api.conf
       notify:
         - Reload Apache
 
     - name: Copy and configure third virtual host
       template:
-        src: templates/default-ssl.conf
+        src: "{{ lookup('env', 'full_path') }}/default-ssl.conf"
         dest: /etc/apache2/sites-available/default-ssl.conf
       notify:
         - Reload Apache
 
     - name: Copy and configure fourth virtual host
       template:
-        src: templates/front.conf
+        src: "{{ lookup('env', 'full_path') }}/front.conf"
         dest: /etc/apache2/sites-available/front.conf
       notify:
         - Reload Apache
