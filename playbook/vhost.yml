@@ -4,21 +4,13 @@
   become: yes
 
   tasks:
+    - name: disable default Apache site
+      ansible.builtin.command: "/usr/sbin/a2dissite 000-default.conf"
+      when: disable_default
+      notify: reload Apache
+
+      
     - name: Copy and configure first virtual host
-      template:
-        src: "{{ lookup('env', 'full_path') }}/000-default.conf"
-        dest: /etc/apache2/sites-available/000-default.conf
-      notify:
-        - Reload Apache
-
-    - name: Enable first virtual host
-      command: "a2ensite 000-default.conf"
-      args:
-        chdir: /etc/apache2/sites-available/
-      notify:
-        - Reload Apache
-
-    - name: Copy and configure second virtual host
       template:
         src: "{{ lookup('env', 'full_path') }}/api.conf"
         dest: /etc/apache2/sites-available/api.conf
@@ -34,26 +26,12 @@
 
     - name: Copy and configure third virtual host
       template:
-        src: "{{ lookup('env', 'full_path') }}/default-ssl.conf"
-        dest: /etc/apache2/sites-available/default-ssl.conf
-      notify:
-        - Reload Apache
-
-    - name: Enable third virtual host
-      command: "a2ensite default-ssl.conf"
-      args:
-        chdir: /etc/apache2/sites-available/
-      notify:
-        - Reload Apache
-
-    - name: Copy and configure fourth virtual host
-      template:
         src: "{{ lookup('env', 'full_path') }}/front.conf"
         dest: /etc/apache2/sites-available/front.conf
       notify:
         - Reload Apache
 
-    - name: Enable fourth virtual host
+    - name: Enable third virtual host
       command: "a2ensite front.conf"
       args:
         chdir: /etc/apache2/sites-available/
