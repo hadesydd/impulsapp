@@ -1,0 +1,39 @@
+- hosts: localhost
+  become: yes
+  vars:
+    symfony_project_dir: /var/www/symfony
+
+  tasks:
+    - name: Install software-properties-common
+      apt:
+        name: software-properties-common
+        state: present
+
+    - name: Add PHP 7.4 repository
+      apt_repository:
+        repo: "ppa:ondrej/php"
+
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Install PHP 7.4
+      apt:
+        name: php7.4
+        state: present
+
+    - name: Install PHP 7.4 extensions
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php7.4-xml
+        - php7.4-mbstring
+        - php7.4-zip
+        - php7.4-cli
+        - php7.4-curl
+        - php7.4-intl
+        - php7.4-gd
+        - php7.4-fpm
+        - php7.4-opcache
+        - php7.4-json

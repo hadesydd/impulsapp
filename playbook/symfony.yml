@@ -5,23 +5,6 @@
     symfony_project_dir: /var/www/symfony
 
   tasks:
-    - name: Install PHP and necessary PHP extensions
-      apt:
-        name: "{{ item }}"
-        state: present
-        update_cache: yes
-      loop:
-        - php
-        - php-xml
-        - php-mbstring
-        - php-zip
-        - php-cli
-        - php-curl
-        - php-intl
-        - php-gd
-        - php-fpm
-        - php-opcache
-        - php-json
 
     - name: Download Composer installer
       get_url:
