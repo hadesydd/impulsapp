@@ -1,15 +1,14 @@
----
 - name: Configure Apache Virtual Hosts
   hosts: localhost
   become: yes
 
   tasks:
-    - name: disable default Apache site
-      ansible.builtin.command: "/usr/sbin/a2dissite 000-default.conf"
-      when: disable_default
-      notify: reload Apache
+    - name: Disable default Apache site
+      command: a2dissite 000-default.conf
 
-      
+    - name: Reload Apache to apply changes
+      command: systemctl reload apache2
+
     - name: Copy and configure first virtual host
       template:
         src: "{{ lookup('env', 'full_path') }}/api.conf"
@@ -37,8 +36,6 @@
         chdir: /etc/apache2/sites-available/
       notify:
         - Reload Apache
-
-
 
   handlers:
     - name: Reload Apache
