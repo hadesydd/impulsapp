@@ -1,0 +1,52 @@
+---
+- hosts: localhost
+  become: yes
+  vars:
+    symfony_project_dir: /var/www/symfony
+
+  tasks:
+    - name: Install PHP and necessary PHP extensions
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - php
+        - php-xml
+        - php-mbstring
+        - php-zip
+        - php-cli
+        - php-curl
+        - php-intl
+        - php-gd
+        - php-fpm
+        - php-opcache
+        - php-json
+
+    - name: Install Composer globally
+      get_url:
+        url: https://getcomposer.org/installer
+        dest: /tmp/composer-setup.php
+        mode: '0755'
+      notify:
+        - Run Composer installer
+
+    - name: Create Symfony project directory
+      file:
+        path: "{{ symfony_project_dir }}"
+        state: directory
+        owner: www-data
+        group: www-data
+
+    - name: Install Symfony
+      composer:
+        command: create-project
+        arguments: symfony/skeleton "{{ symfony_project_dir }}"
+        working_dir: "{{ symfony_project_dir }}"
+        prefer_dist: yes
+
+  handlers:
+    - name: Run Composer installer
+      command: php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      args:
+        creates: /usr/local/bin/composer

@@ -17,7 +17,7 @@ cd $IMPULSAPP_PATH
 chmod +x *.sh
 
 # symfony 
-
+ansible-playbook -i localhost symfony.yml
 ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 
