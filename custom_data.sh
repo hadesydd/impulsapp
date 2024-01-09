@@ -1,11 +1,10 @@
 #!/bin/bash
 
-
 # install ansible
 sudo apt-get update
 sudo apt install software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install python3
+sudo apt install python3 -y
 sudo apt install ansible -y
 sudo apt install ansible-core -y
 ansible --version
@@ -16,8 +15,9 @@ source ~/.bashrc
 cd $IMPULSAPP_PATH
 chmod +x *.sh
 
-# symfony 
+# symfony / nodejs / php
 ansible-playbook -i localhost symfony.yml
+ansible-playbook -i localhost php.yml
 ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 
@@ -37,15 +37,10 @@ apt install php-cli -y
 
 php /var/www/html/back-end/bin/console cache:clear
 
-
-
 user_home="$HOME"
 vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
 source ~/.bashrc
-
-
-
 
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml

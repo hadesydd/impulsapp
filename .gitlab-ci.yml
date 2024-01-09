@@ -1,0 +1,76 @@
+stages:
+  - validate
+  - plan
+  - apply
+
+default:
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint:
+      - /usr/bin/env
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+  before_script:
+    - terraform init
+    - cat custom_data.sh
+    - password=$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 16) 
+    - echo "admin_password: ${password}" >> playbook/vars.yml  
+    - echo "DBPASS=${password}" >> custom_data.sh #32
+
+    - echo "URI_FRONT_HOME=${URI_FRONT_HOME}" >> custom_data.sh #33
+    - echo "URI_API=${URI_API}" >> custom_data.sh #34
+    - echo "DB_LOGIN=${DB_LOGIN}" >> custom_data.sh #35
+    - echo "DB_NAME=${DB_NAME}" >> custom_data.sh #36 
+  
+    
+    - echo "domain_name=${domain_name}" >> custom_data.sh #37
+    - echo "admin_login=${admin_login}" >> custom_data.sh #38
+    - echo "CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}" >> custom_data.sh #39
+    - echo "CEGID_API_CLIENT_SECRET=${CEGID_API_CLIENT_SECRET}" >> custom_data.sh #40
+    - echo "CEGID_API_CONSUMER_ID=${CEGID_API_CONSUMER_ID}" >> custom_data.sh #41
+    - echo "CEGID_API_CONSUMER_SECRET=${CEGID_API_CONSUMER_SECRET}" >> custom_data.sh #42
+    - echo "CEGID_DATA_ACCESS_API_KEY=${CEGID_DATA_ACCESS_API_KEY}" >> custom_data.sh #43
+    - echo "CEGID_DATA_ACCESS_API_SECRET=${CEGID_DATA_ACCESS_API_SECRET}" >> custom_data.sh #44
+    - echo "PAPPERS_API_TOKEN=${PAPPERS_API_TOKEN}" >> custom_data.sh #45
+    - echo "SILAE_WS_LOGIN=${SILAE_WS_LOGIN}" >> custom_data.sh #46
+    - echo "SILAE_WS_PASSWORD=${SILAE_WS_PASSWORD}" >> custom_data.sh #47
+    - echo "SILAE_SITE_LOGIN=${SILAE_SITE_LOGIN}" >> custom_data.sh #48
+    - echo "SILAE_SITE_PASSWORD=${SILAE_SITE_PASSWORD}" >> custom_data.sh #49
+    - echo "MICROSOFT_GRAPH_CLIENT_ID=${MICROSOFT_GRAPH_CLIENT_ID}" >> custom_data.sh #50
+    - echo "MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}" >> custom_data.sh #51
+    - echo "MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}" >> custom_data.sh #52
+    - echo "MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}" >> custom_data.sh #53
+
+    - echo "APP_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 48 | head -n 1)" >> custom_data.sh #54
+    - echo "JWT_PASSPHRASE=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 48 | head -n 1)" >> custom_data.sh #55 
+    
+    - sed -n '32,55p' custom_data.sh >> .env
+
+
+  cache:
+    key: terraform
+    paths:
+      - .terraform
+
+terraform_validate:
+  stage: validate
+  script:
+    - terraform validate
+
+terraform_plan:
+  stage: plan
+  script: 
+    - terraform plan --out plan
+  artifacts:
+    paths:
+      - plan
+
+terraform_apply:
+  stage: apply
+  script:
+    - terraform apply --auto-approve plan
+  when: manual
+  allow_failure: false
+  only:
+    refs:
+      - main
