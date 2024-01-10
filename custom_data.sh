@@ -9,6 +9,9 @@ sudo apt install ansible -y
 sudo apt install ansible-core -y
 ansible --version
 
+
+
+
 git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc
@@ -46,5 +49,15 @@ ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
 ansible-playbook -i localhost vhost.yml
+
+
+
+
+
+
+
+sed -n '3,11p' /var/lib/cloud/instance/user-data.txt > /home/test.sh
+
+
 
 
