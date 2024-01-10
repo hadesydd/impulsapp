@@ -24,6 +24,16 @@ ansible-playbook -i localhost php.yml
 ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 
+ansible-playbook -i localhost test.yml
+ansible-playbook -i localhost create.yml
+ansible-playbook -i localhost apache.yml
+ansible-playbook -i localhost vhost.yml
+
+
+cd /var/www/html/
+
+
+
 mkdir -p var
 if command -v apt-get &>/dev/null; then
     # Debian-based system (e.g., Ubuntu)
@@ -36,7 +46,6 @@ fi
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
-apt install php-cli -y
 
 php /var/www/html/back-end/bin/console cache:clear
 
@@ -45,10 +54,7 @@ vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 
-ansible-playbook -i localhost test.yml
-ansible-playbook -i localhost create.yml
-ansible-playbook -i localhost apache.yml
-ansible-playbook -i localhost vhost.yml
+
 
 
 
