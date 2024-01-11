@@ -22,8 +22,7 @@ ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 ansible-playbook -i localhost symfony.yml
 #sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vhost.yml
-ansible-playbook -i localhost test.yml
-ansible-playbook -i localhost create.yml
+
 ansible-playbook -i localhost apache.yml
 ansible-playbook -i localhost vhost.yml
 
