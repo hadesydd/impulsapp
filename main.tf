@@ -71,7 +71,8 @@ resource "azurerm_public_ip" "my_public_ip" {
     name                = "myPublicIP"
     location            = azurerm_resource_group.my_resource_group.location
     resource_group_name = azurerm_resource_group.my_resource_group.name
-    allocation_method   = "Dynamic"
+    allocation_method   = "Static"
+
 }
 
 resource "azurerm_network_interface" "my_nic" {
