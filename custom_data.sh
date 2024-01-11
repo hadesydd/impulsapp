@@ -77,6 +77,13 @@ php /var/www/html/back-end/bin/console cache:clear
 
 
 
+
+
+
+
+
+
+
 sed -n '59,82p' /var/lib/cloud/instance/user-data.txt > /home/test.sh
 
 
