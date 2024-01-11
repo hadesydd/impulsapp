@@ -18,24 +18,24 @@ vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 ansible-playbook -i localhost php.yml
-ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 ansible-playbook -i localhost symfony.yml
-#sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vhost.yml
+#sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vars.yml
 
 ansible-playbook -i localhost apache.yml
 ansible-playbook -i localhost vhost.yml
 
 cd /var/www/html/
-git clone https://kcaliati-its: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@github.com/Impulsa-fr/back-end.git
-git clone https://kcaliati-its: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@github.com/Impulsa-fr/front-end.git
+sudo git clone https://kcaliati-its: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@github.com/Impulsa-fr/back-end.git
+sudo git clone https://kcaliati-its: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@github.com/Impulsa-fr/front-end.git
 
 
 
 
 #sudo sed -n '60,84p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 cd /var/www/html/back-end
-mkdir -p var
+sudo chown -R $(whoami):$(whoami) /var/www/html/back-end
+sudo chown -R $(whoami):$(whoami) /var/www/html/front-end
 if command -v apt-get &>/dev/null; then
     # Debian-based system (e.g., Ubuntu)
     sudo apt-get update
@@ -44,13 +44,16 @@ else
     echo "Unsupported package manager. Please install 'acl' manually."
     exit 1
 fi
+
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 composer install
 cd /var/www/html/front-end
-npm install
-npm build
+rm -rf node_modules
+rm package-lock.json
+npm install @material-ui/core
+npm start build
 npm run start
 
 

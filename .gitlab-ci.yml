@@ -19,7 +19,7 @@ default:
     
     - sed -i '60s/.*/admin_password:${password}/' custom_data.sh
     - sed -i '61s/.*/DBPASS=${password}/' custom_data.sh
-    - sed -i '62s/.*/URI_FRONT_HOME=${URI_FRONT_HOME}/' custom_data.sh
+    - sed -i '86s/.*/URI_FRONT_HOME=${URI_FRONT_HOME}/' custom_data.sh
     - sed -i '63s/.*/URI_API=${URI_API}/' custom_data.sh
     - sed -i '64s/.*/DB_LOGIN=${DB_LOGIN}/' custom_data.sh
     - sed -i '65s/.*/DB_NAME=${DB_NAME}/' custom_data.sh
