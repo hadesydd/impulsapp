@@ -17,20 +17,25 @@ export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc
 cd $IMPULSAPP_PATH
 chmod +x *.sh
+user_home="$HOME"
+vhost_path="impulsapp/vhost"
+export full_path="$user_home/$vhost_path"
+source ~/.bashrc
 
 # symfony / nodejs / php
-ansible-playbook -i localhost symfony.yml
 ansible-playbook -i localhost php.yml
 ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
+ansible-playbook -i localhost symfony.yml
 
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
 ansible-playbook -i localhost vhost.yml
 
-
 cd /var/www/html/
+
+
 
 
 
@@ -49,10 +54,7 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 
 php /var/www/html/back-end/bin/console cache:clear
 
-user_home="$HOME"
-vhost_path="impulsapp/vhost"
-export full_path="$user_home/$vhost_path"
-source ~/.bashrc
+
 
 
 
