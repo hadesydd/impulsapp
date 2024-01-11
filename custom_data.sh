@@ -39,6 +39,9 @@ cd /var/www/html/
 
 
 
+
+ansible-playbook -i localhost vhost.yml
+
 mkdir -p var
 if command -v apt-get &>/dev/null; then
     # Debian-based system (e.g., Ubuntu)
