@@ -12,10 +12,10 @@ default:
 
   before_script:
     - terraform init
-    - sed -i "38s|.*|git_token=${git_token}|" custom_data.sh
-    - sed -i "39s|.*|git_username=${git_username}|" custom_data.sh
-    - sed -i "40s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
-    - sed -i "41s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
+    - sed -i "34s|.*|git_token=${git_token}|" custom_data.sh
+    - sed -i "35s|.*|git_username=${git_username}|" custom_data.sh
+    - sed -i "36s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
+    - sed -i "37s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
     
     - sed -i '60s/.*/admin_password:${password}/' custom_data.sh
     - sed -i '61s/.*/DBPASS=${password}/' custom_data.sh

@@ -37,3 +37,4 @@
         - php7.4-fpm
         - php7.4-opcache
         - php7.4-json
+        - php7.4-soap
