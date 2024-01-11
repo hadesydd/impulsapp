@@ -21,7 +21,7 @@ ansible-playbook -i localhost php.yml
 ansible-playbook -i localhost php-cli.yml
 ansible-playbook -i localhost nodejs-14.yml
 ansible-playbook -i localhost symfony.yml
-sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vhost.yml
+#sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vhost.yml
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
@@ -34,7 +34,7 @@ git clone https://kcaliati-its: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@github.c
 
 
 
-sudo sed -n '60,84p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
+#sudo sed -n '60,84p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 cd /var/www/html/back-end
 mkdir -p var
 if command -v apt-get &>/dev/null; then
