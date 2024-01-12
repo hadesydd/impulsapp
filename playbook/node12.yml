@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+ tasks:
+   - name: Download and install NVM
+     shell: |
+       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+   - name: Source NVM
+     shell: source ~/.nvm/nvm.sh
+     args:
+       executable: /bin/bash
+
+   - name: Install Node.js v12 using NVM
+     shell: nvm install 12
+     args:
+       executable: /bin/bash
