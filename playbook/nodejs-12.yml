@@ -14,7 +14,7 @@
 
     - name: Add NodeSource repository for Node.js 12.x
       apt_repository:
-        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
+        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ shell('lsb_release -cs') }} main"
         state: present
         update_cache: yes
         validate_certs: yes
