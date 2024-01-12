@@ -18,7 +18,7 @@ vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 ansible-playbook -i localhost php.yml
-ansible-playbook -i localhost nodejs-14.yml
+ansible-playbook -i localhost nodejs-12.yml
 ansible-playbook -i localhost symfony.yml
 #sudo sed -n '60p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vars.yml
 
