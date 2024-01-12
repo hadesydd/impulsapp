@@ -1,39 +1,27 @@
 - hosts: localhost
- become: yes
- tasks:
-   - name: Download Node.js version 12
-     get_url:
-       url: https://nodejs.org/dist/v12.22.7/node-v12.22.7-linux-x64.tar.xz
-       dest: /tmp/node-v12.22.7-linux-x64.tar.xz
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
 
-   - name: Extract Node.js tarball
-     unarchive:
-       src: /tmp/node-v12.22.7-linux-x64.tar.xz
-       dest: /opt
-       remote_src: yes
+    - name: Install the gpg key for NodeSource
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+        state: present
 
-   - name: Remove downloaded tarball
-     file:
-       path: /tmp/node-v12.22.7-linux-x64.tar.xz
-       state: absent
+    - name: Add NodeSource repository for Node.js 12.x
+      apt_repository:
+        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ ansible_distribution_release }} main"
+        state: present
+        update_cache: yes
+        validate_certs: yes
 
-   - name: Create symbolic link for node and npm
-     file:
-       src: /opt/node-v12.22.7-linux-x64/bin/node
-       dest: /usr/bin/node
-       state: link
-       force: yes
-     notify: Restart SSH
 
-   - name: Create symbolic link for node and npm
-     file:
-       src: /opt/node-v12.22.7-linux-x64/bin/npm
-       dest: /usr/bin/npm
-       state: link
-       force: yes
+    - name: Install Node.js version 12.x
+      apt:
+        name: nodejs
+        state: present
 
- handlers:
-   - name: Restart SSH
-     service:
-       name: ssh
-       state: restarted
+    - name: Verify Node.js installation
+      command: "node -v && npm -v"
