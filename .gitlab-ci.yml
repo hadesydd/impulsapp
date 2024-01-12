@@ -42,7 +42,8 @@ default:
     - sed -i '101s/.*/MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}/' custom_data.sh
     - sed -i '102s/.*/APP_SECRET=$(cat /dev/urandom | tr -dc '"'"'a-zA-Z0-9'"'"' | fold -w 48 | head -n 1)/' custom_data.sh
     - sed -i '103s/.*/JWT_PASSPHRASE=$(cat /dev/urandom | tr -dc '"'"'a-zA-Z0-9'"'"' | fold -w 48 | head -n 1)/' custom_data.sh
-  
+    - sed -i '104iDATABASE_URL="mysql://${DB_LOGIN}:DBPASS=${password}@localhost:3306/${DB_NAME}"' custom_data.sh
+
 
 
   cache:
