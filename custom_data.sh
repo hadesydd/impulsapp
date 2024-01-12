@@ -27,7 +27,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 nvm install 12
 nvm use 12  
 ansible-playbook -i localhost symfony.yml
-sudo sed -n '80p' /var/lib/cloud/instance/user-data.txt >> cd $IMPULSAPP_PATH/vars.yml
+sudo sed -n '80p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
 ansible-playbook -i localhost apache.yml
@@ -41,8 +41,8 @@ cd /var/www/html/
 sudo sed -n '80,103p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 cd /var/www/html/back-end
-sudo chown -R $(whoami):$(whoami) /var/www/html/back-end
-sudo chown -R $(whoami):$(whoami) /var/www/html/front-end
+sudo chown -R superuser:superuser /var/www/html/back-end
+sudo chown -R superuser:superuser /var/www/html/front-end
 if command -v apt-get &>/dev/null; then
     sudo apt-get update
     sudo apt-get install -y acl
