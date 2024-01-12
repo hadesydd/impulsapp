@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
   become: yes
   tasks:
     - name: Add NodeSource repo for Node.js 12.x
