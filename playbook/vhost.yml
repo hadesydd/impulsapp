@@ -23,6 +23,20 @@
       notify:
         - Reload Apache
 
+    - name: Copy and configure third virtual host
+      template:
+        src: "{{ lookup('env', 'full_path') }}/front.conf"
+        dest: /etc/apache2/sites-available/front.conf
+      notify:
+        - Reload Apache
+
+    - name: Enable third virtual host
+      command: "a2ensite front.conf"
+      args:
+        chdir: /etc/apache2/sites-available/
+      notify:
+        - Reload Apache
+
   handlers:
     - name: Reload Apache
       service:
