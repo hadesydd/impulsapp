@@ -12,9 +12,13 @@
         url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
         state: present
 
+    - name: Get distribution codename
+      command: "lsb_release -cs"
+      register: dist_codename
+
     - name: Add NodeSource repository for Node.js 12.x
       apt_repository:
-        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ shell('lsb_release -cs') }} main"
+        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ dist_codename.stdout }} main"
         state: present
         update_cache: yes
         validate_certs: yes
