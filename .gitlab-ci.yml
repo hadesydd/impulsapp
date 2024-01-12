@@ -16,6 +16,7 @@ default:
     - sed -i "38s|.*|git_username=${git_username}|" custom_data.sh
     - sed -i "39s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
     - sed -i "40s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
+
     
     - sed -i '80s/.*/admin_password:${password}/' custom_data.sh
     - sed -i '81s/.*/DBPASS=${password}/' custom_data.sh
