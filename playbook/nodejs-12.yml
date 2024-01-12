@@ -1,20 +1,28 @@
 ---
-- hosts: localhost
+- name: Install Node.js 12.x
+  hosts: localhost
   become: yes
   tasks:
-    - name: Add NodeSource repo for Node.js 12.x
-      shell: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    - name: Update apt package list
+      apt:
+        update_cache: yes
 
-    - name: Install Node.js 12.x
+    - name: Install the gpg key for NodeSource
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+        state: present
+
+    - name: Add NodeSource repository for Node.js 12.x
+      apt_repository:
+        repo: "deb [arch=amd64] https://deb.nodesource.com/node_12.x {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
+        state: present
+        update_cache: yes
+        validate_certs: yes
+
+    - name: Install Node.js version 12.x
       apt:
         name: nodejs
         state: present
-        update_cache: yes
 
-    - name: Check Node.js version
-      command: node -v
-      register: node_version
-      changed_when: false
-
-    - debug:
-        msg: "Node.js version installed is {{ node_version.stdout }}"
+    - name: Verify Node.js installation
+      command: "node -v && npm -v"
