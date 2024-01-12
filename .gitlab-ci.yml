@@ -16,32 +16,35 @@ default:
     - sed -i "38s|.*|git_username=${git_username}|" custom_data.sh
     - sed -i "39s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
     - sed -i "40s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
-    - sed -i "80s|.*|admin_password=${password}|" custom_data.sh
-    - sed -i "81s|.*|DBPASS=${password}|" custom_data.sh
-    - sed -i "82s|.*|URI_FRONT_HOME=${URI_FRONT_HOME}|" custom_data.sh
-    - sed -i "70s|.*|URI_API=${URI_API}|" custom_data.sh
-    - sed -i "83s|.*|DB_LOGIN=${DB_LOGIN}|" custom_data.sh
-    - sed -i "84s|.*|DB_NAME=${DB_NAME}|" custom_data.sh
-    - sed -i "85s|.*|domain_name=${domain_name}|" custom_data.sh
-    - sed -i "86s|.*|admin_login=${admin_login}|" custom_data.sh
-    - sed -i "87s|.*|CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}|" custom_data.sh
-    - sed -i "88s|.*|CEGID_API_CLIENT_SECRET=${CEGID_API_CLIENT_SECRET}|" custom_data.sh
-    - sed -i "89s|.*|CEGID_API_CONSUMER_ID=${CEGID_API_CONSUMER_ID}|" custom_data.sh
-    - sed -i "90s|.*|CEGID_API_CONSUMER_SECRET=${CEGID_API_CONSUMER_SECRET}|" custom_data.sh
-    - sed -i "91s|.*|CEGID_DATA_ACCESS_API_KEY=${CEGID_DATA_ACCESS_API_KEY}|" custom_data.sh
-    - sed -i "92s|.*|CEGID_DATA_ACCESS_API_SECRET=${CEGID_DATA_ACCESS_API_SECRET}|" custom_data.sh
-    - sed -i "93s|.*|PAPPERS_API_TOKEN=${PAPPERS_API_TOKEN}|" custom_data.sh
-    - sed -i "94s|.*|SILAE_WS_LOGIN=${SILAE_WS_LOGIN}|" custom_data.sh
-    - sed -i "95s|.*|SILAE_WS_PASSWORD=${SILAE_WS_PASSWORD}|" custom_data.sh
-    - sed -i "96s|.*|SILAE_SITE_LOGIN=${SILAE_SITE_LOGIN}|" custom_data.sh
-    - sed -i "97s|.*|SILAE_SITE_PASSWORD=${SILAE_SITE_PASSWORD}|" custom_data.sh
-    - sed -i "98s|.*|MICROSOFT_GRAPH_CLIENT_ID=${MICROSOFT_GRAPH_CLIENT_ID}|" custom_data.sh
-    - sed -i "99s|.*|MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}|" custom_data.sh
-    - sed -i "100s|.*|MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}|" custom_data.sh
-    - sed -i "101s|.*|MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}|" custom_data.sh
-    - sed -i "102s|.*|APP_SECRET=\$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 48 | head -n 1)|" custom_data.sh
-    - sed -i "103s|.*|JWT_PASSPHRASE=\$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 48 | head -n 1)|" custom_data.sh
-    - sed -i "104s|.*|DATABASE_URL=\"mysql://${DB_LOGIN}:DBPASS=${password}@localhost:3306/${DB_NAME}\"|" custom_data.sh
+
+    
+    - sed -i '80s/.*/admin_password:${password}/' custom_data.sh
+    - sed -i '81s/.*/DBPASS=${password}/' custom_data.sh
+    - sed -i '82s/.*/URI_FRONT_HOME=${URI_FRONT_HOME}/' custom_data.sh
+    - sed -i '70s/.*/URI_API=${URI_API}/' custom_data.sh
+    - sed -i '83s/.*/DB_LOGIN=${DB_LOGIN}/' custom_data.sh
+    - sed -i '84s/.*/DB_NAME=${DB_NAME}/' custom_data.sh
+    - sed -i '85s/.*/domain_name=${domain_name}/' custom_data.sh
+    - sed -i '86s/.*/admin_login=${admin_login}/' custom_data.sh
+    - sed -i '87s/.*/CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}/' custom_data.sh
+    - sed -i '88s/.*/CEGID_API_CLIENT_SECRET=${CEGID_API_CLIENT_SECRET}/' custom_data.sh
+    - sed -i '89s/.*/CEGID_API_CONSUMER_ID=${CEGID_API_CONSUMER_ID}/' custom_data.sh
+    - sed -i '90s/.*/CEGID_API_CONSUMER_SECRET=${CEGID_API_CONSUMER_SECRET}/' custom_data.sh
+    - sed -i '91s/.*/CEGID_DATA_ACCESS_API_KEY=${CEGID_DATA_ACCESS_API_KEY}/' custom_data.sh
+    - sed -i '92s/.*/CEGID_DATA_ACCESS_API_SECRET=${CEGID_DATA_ACCESS_API_SECRET}/' custom_data.sh
+    - sed -i '93s/.*/PAPPERS_API_TOKEN=${PAPPERS_API_TOKEN}/' custom_data.sh
+    - sed -i '94s/.*/SILAE_WS_LOGIN=${SILAE_WS_LOGIN}/' custom_data.sh
+    - sed -i '95s/.*/SILAE_WS_PASSWORD=${SILAE_WS_PASSWORD}/' custom_data.sh
+    - sed -i '96s/.*/SILAE_SITE_LOGIN=${SILAE_SITE_LOGIN}/' custom_data.sh
+    - sed -i '97s/.*/SILAE_SITE_PASSWORD=${SILAE_SITE_PASSWORD}/' custom_data.sh
+    - sed -i '98s/.*/MICROSOFT_GRAPH_CLIENT_ID=${MICROSOFT_GRAPH_CLIENT_ID}/' custom_data.sh
+    - sed -i '99s/.*/MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}/' custom_data.sh
+    - sed -i '100s/.*/MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}/' custom_data.sh
+    - sed -i '101s/.*/MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}/' custom_data.sh
+    - sed -i '102s|.*|APP_SECRET=$(cat /dev/urandom | tr -dc '\''a-zA-Z0-9'\'' | fold -w 48 | head -n 1)|' custom_data.sh
+    - sed -i '103s/.*/JWT_PASSPHRASE=$(cat /dev/urandom | tr -dc '"'"'a-zA-Z0-9'"'"' | fold -w 48 | head -n 1)/' custom_data.sh
+    - sed -i '104iDATABASE_URL="mysql://${DB_LOGIN}:${password}@localhost:3306/${DB_NAME}"' custom_data.sh
+    - cat -n custom_data.sh
 
 
   cache:
@@ -58,6 +61,9 @@ terraform_plan:
   stage: plan
   script: 
     - terraform plan --out plan
+  artifacts:
+    paths:
+      - plan
 
 terraform_apply:
   stage: apply
