@@ -17,7 +17,6 @@ default:
     - sed -i "39s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
     - sed -i "40s|.*|git clone https://\$git_username:\$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
 
-    
     - sed -i '80s/.*/admin_password:${password}/' custom_data.sh
     - sed -i '81s/.*/DBPASS=${password}/' custom_data.sh
     - sed -i '82s/.*/URI_FRONT_HOME=${URI_FRONT_HOME}/' custom_data.sh
@@ -41,11 +40,11 @@ default:
     - sed -i '99s/.*/MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}/' custom_data.sh
     - sed -i '100s/.*/MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}/' custom_data.sh
     - sed -i '101s/.*/MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}/' custom_data.sh
-    - sed -i '102s/.*/APP_SECRET=$(cat /dev/urandom | tr -dc '"'"'a-zA-Z0-9'"'"' | fold -w 48 | head -n 1)/' custom_data.sh
-    - sed -i '103s/.*/JWT_PASSPHRASE=$(cat /dev/urandom | tr -dc '"'"'a-zA-Z0-9'"'"' | fold -w 48 | head -n 1)/' custom_data.sh
-    - sed -i '104iDATABASE_URL="mysql://${DB_LOGIN}:DBPASS=${password}@localhost:3306/${DB_NAME}"' custom_data.sh
-    - cat -n custom_data.sh
+    - sed -i '102s/.*/APP_SECRET=$(cat \/dev\/urandom | tr -dc "a-zA-Z0-9" | fold -w 48 | head -n 1)/' custom_data.sh
 
+    - sed -i '103s/.*/JWT_PASSPHRASE=$(cat \/dev\/urandom | tr -dc '\''a-zA-Z0-9'\'' | fold -w 48 | head -n 1)/' custom_data.sh
+    - sed -i '104s|.*|DATABASE_URL="mysql://${DB_LOGIN}:DBPASS=${password}@localhost:3306/${DB_NAME}"|' custom_data.sh
+    - cat -n custom_data.sh
 
   cache:
     key: terraform
@@ -61,16 +60,3 @@ terraform_plan:
   stage: plan
   script: 
     - terraform plan --out plan
-  artifacts:
-    paths:
-      - plan
-
-terraform_apply:
-  stage: apply
-  script:
-    - terraform apply --auto-approve plan
-  when: manual
-  allow_failure: false
-  only:
-    refs:
-      - main

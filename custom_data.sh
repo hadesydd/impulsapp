@@ -95,3 +95,19 @@ php /var/www/html/back-end/bin/console cache:clear
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
