@@ -19,13 +19,9 @@ export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 ansible-playbook -i localhost php.yml
 ansible-playbook -i localhost php-cli.yml
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm 
-
-nvm install 12
-nvm use 12  
+sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt -y install nodejs npm
+ 
 ansible-playbook -i localhost symfony.yml
 sudo sed -n '80p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
 ansible-playbook -i localhost test.yml
