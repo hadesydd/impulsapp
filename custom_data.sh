@@ -7,7 +7,6 @@ sudo apt install python3 -y
 sudo apt install ansible -y
 sudo apt install ansible-core -y
 ansible --version
-
 git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
 source ~/.bashrc
@@ -18,7 +17,6 @@ vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
 source ~/.bashrc
 ansible-playbook -i localhost php.yml
-ansible-playbook -i localhost php-cli.yml
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt -y install nodejs npm
  
@@ -53,6 +51,7 @@ composer install
 cd /var/www/html/front-end
 rm -rf node_modules
 rm package-lock.json
+npm install 
 npm install @material-ui/core
 npm start build
 npm run start   
