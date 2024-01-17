@@ -20,7 +20,6 @@ ansible-playbook -i localhost php.yml
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt -y install nodejs npm
  
-ansible-playbook -i localhost symfony.yml
 sudo sed -n '80p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
 ansible-playbook -i localhost test.yml
 ansible-playbook -i localhost create.yml
