@@ -18,7 +18,7 @@ default:
     - sed -i "40s|.*|git clone https://$git_username:$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
 
     
-    - sed -i "80s|.*|admin_password:$database_password|" custom_data.sh
+    - sed -i "80s|.*|admin_password: $database_password|" custom_data.sh
     - sed -i "81s|.*|DBPASS=$database_password|" custom_data.sh
     - sed -i "82s|.*|URI_FRONT_HOME=${URI_FRONT_HOME}|" custom_data.sh
     - sed -i "70s|.*|URI_API=${URI_API}|" custom_data.sh
