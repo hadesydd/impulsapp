@@ -36,13 +36,8 @@ sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-e
 cd /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/front-end
-if command -v apt-get &>/dev/null; then
     sudo apt-get update
     sudo apt-get install -y acl
-else
-    echo "Unsupported package manager. Please install 'acl' manually."
-    exit 1
-fi
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
