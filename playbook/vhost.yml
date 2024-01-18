@@ -9,6 +9,14 @@
     - name: Reload Apache to apply changes
       command: systemctl reload apache2
 
+    - name: Enable required Apache modules
+      command: a2enmod name={{ item }}
+      loop:
+        - proxy
+        - proxy_http
+      notify:
+        - Reload Apache
+
     - name: Copy and configure first virtual host
       template:
         src: "{{ lookup('env', 'full_path') }}/api.conf"
