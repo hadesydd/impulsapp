@@ -37,8 +37,3 @@
       notify:
         - Reload Apache
 
-  handlers:
-    - name: Reload Apache
-      service:
-        name: apache2
-        state: reloaded

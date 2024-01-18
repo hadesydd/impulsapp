@@ -1,78 +1,91 @@
 #!/bin/bash
-# install ansible
+set -e
+
+# Log file for capturing output and errors
+LOG_FILE="/var/log/bootstrap_script.log"
+
+# Redirect all subsequent output and errors to the log file
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+# Function to log messages with timestamps
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+log "Starting bootstrap script..."
+
+# Add necessary repositories and install dependencies
 sudo apt-get update
-sudo apt install software-properties-common -y
+sudo apt-get install -y software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install python3 -y
-sudo apt install ansible -y
-sudo apt install ansible-core -y
-ansible --version
+sudo apt-get install -y python3 ansible ansible-core
+
+# Clone the repository
 git clone https://github.com/hadesydd/impulsapp.git
 export IMPULSAPP_PATH=$(pwd)/impulsapp/playbook
-source ~/.bashrc
 cd $IMPULSAPP_PATH
 chmod +x *.sh
+
+# Set up environment variables
 user_home="$HOME"
 vhost_path="impulsapp/vhost"
 export full_path="$user_home/$vhost_path"
-source ~/.bashrc
+# Run Ansible playbooks
 ansible-playbook -i localhost php.yml
-sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt -y install nodejs npm
- 
-sudo sed -n '80p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
-ansible-playbook -i localhost test.yml
-ansible-playbook -i localhost create.yml
-ansible-playbook -i localhost apache.yml
-ansible-playbook -i localhost vhost.yml
 
+
+# Perform other setup tasks
 cd /var/www/html/
 
 
 
-
-sudo sed -n '80,103p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
+# Extract and append specific lines from user-data.txt and execute other playbook
+sudo sed -n '90,114p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
+sudo sed -n '90p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
+cd $IMPULSAPP_PATH
+ansible-playbook -i localhost test.yml 
+ansible-playbook -i localhost apache.yml
+ansible-playbook -i localhost vhost.yml
+ansible-playbook -i localhost create.yml
+# Set permissions
 cd /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/front-end
+
+# Install ACL
+if command -v apt-get &>/dev/null; then
     sudo apt-get update
     sudo apt-get install -y acl
+else
+    log "Unsupported package manager. Please install 'acl' manually."
+    exit 1
+fi
+
+# Set ACL permissions
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
+# Install Composer
+
 
 sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 
-composer install
+# Install front-end dependencies
 cd /var/www/html/front-end
 rm -rf node_modules
 rm package-lock.json
-npm install 
+npm install
 npm install @material-ui/core
-npm start build
-npm run start   
+npm run build
+npm start
+
+# Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+log "Bootstrap script completed successfully."
 
 
 
