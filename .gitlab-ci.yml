@@ -24,30 +24,33 @@ default:
     - sed -i "70s|.*|URI_API=${URI_API}|" custom_data.sh
     - sed -i "93s|.*|DB_LOGIN=${DB_LOGIN}|" custom_data.sh
     - sed -i "94s|.*|DB_NAME=${DB_NAME}|" custom_data.sh
-    - sed -i "95s|.*|domain_name=${domain_name}|" custom_data.sh
-    - sed -i "96s|.*|admin_login=${admin_login}|" custom_data.sh
-    - sed -i "97s|.*|CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}|" custom_data.sh
-    - sed -i "98s|.*|CEGID_API_CLIENT_SECRET=${CEGID_API_CLIENT_SECRET}|" custom_data.sh
-    - sed -i "99s|.*|CEGID_API_CONSUMER_ID=${CEGID_API_CONSUMER_ID}|" custom_data.sh
-    - sed -i "100s|.*|CEGID_API_CONSUMER_SECRET=${CEGID_API_CONSUMER_SECRET}|" custom_data.sh
-    - sed -i "101s|.*|CEGID_DATA_ACCESS_API_KEY=${CEGID_DATA_ACCESS_API_KEY}|" custom_data.sh
-    - sed -i "102s|.*|CEGID_DATA_ACCESS_API_SECRET=${CEGID_DATA_ACCESS_API_SECRET}|" custom_data.sh
-    - sed -i "103s|.*|PAPPERS_API_TOKEN=${PAPPERS_API_TOKEN}|" custom_data.sh
-    - sed -i "104s|.*|SILAE_WS_LOGIN=${SILAE_WS_LOGIN}|" custom_data.sh
-    - sed -i "105s|.*|SILAE_WS_PASSWORD=${SILAE_WS_PASSWORD}|" custom_data.sh
-    - sed -i "106s|.*|SILAE_SITE_LOGIN=${SILAE_SITE_LOGIN}|" custom_data.sh
-    - sed -i "107s|.*|SILAE_SITE_PASSWORD=${SILAE_SITE_PASSWORD}|" custom_data.sh
-    - sed -i "108s|.*|MICROSOFT_GRAPH_CLIENT_ID=${MICROSOFT_GRAPH_CLIENT_ID}|" custom_data.sh
-    - sed -i "109s|.*|MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}|" custom_data.sh
-    - sed -i "110s|.*|MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}|" custom_data.sh
-    - sed -i "111s|.*|MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}|" custom_data.sh
+    - sed -i "95s|.*|CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}|" custom_data.sh
+    - sed -i "96s|.*|CEGID_API_CLIENT_SECRET=${CEGID_API_CLIENT_SECRET}|" custom_data.sh
+    - sed -i "97s|.*|CEGID_API_CONSUMER_ID=${CEGID_API_CONSUMER_ID}|" custom_data.sh
+    - sed -i "98s|.*|CEGID_API_CONSUMER_SECRET=${CEGID_API_CONSUMER_SECRET}|" custom_data.sh
+    - sed -i "99s|.*|CEGID_DATA_ACCESS_API_KEY=${CEGID_DATA_ACCESS_API_KEY}|" custom_data.sh
+    - sed -i "100s|.*|CEGID_DATA_ACCESS_API_SECRET=${CEGID_DATA_ACCESS_API_SECRET}|" custom_data.sh
+    - sed -i "101s|.*|PAPPERS_API_TOKEN=${PAPPERS_API_TOKEN}|" custom_data.sh
+    - sed -i "102s|.*|SILAE_WS_LOGIN=${SILAE_WS_LOGIN}|" custom_data.sh
+    - sed -i "103s|.*|SILAE_WS_PASSWORD=${SILAE_WS_PASSWORD}|" custom_data.sh
+    - sed -i "104s|.*|SILAE_SITE_LOGIN=${SILAE_SITE_LOGIN}|" custom_data.sh
+    - sed -i "105s|.*|SILAE_SITE_PASSWORD=${SILAE_SITE_PASSWORD}|" custom_data.sh
+    - sed -i "106s|.*|MICROSOFT_GRAPH_CLIENT_ID=${MICROSOFT_GRAPH_CLIENT_ID}|" custom_data.sh
+    - sed -i "107s|.*|MICROSOFT_GRAPH_CLIENT_SECRET=${MICROSOFT_GRAPH_CLIENT_SECRET}|" custom_data.sh
+    - sed -i "108s|.*|MICROSOFT_GRAPH_TENANT_ID=${MICROSOFT_GRAPH_TENANT_ID}|" custom_data.sh
+    - sed -i "109s|.*|MICROSOFT_GRAPH_SITE_ID=${MICROSOFT_GRAPH_SITE_ID}|" custom_data.sh
     - random_string=$(openssl rand -base64 36 | tr -dc 'A-Za-z0-9' | head -c 48)
-    - sed -i "112s|.*|APP_SECRET=$random_string|" custom_data.sh
+    - sed -i "110s|.*|APP_SECRET=$random_string|" custom_data.sh
     - jwt=$(openssl rand -base64 36 | tr -dc 'A-Za-z0-9' | head -c 48)
     - JWT_PASSPHRASE=jwt
-    - sed -i "113s|.*|JWT_PASSPHRASE=$jwt|" custom_data.sh
-    - sed -i "114iDATABASE_URL=\"mysql://${DB_LOGIN}:$database_password@localhost:3306/${DB_NAME}\"" custom_data.sh
+    - sed -i "111s|.*|JWT_PASSPHRASE=$jwt|" custom_data.sh
+    - sed -i "112iDATABASE_URL=\"mysql://${DB_LOGIN}:$database_password@localhost:3306/${DB_NAME}?serverVersion=8.0\"" custom_data.sh
+    - sed -i "113s|.*|domain_name=${domain_name}|" custom_data.sh
+    - sed -i "114s|.*|admin_login=${admin_login}|" custom_data.sh
+
+
     - cat -n custom_data.sh
+
 
 
   cache:

@@ -40,7 +40,7 @@ cd /var/www/html/
 
 
 # Extract and append specific lines from user-data.txt and execute other playbook
-sudo sed -n '90,114p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
+sudo sed -n '91,112p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 sudo sed -n '90p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
 cd $IMPULSAPP_PATH
@@ -52,7 +52,7 @@ ansible-playbook -i localhost create.yml
 cd /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/front-end
-sudo sed -n '90,114p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
+sudo sed -n '91,112p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 
 # Install ACL
@@ -65,17 +65,18 @@ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 #Composer install
 composer install -n
+sudo chown -R superuser:superuser /var/www/html/back-end
+
+
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
 
 
 
 # Set ACL permissions
-
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
-
 # Install front-end dependencies
 cd /var/www/html/front-end
 rm -rf node_modules
@@ -84,7 +85,6 @@ npm install
 npm install @material-ui/core
 npm run build
 npm start
-
 log "Bootstrap script completed successfully."
 
 
