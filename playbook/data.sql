@@ -15,7 +15,2468 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS impulsapp COLLATE utf8mb4_general_ci;
+CREATE DATABASE impulsapp COLLATE utf8mb4_general_ci;
+
+USE impulsapp;
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `account` (
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `addressId` int DEFAULT NULL,
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `groupeName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `search` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filters` json DEFAULT NULL,
+  `attributes` json DEFAULT NULL,
+  `data_off_board` json DEFAULT NULL,
+  `data_on_board` json DEFAULT NULL,
+  `lead_id` int DEFAULT NULL,
+  `account_created` tinyint(1) NOT NULL,
+  `standby` tinyint(1) NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `IDX_7D3656A4D5289B7F` (`addressId`),
+  KEY `IDX_7D3656A43FAA311E` (`lead_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_7D3656A43FAA311E` FOREIGN KEY (`lead_id`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_7D3656A4D5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `address`
+--
+
+DROP TABLE IF EXISTS `address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `address` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `zip_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `longitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `countryCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `formatted_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D4E6F81A164B0CD` (`countryCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D4E6F81A164B0CD` FOREIGN KEY (`countryCode`) REFERENCES `country` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=7612 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `alert`
+--
+
+DROP TABLE IF EXISTS `alert`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `archived` tinyint(1) NOT NULL DEFAULT '0',
+  `userBoId` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `notification_id` int DEFAULT NULL,
+  `context` json NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_17FD46C19ECBEACB` (`userBoId`),
+  KEY `IDX_17FD46C1EF1A9D84` (`notification_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_17FD46C19ECBEACB` FOREIGN KEY (`userBoId`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_17FD46C1EF1A9D84` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64364 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `alert_notification`
+--
+
+DROP TABLE IF EXISTS `alert_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `on_click_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` json NOT NULL,
+  `send_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  `is_read` tinyint(1) NOT NULL,
+  `alert_template_id` int NOT NULL,
+  `entity_id` int NOT NULL,
+  `catgory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sub_category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_7D05DBB0A76ED395` (`user_id`),
+  KEY `IDX_7D05DBB08388D204` (`alert_template_id`),
+  CONSTRAINT `FK_7D05DBB08388D204` FOREIGN KEY (`alert_template_id`) REFERENCES `alert_template` (`id`),
+  CONSTRAINT `FK_7D05DBB0A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34913 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `alert_template`
+--
+
+DROP TABLE IF EXISTS `alert_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_template` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `on_click_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `params` json NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entity_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categorie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_categorie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notify_pole_admin` tinyint(1) NOT NULL,
+  `notify_entity_creator` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_E294EFB85E237E06` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `alert_template_user_bo`
+--
+
+DROP TABLE IF EXISTS `alert_template_user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_template_user_bo` (
+  `alert_template_id` int NOT NULL,
+  `user_bo_id` int NOT NULL,
+  PRIMARY KEY (`alert_template_id`,`user_bo_id`),
+  KEY `IDX_8318E9AD8388D204` (`alert_template_id`),
+  KEY `IDX_8318E9AD3D57D31F` (`user_bo_id`),
+  CONSTRAINT `FK_8318E9AD3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_8318E9AD8388D204` FOREIGN KEY (`alert_template_id`) REFERENCES `alert_template` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `alert_template_user_bo_condition`
+--
+
+DROP TABLE IF EXISTS `alert_template_user_bo_condition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alert_template_user_bo_condition` (
+  `alert_template_id` int NOT NULL,
+  `user_bo_condition_id` int NOT NULL,
+  PRIMARY KEY (`alert_template_id`,`user_bo_condition_id`),
+  KEY `IDX_2CD9457E8388D204` (`alert_template_id`),
+  KEY `IDX_2CD9457E28A61758` (`user_bo_condition_id`),
+  CONSTRAINT `FK_2CD9457E28A61758` FOREIGN KEY (`user_bo_condition_id`) REFERENCES `user_bo_condition` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_2CD9457E8388D204` FOREIGN KEY (`alert_template_id`) REFERENCES `alert_template` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `annotation`
+--
+
+DROP TABLE IF EXISTS `annotation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `annotation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entityType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` json NOT NULL,
+  `search` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `parent_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_2E443EF289697FA8` (`serviceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  KEY `IDX_2E443EF2727ACA70` (`parent_id`),
+  CONSTRAINT `FK_2E443EF2727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `annotation` (`id`),
+  CONSTRAINT `FK_2E443EF289697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2360 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_bill`
+--
+
+DROP TABLE IF EXISTS `billing_bill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_bill` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `month` int DEFAULT NULL,
+  `year` int DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `status` enum('hold_on','to_validate','validated') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('month','date') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_overdue` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5532724FB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5532724FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=9616 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_contract`
+--
+
+DROP TABLE IF EXISTS `billing_contract`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_contract` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_id` int NOT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `type` enum('draft','scheduled','active','previous') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_F15341A5DAB7DF02` (`accountCode`),
+  KEY `IDX_F15341A5ED5CA9E6` (`service_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_F15341A5DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`),
+  CONSTRAINT `FK_F15341A5ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3695 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_chargeback`
+--
+
+DROP TABLE IF EXISTS `billing_fee_chargeback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_chargeback` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_bill_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `disbursement` tinyint(1) NOT NULL,
+  `type` enum('cegid','ipaidthat','legal_fees') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `document` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `document_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D77EFA4471A29922` (`billing_bill_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D77EFA4471A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_contractual`
+--
+
+DROP TABLE IF EXISTS `billing_fee_contractual`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_contractual` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_rule_id` int NOT NULL,
+  `profile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `billing_bill_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `mission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_AFEAC881F608886` (`billing_rule_id`),
+  KEY `IDX_AFEAC8871A29922` (`billing_bill_id`),
+  KEY `IDX_AFEAC88BE6CAE90` (`mission_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_AFEAC881F608886` FOREIGN KEY (`billing_rule_id`) REFERENCES `billing_rule` (`id`),
+  CONSTRAINT `FK_AFEAC8871A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_AFEAC88BE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_credit`
+--
+
+DROP TABLE IF EXISTS `billing_fee_credit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_credit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `billing_bill_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `service_id` int DEFAULT NULL,
+  `billing_fee_subscription_id` int DEFAULT NULL,
+  `billing_fee_exceptional_id` int DEFAULT NULL,
+  `billing_fee_contractual_id` int DEFAULT NULL,
+  `billing_fee_chargeback_id` int DEFAULT NULL,
+  `type` enum('standalone','subscription','exceptional','contractual','chargeback') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_45754FE771A29922` (`billing_bill_id`),
+  KEY `IDX_45754FE7ED5CA9E6` (`service_id`),
+  KEY `IDX_45754FE7501C23B2` (`billing_fee_subscription_id`),
+  KEY `IDX_45754FE76E1BA38A` (`billing_fee_exceptional_id`),
+  KEY `IDX_45754FE7D1D0A3FC` (`billing_fee_contractual_id`),
+  KEY `IDX_45754FE7483CB5F7` (`billing_fee_chargeback_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_45754FE7483CB5F7` FOREIGN KEY (`billing_fee_chargeback_id`) REFERENCES `billing_fee_chargeback` (`id`),
+  CONSTRAINT `FK_45754FE7501C23B2` FOREIGN KEY (`billing_fee_subscription_id`) REFERENCES `billing_fee_subscription` (`id`),
+  CONSTRAINT `FK_45754FE76E1BA38A` FOREIGN KEY (`billing_fee_exceptional_id`) REFERENCES `billing_fee_exceptional` (`id`),
+  CONSTRAINT `FK_45754FE771A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_45754FE7D1D0A3FC` FOREIGN KEY (`billing_fee_contractual_id`) REFERENCES `billing_fee_contractual` (`id`),
+  CONSTRAINT `FK_45754FE7ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_disbursement`
+--
+
+DROP TABLE IF EXISTS `billing_fee_disbursement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_disbursement` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_bill_id` int NOT NULL,
+  `billing_fee_subscription_id` int DEFAULT NULL,
+  `billing_fee_exceptional_id` int DEFAULT NULL,
+  `billing_fee_contractual_id` int DEFAULT NULL,
+  `billing_fee_chargeback_id` int DEFAULT NULL,
+  `billing_fee_regularization_id` int DEFAULT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `type` enum('subscription','exceptional','contractual','chargeback','regularization') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_55933BB471A29922` (`billing_bill_id`),
+  KEY `IDX_55933BB4501C23B2` (`billing_fee_subscription_id`),
+  KEY `IDX_55933BB46E1BA38A` (`billing_fee_exceptional_id`),
+  KEY `IDX_55933BB4D1D0A3FC` (`billing_fee_contractual_id`),
+  KEY `IDX_55933BB4483CB5F7` (`billing_fee_chargeback_id`),
+  KEY `IDX_55933BB41CC03B95` (`billing_fee_regularization_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_55933BB41CC03B95` FOREIGN KEY (`billing_fee_regularization_id`) REFERENCES `billing_fee_regularization` (`id`),
+  CONSTRAINT `FK_55933BB4483CB5F7` FOREIGN KEY (`billing_fee_chargeback_id`) REFERENCES `billing_fee_chargeback` (`id`),
+  CONSTRAINT `FK_55933BB4501C23B2` FOREIGN KEY (`billing_fee_subscription_id`) REFERENCES `billing_fee_subscription` (`id`),
+  CONSTRAINT `FK_55933BB46E1BA38A` FOREIGN KEY (`billing_fee_exceptional_id`) REFERENCES `billing_fee_exceptional` (`id`),
+  CONSTRAINT `FK_55933BB471A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_55933BB4D1D0A3FC` FOREIGN KEY (`billing_fee_contractual_id`) REFERENCES `billing_fee_contractual` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3964 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_exceptional`
+--
+
+DROP TABLE IF EXISTS `billing_fee_exceptional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_exceptional` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mission_id` int DEFAULT NULL,
+  `type` enum('catalog','free') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `label` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `billing_bill_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `disbursement` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_7F382C17BE6CAE90` (`mission_id`),
+  KEY `IDX_7F382C1771A29922` (`billing_bill_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_7F382C1771A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_7F382C17BE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_regularization`
+--
+
+DROP TABLE IF EXISTS `billing_fee_regularization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_regularization` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_bill_id` int NOT NULL,
+  `billing_subscription_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `disbursement` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_31F89A6E71A29922` (`billing_bill_id`),
+  KEY `IDX_31F89A6ECF9564CB` (`billing_subscription_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_31F89A6E71A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_31F89A6ECF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_fee_subscription`
+--
+
+DROP TABLE IF EXISTS `billing_fee_subscription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_fee_subscription` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_bill_id` int NOT NULL,
+  `billing_subscription_id` int NOT NULL,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('to_complete','to_verify','ready') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `annotations` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_8AC3FDC671A29922` (`billing_bill_id`),
+  KEY `IDX_8AC3FDC6CF9564CB` (`billing_subscription_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_8AC3FDC671A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`),
+  CONSTRAINT `FK_8AC3FDC6CF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10522 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_rule`
+--
+
+DROP TABLE IF EXISTS `billing_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_rule` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_contract_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `mission_id` int DEFAULT NULL,
+  `label` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `type` enum('mission','service','custom') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value_by_profile` tinyint(1) NOT NULL,
+  `periodicity` enum('monthly','quarterly','semiannual','annual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_month` int DEFAULT NULL,
+  `disbursement` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_39AA920BA2F22440` (`billing_contract_id`),
+  KEY `IDX_39AA920BED5CA9E6` (`service_id`),
+  KEY `IDX_39AA920BBE6CAE90` (`mission_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_39AA920BA2F22440` FOREIGN KEY (`billing_contract_id`) REFERENCES `billing_contract` (`id`),
+  CONSTRAINT `FK_39AA920BBE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`),
+  CONSTRAINT `FK_39AA920BED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_rule_value`
+--
+
+DROP TABLE IF EXISTS `billing_rule_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_rule_value` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_rule_id` int NOT NULL,
+  `value_type` enum('hourly_rate','by_unit','fixed_price') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double NOT NULL,
+  `profile` enum('collaborateur','manager','superviseur','associe','juriste','expert_comptable') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_5F2217651F608886` (`billing_rule_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5F2217651F608886` FOREIGN KEY (`billing_rule_id`) REFERENCES `billing_rule` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `billing_subscription`
+--
+
+DROP TABLE IF EXISTS `billing_subscription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `billing_subscription` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_contract_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `periodicity` enum('monthly','quarterly','semiannual','annual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_month` int NOT NULL,
+  `amount` double NOT NULL,
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `disbursement` tinyint(1) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_16912F26A2F22440` (`billing_contract_id`),
+  KEY `IDX_16912F26ED5CA9E6` (`service_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_16912F26A2F22440` FOREIGN KEY (`billing_contract_id`) REFERENCES `billing_contract` (`id`),
+  CONSTRAINT `FK_16912F26ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4826 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contact` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `last_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `job_title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `external_company_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `service` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `type` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `notification_contact_id` int DEFAULT NULL,
+  `phone_2` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_4C62E6381CD38068` (`notification_contact_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_4C62E6381CD38068` FOREIGN KEY (`notification_contact_id`) REFERENCES `notification_contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `contact_lead`
+--
+
+DROP TABLE IF EXISTS `contact_lead`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contact_lead` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `lastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jobTitle` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `externalCompanyName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `service` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `notificationContactId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_6EE3348D6A0B40` (`notificationContactId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_6EE3348D6A0B40` FOREIGN KEY (`notificationContactId`) REFERENCES `notification_contact` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `country`
+--
+
+DROP TABLE IF EXISTS `country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `country` (
+  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_fr` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_en` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IsoAlpha3` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `IsoM49` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `Detail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `isSepa` tinyint(1) NOT NULL,
+  `isState` tinyint(1) NOT NULL,
+  `isIban` tinyint(1) NOT NULL,
+  `isDsp` tinyint(1) NOT NULL DEFAULT '0',
+  `LengthIban` int DEFAULT NULL,
+  `PhoneCode` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `isUE` tinyint(1) NOT NULL DEFAULT '0',
+  `vat` decimal(4,2) NOT NULL DEFAULT '0.00',
+  `FlagPath` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zipCodeFormat` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `IbanFormat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `AccountNumberLength` int DEFAULT NULL,
+  `BankCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `BranchCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `IbanFields` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `NationalityCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `currencyCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`code`),
+  KEY `IDX_5373C96648C61E47` (`currencyCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5373C96648C61E47` FOREIGN KEY (`currencyCode`) REFERENCES `currency` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cron_job`
+--
+
+DROP TABLE IF EXISTS `cron_job`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cron_job` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cron_schedule` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cron_log`
+--
+
+DROP TABLE IF EXISTS `cron_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cron_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exit_status` int DEFAULT NULL,
+  `exit_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `started_at` datetime NOT NULL,
+  `finished_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3845 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `currency`
+--
+
+DROP TABLE IF EXISTS `currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `currency` (
+  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iso4217` int DEFAULT NULL,
+  `minorUnit` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`code`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `data_export`
+--
+
+DROP TABLE IF EXISTS `data_export`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_export` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `data_export_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `file_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_2272278D8ECB2A59` (`data_export_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_2272278D8ECB2A59` FOREIGN KEY (`data_export_type_id`) REFERENCES `data_export_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1381 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `data_export_header`
+--
+
+DROP TABLE IF EXISTS `data_export_header`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_export_header` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `data_export_type_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_ED0025E48ECB2A59` (`data_export_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_ED0025E48ECB2A59` FOREIGN KEY (`data_export_type_id`) REFERENCES `data_export_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4215 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `data_export_type`
+--
+
+DROP TABLE IF EXISTS `data_export_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_export_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `data_update`
+--
+
+DROP TABLE IF EXISTS `data_update`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_update` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `execute_order` int NOT NULL,
+  `executed_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `directory`
+--
+
+DROP TABLE IF EXISTS `directory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `directory` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nb_files_total` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `nb_files_in_root` int DEFAULT NULL,
+  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nb_directories_in_root` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_467844DA727ACA70` (`parent_id`),
+  KEY `IDX_467844DAFB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_467844DA727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
+  CONSTRAINT `FK_467844DAFB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=122709 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `doctrine_migration_versions`
+--
+
+DROP TABLE IF EXISTS `doctrine_migration_versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `doctrine_migration_versions` (
+  `version` varchar(191) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `executed_at` datetime DEFAULT NULL,
+  `execution_time` int DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `document`
+--
+
+DROP TABLE IF EXISTS `document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `extension` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `document_type_id` int DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  `original_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D8698A7661232A4F` (`document_type_id`),
+  KEY `IDX_D8698A76727ACA70` (`parent_id`),
+  KEY `IDX_D8698A76FB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D8698A7661232A4F` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `FK_D8698A76727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
+  CONSTRAINT `FK_D8698A76FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=228364 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `document_category`
+--
+
+DROP TABLE IF EXISTS `document_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `orderDisplay` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `document_type`
+--
+
+DROP TABLE IF EXISTS `document_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `acceptedFormat` json DEFAULT NULL,
+  `orderDisplay` int DEFAULT NULL,
+  `isUnique` tinyint(1) NOT NULL DEFAULT '0',
+  `individualOnly` tinyint(1) NOT NULL DEFAULT '0',
+  `companyOnly` tinyint(1) NOT NULL DEFAULT '0',
+  `uploadNotRequired` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `categoryId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_2B6ADBBA9C370B71` (`categoryId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_2B6ADBBA9C370B71` FOREIGN KEY (`categoryId`) REFERENCES `document_category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `email_notification`
+--
+
+DROP TABLE IF EXISTS `email_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `email_notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `template` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `api_id` int NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `params` json NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_note`
+--
+
+DROP TABLE IF EXISTS `history_note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_note` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entityId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` int NOT NULL DEFAULT '0',
+  `entityData` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2766 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_task_status`
+--
+
+DROP TABLE IF EXISTS `history_task_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_task_status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `beginDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `endDate` datetime DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taskTypeId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DE83E6A6D1C4661A` (`taskTypeId`),
+  CONSTRAINT `FK_DE83E6A6D1C4661A` FOREIGN KEY (`taskTypeId`) REFERENCES `task` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_x_user_manager`
+--
+
+DROP TABLE IF EXISTS `history_x_user_manager`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_x_user_role_`
+--
+
+DROP TABLE IF EXISTS `history_x_user_role_`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_role_` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `history_x_user_site`
+--
+
+DROP TABLE IF EXISTS `history_x_user_site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_site` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `lead_source`
+--
+
+DROP TABLE IF EXISTS `lead_source`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lead_source` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `leads`
+--
+
+DROP TABLE IF EXISTS `leads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `leads` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `siren` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `addressId` int DEFAULT NULL,
+  `legalFormCode` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nafCode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userBoInChargeId` int DEFAULT NULL,
+  `leadSourceId` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `data_on_board` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_17904552D5289B7F` (`addressId`),
+  KEY `IDX_1790455295760890` (`legalFormCode`),
+  KEY `IDX_17904552DAB7DF02` (`accountCode`),
+  KEY `IDX_17904552655CF66E` (`nafCode`),
+  KEY `IDX_17904552B971BF69` (`userBoInChargeId`),
+  KEY `IDX_179045523AE585A5` (`leadSourceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_179045523AE585A5` FOREIGN KEY (`leadSourceId`) REFERENCES `lead_source` (`id`),
+  CONSTRAINT `FK_17904552655CF66E` FOREIGN KEY (`nafCode`) REFERENCES `naf` (`code`),
+  CONSTRAINT `FK_17904552B971BF69` FOREIGN KEY (`userBoInChargeId`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_289161CB95760890` FOREIGN KEY (`legalFormCode`) REFERENCES `legal_form` (`code`),
+  CONSTRAINT `FK_289161CBD5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`),
+  CONSTRAINT `FK_289161CBDAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `legal_form`
+--
+
+DROP TABLE IF EXISTS `legal_form`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `legal_form` (
+  `code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `parentCode` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `labelShort` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`code`),
+  KEY `IDX_7FF313F8A1EFE539` (`parentCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_7FF313F8A1EFE539` FOREIGN KEY (`parentCode`) REFERENCES `legal_form` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mission`
+--
+
+DROP TABLE IF EXISTS `mission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code_exceptional` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_9067F23C89697FA8` (`serviceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_9067F23C89697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `naf`
+--
+
+DROP TABLE IF EXISTS `naf`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `naf` (
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`code`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `note`
+--
+
+DROP TABLE IF EXISTS `note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `note` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `entityType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CFBDFA1489697FA8` (`serviceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_CFBDFA1489697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2223 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `param_values` json NOT NULL,
+  `notification_type_id` int NOT NULL,
+  `sent_at` datetime DEFAULT NULL,
+  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BF5476CAD0520624` (`notification_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_BF5476CAD0520624` FOREIGN KEY (`notification_type_id`) REFERENCES `notification_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notification_contact`
+--
+
+DROP TABLE IF EXISTS `notification_contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_contact` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `apiId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int DEFAULT NULL,
+  `user_client_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_597C6C8F3D57D31F` (`user_bo_id`),
+  KEY `IDX_597C6C8F190BE4C5` (`user_client_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_597C6C8F190BE4C5` FOREIGN KEY (`user_client_id`) REFERENCES `user_client` (`id`),
+  CONSTRAINT `FK_597C6C8F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notification_template`
+--
+
+DROP TABLE IF EXISTS `notification_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_template` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `template` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `apiId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_C2702726727ACA70` (`parent_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_C2702726727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `notification_template` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notification_transport`
+--
+
+DROP TABLE IF EXISTS `notification_transport`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_transport` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `notification_id` int NOT NULL,
+  `sender_email` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sender_name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notification_type`
+--
+
+DROP TABLE IF EXISTS `notification_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `params` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `notification_template_id` int NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtype` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `context` json NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_34E21C13D0413CF9` (`notification_template_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_34E21C13D0413CF9` FOREIGN KEY (`notification_template_id`) REFERENCES `notification_template` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `nps`
+--
+
+DROP TABLE IF EXISTS `nps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nps` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `releasedDisplayDate` datetime DEFAULT NULL,
+  `firstShownDate` datetime DEFAULT NULL,
+  `lastShownDate` datetime DEFAULT NULL,
+  `answeredDate` datetime DEFAULT NULL,
+  `numberTimeShown` int NOT NULL,
+  `npsScore` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `npsComment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dismissedDate` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `npsTypeId` int NOT NULL,
+  `AccountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5B3B66482EE225BB` (`npsTypeId`),
+  KEY `IDX_5B3B66485C2B50D5` (`AccountCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5B3B66482EE225BB` FOREIGN KEY (`npsTypeId`) REFERENCES `npstype` (`id`),
+  CONSTRAINT `FK_5B3B66485C2B50D5` FOREIGN KEY (`AccountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `npstype`
+--
+
+DROP TABLE IF EXISTS `npstype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `npstype` (
+  `id` int NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `displayInterval` int NOT NULL,
+  `dismissInterval` int NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notationType` json NOT NULL COMMENT '(DC2Type:json_array)',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `npsTypeIdNext` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5E2FF72DE0766E33` (`npsTypeIdNext`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5E2FF72DE0766E33` FOREIGN KEY (`npsTypeIdNext`) REFERENCES `npstype` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `opportunity`
+--
+
+DROP TABLE IF EXISTS `opportunity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `opportunity` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `leadId` int DEFAULT NULL,
+  `missionId` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_8389C3D7DAB7DF02` (`accountCode`),
+  KEY `IDX_8389C3D738063428` (`leadId`),
+  KEY `IDX_8389C3D7AFD395A` (`missionId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_8389C3D738063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_8389C3D7AFD395A` FOREIGN KEY (`missionId`) REFERENCES `mission` (`id`),
+  CONSTRAINT `FK_8389C3D7DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `parameter`
+--
+
+DROP TABLE IF EXISTS `parameter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `parameter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pole`
+--
+
+DROP TABLE IF EXISTS `pole`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pole` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `managerUserBoId` int DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_FD6042E1AD385CF6` (`managerUserBoId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_FD6042E1AD385CF6` FOREIGN KEY (`managerUserBoId`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `production_period`
+--
+
+DROP TABLE IF EXISTS `production_period`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `production_period` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `production_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `production_subtype` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `outdated` tinyint(1) NOT NULL,
+  `due_date` datetime NOT NULL,
+  `deprecated` tinyint(1) NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iteration` int DEFAULT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `switch_date` datetime NOT NULL,
+  `data` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A188A93FB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_A188A93FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=75101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `profile`
+--
+
+DROP TABLE IF EXISTS `profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profile` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `hierarchy` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `profitability`
+--
+
+DROP TABLE IF EXISTS `profitability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profitability` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period` datetime NOT NULL,
+  `total_working_hours` double NOT NULL,
+  `total_selling_price` double NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int DEFAULT NULL,
+  `service_id` int NOT NULL,
+  `total_cost_price` double NOT NULL,
+  `exercice` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_125DAA73FB86B732` (`account_code`),
+  KEY `IDX_125DAA733D57D31F` (`user_bo_id`),
+  KEY `IDX_125DAA73ED5CA9E6` (`service_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_125DAA733D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_125DAA73ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_125DAA73FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=8172100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `profitability_log`
+--
+
+DROP TABLE IF EXISTS `profitability_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profitability_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_insert` int DEFAULT NULL,
+  `nb_update` int DEFAULT NULL,
+  `nb_delete` int DEFAULT NULL,
+  `status` enum('to_process','processed','error') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `subdirectory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_ignored` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `refresh_tokens`
+--
+
+DROP TABLE IF EXISTS `refresh_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `refresh_tokens` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `refresh_token` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valid` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_9BACE7E1C74F2195` (`refresh_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=16799 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `image` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `serviceOrder` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL,
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `service_attribute_category`
+--
+
+DROP TABLE IF EXISTS `service_attribute_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_attribute_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `categoryOrder` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `serviceId` int DEFAULT NULL,
+  `collapsable` tinyint(1) NOT NULL,
+  `configuration` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_6C1DB20F89697FA8` (`serviceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_6C1DB20F89697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `service_attribute_type`
+--
+
+DROP TABLE IF EXISTS `service_attribute_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_attribute_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entityType` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `referenceEntity` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `referenceField` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `typeOrder` int NOT NULL,
+  `serviceAttributeCategoryId` int NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_editable` tinyint(1) NOT NULL DEFAULT '1',
+  `is_multiple` tinyint(1) NOT NULL DEFAULT '0',
+  `referenceSelect` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dependancyServiceAttributeType_value` json DEFAULT NULL,
+  `dependancyServiceAttributeTypeId` int DEFAULT NULL,
+  `configuration` json DEFAULT NULL,
+  `is_valued` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_D450AE175346D9DE` (`serviceAttributeCategoryId`),
+  KEY `IDX_D450AE1754D8B695` (`dependancyServiceAttributeTypeId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D450AE175346D9DE` FOREIGN KEY (`serviceAttributeCategoryId`) REFERENCES `service_attribute_category` (`id`),
+  CONSTRAINT `FK_D450AE1754D8B695` FOREIGN KEY (`dependancyServiceAttributeTypeId`) REFERENCES `service_attribute_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `service_attribute_value`
+--
+
+DROP TABLE IF EXISTS `service_attribute_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_attribute_value` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `serviceAttributeTypeId` int NOT NULL,
+  `referenceId` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DC4ECB66A282A02B` (`serviceAttributeTypeId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_DC4ECB66A282A02B` FOREIGN KEY (`serviceAttributeTypeId`) REFERENCES `service_attribute_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=173401 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `setting`
+--
+
+DROP TABLE IF EXISTS `setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `setting` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `setting_type_id` int NOT NULL,
+  `user_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
+  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_9F74B8989D1E3C7B` (`setting_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_9F74B8989D1E3C7B` FOREIGN KEY (`setting_type_id`) REFERENCES `setting_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `setting_type`
+--
+
+DROP TABLE IF EXISTS `setting_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `setting_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `site`
+--
+
+DROP TABLE IF EXISTS `site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `addressId` int DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `user_admin` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_694309E4D5289B7F` (`addressId`),
+  KEY `FK_694309E46ACCF62E` (`user_admin`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_694309E46ACCF62E` FOREIGN KEY (`user_admin`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_694309E4D5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `synchro_ged`
+--
+
+DROP TABLE IF EXISTS `synchro_ged`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `synchro_ged` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `synchro_date_end` datetime DEFAULT NULL,
+  `object_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_ignored` tinyint(1) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `synchro_date_begin` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=750 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `task`
+--
+
+DROP TABLE IF EXISTS `task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `task` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `status` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_end` datetime DEFAULT NULL,
+  `task_type_id` int DEFAULT NULL,
+  `assigned_user_bo_id` int DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lead_id` int DEFAULT NULL,
+  `label` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `scoring` int NOT NULL,
+  `calculated_scoring` double NOT NULL,
+  `task_category_id` int DEFAULT NULL,
+  `author_user_bo_id` int DEFAULT NULL,
+  `context` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_527EDB255F6B06E` (`assigned_user_bo_id`),
+  KEY `IDX_527EDB25DAADA679` (`task_type_id`),
+  KEY `IDX_527EDB25FB86B732` (`account_code`),
+  KEY `IDX_527EDB2555458D` (`lead_id`),
+  KEY `IDX_527EDB25543330D0` (`task_category_id`),
+  KEY `IDX_527EDB257F5EAFA4` (`author_user_bo_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_527EDB25543330D0` FOREIGN KEY (`task_category_id`) REFERENCES `task_category` (`id`),
+  CONSTRAINT `FK_527EDB2555458D` FOREIGN KEY (`lead_id`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_527EDB255F6B06E` FOREIGN KEY (`assigned_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_527EDB257F5EAFA4` FOREIGN KEY (`author_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_527EDB25DAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`),
+  CONSTRAINT `FK_527EDB25FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=35697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `task_category`
+--
+
+DROP TABLE IF EXISTS `task_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `task_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_order` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `count_tasks` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `task_type`
+--
+
+DROP TABLE IF EXISTS `task_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `task_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `validatable` tinyint(1) NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `scoring` int NOT NULL,
+  `task_category_id` int DEFAULT NULL,
+  `are_assigned_users` tinyint(1) NOT NULL,
+  `due_days` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_FF6DC352543330D0` (`task_category_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_FF6DC352543330D0` FOREIGN KEY (`task_category_id`) REFERENCES `task_category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ticket`
+--
+
+DROP TABLE IF EXISTS `ticket`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ticket` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` enum('open','reopened','resolved','standby','validated','closed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `ticket_type_id` int NOT NULL,
+  `last_action` datetime NOT NULL,
+  `object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `assigned_to_user_bo_id` int DEFAULT NULL,
+  `assigned_by_user_bo_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_97A0ADA3C980D5C1` (`ticket_type_id`),
+  KEY `IDX_97A0ADA3A0569827` (`assigned_to_user_bo_id`),
+  KEY `IDX_97A0ADA35791A93C` (`assigned_by_user_bo_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_97A0ADA35791A93C` FOREIGN KEY (`assigned_by_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_97A0ADA3A0569827` FOREIGN KEY (`assigned_to_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_97A0ADA3C980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ticket_message`
+--
+
+DROP TABLE IF EXISTS `ticket_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ticket_message` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `ticket_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BA71692D700047D2` (`ticket_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_BA71692D700047D2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ticket_type`
+--
+
+DROP TABLE IF EXISTS `ticket_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ticket_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` enum('activated','deactivated') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `manager` int NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BE054211FA2425B9` (`manager`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_BE054211FA2425B9` FOREIGN KEY (`manager`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tmp_profitability`
+--
+
+DROP TABLE IF EXISTS `tmp_profitability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tmp_profitability` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `CODE` varchar(255) NOT NULL,
+  `COLLAB` varchar(255) NOT NULL,
+  `PERIODE` date DEFAULT NULL,
+  `SERVICE` varchar(255) NOT NULL,
+  `TOT_TEMPS` float NOT NULL,
+  `TOT_PR` float NOT NULL,
+  `TOT_PV` float NOT NULL,
+  `ACTIVITY_KEY` varchar(255) NOT NULL,
+  `EXERCICE` int NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tool`
+--
+
+DROP TABLE IF EXISTS `tool`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tool` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `services` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_bo`
+--
+
+DROP TABLE IF EXISTS `user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `employeeId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `starting_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `poleId` int DEFAULT NULL,
+  `profileId` int DEFAULT NULL,
+  `trigram` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `verification_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `register_limit_date` datetime DEFAULT NULL,
+  `verification_code_limit_date` datetime DEFAULT NULL,
+  `first_connect_complete` tinyint(1) NOT NULL,
+  `verification_code_tries` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `services` json NOT NULL,
+  `managers` json NOT NULL,
+  `siteId` int DEFAULT NULL,
+  `avatar` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `supervisor` json NOT NULL,
+  `user_validation_bill` tinyint(1) NOT NULL,
+  `deactivated` tinyint(1) NOT NULL,
+  `apprentice_supervisors` json NOT NULL,
+  `supervised_apprentice` json NOT NULL,
+  `data` json DEFAULT NULL,
+  `data_on_board` json DEFAULT NULL,
+  `data_off_board` json DEFAULT NULL,
+  `user_created` tinyint(1) NOT NULL,
+  `search` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D348D3D69B26949C` (`profileId`),
+  KEY `IDX_D348D3D6F50A5C83` (`poleId`),
+  KEY `IDX_D348D3D66973A4FD` (`siteId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D348D3D66973A4FD` FOREIGN KEY (`siteId`) REFERENCES `site` (`id`),
+  CONSTRAINT `FK_D348D3D69B26949C` FOREIGN KEY (`profileId`) REFERENCES `profile` (`id`),
+  CONSTRAINT `FK_D348D3D6F50A5C83` FOREIGN KEY (`poleId`) REFERENCES `pole` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_bo_condition`
+--
+
+DROP TABLE IF EXISTS `user_bo_condition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_bo_condition` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_EF9C6B2CED5CA9E6` (`service_id`),
+  CONSTRAINT `FK_EF9C6B2CED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_bo_condition_profile`
+--
+
+DROP TABLE IF EXISTS `user_bo_condition_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_bo_condition_profile` (
+  `user_bo_condition_id` int NOT NULL,
+  `profile_id` int NOT NULL,
+  PRIMARY KEY (`user_bo_condition_id`,`profile_id`),
+  KEY `IDX_1257A24228A61758` (`user_bo_condition_id`),
+  KEY `IDX_1257A242CCFA12B8` (`profile_id`),
+  CONSTRAINT `FK_1257A24228A61758` FOREIGN KEY (`user_bo_condition_id`) REFERENCES `user_bo_condition` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_1257A242CCFA12B8` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_client`
+--
+
+DROP TABLE IF EXISTS `user_client`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_client` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `password_tmp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `register_limit_date` datetime DEFAULT NULL,
+  `new_password_limit_date` datetime DEFAULT NULL,
+  `first_connect_complete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `workforce`
+--
+
+DROP TABLE IF EXISTS `workforce`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `workforce` (
+  `code` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `min` int DEFAULT NULL,
+  `max` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `min_max` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_account_contact`
+--
+
+DROP TABLE IF EXISTS `x_account_contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_account_contact` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `contactId` int NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5F622E99744BF426` (`contactId`),
+  KEY `IDX_5F622E9989697FA8` (`serviceId`),
+  KEY `IDX_5F622E99DAB7DF02` (`accountCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5F622E99744BF426` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`),
+  CONSTRAINT `FK_5F622E9989697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_5F622E99DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=4253337 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_billing_subscription_mission`
+--
+
+DROP TABLE IF EXISTS `x_billing_subscription_mission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_billing_subscription_mission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_subscription_id` int NOT NULL,
+  `mission_id` int NOT NULL,
+  `periodicity` enum('monthly','quarterly','semiannual','annual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_466D0CFECF9564CB` (`billing_subscription_id`),
+  KEY `IDX_466D0CFEBE6CAE90` (`mission_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_466D0CFEBE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`),
+  CONSTRAINT `FK_466D0CFECF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1775 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_lead_contact_lead`
+--
+
+DROP TABLE IF EXISTS `x_lead_contact_lead`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_lead_contact_lead` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `contactLeadId` int NOT NULL,
+  `leadId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5726CB2498B8CD8D` (`contactLeadId`),
+  KEY `IDX_5726CB2438063428` (`leadId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5726CB2438063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_5726CB2498B8CD8D` FOREIGN KEY (`contactLeadId`) REFERENCES `contact_lead` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_notification_contact_notification`
+--
+
+DROP TABLE IF EXISTS `x_notification_contact_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_notification_contact_notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `notification_id` int NOT NULL,
+  `notification_contact_id` int NOT NULL,
+  `contact_type` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_C0A1F82DEF1A9D84` (`notification_id`),
+  KEY `IDX_C0A1F82D1CD38068` (`notification_contact_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_C0A1F82D1CD38068` FOREIGN KEY (`notification_contact_id`) REFERENCES `notification_contact` (`id`),
+  CONSTRAINT `FK_C0A1F82DEF1A9D84` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_task_type_user_bo`
+--
+
+DROP TABLE IF EXISTS `x_task_type_user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_task_type_user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_bo_id` int NOT NULL,
+  `task_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_3321947F3D57D31F` (`user_bo_id`),
+  KEY `IDX_3321947FDAADA679` (`task_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_3321947F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_3321947FDAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_ticket_type_user_bo`
+--
+
+DROP TABLE IF EXISTS `x_ticket_type_user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_ticket_type_user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_bo_id` int NOT NULL,
+  `ticket_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_42D44CD3D57D31F` (`user_bo_id`),
+  KEY `IDX_42D44CDC980D5C1` (`ticket_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_42D44CD3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_42D44CDC980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `x_user_bo_service_account`
+--
+
+DROP TABLE IF EXISTS `x_user_bo_service_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_user_bo_service_account` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ratio` double NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_E12783493D57D31F` (`user_bo_id`),
+  KEY `IDX_E1278349ED5CA9E6` (`service_id`),
+  KEY `IDX_E1278349FB86B732` (`account_code`),
+  KEY `IDX_account_code_is_deleted` (`account_code`,`is_deleted`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_E12783493D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_E1278349ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_E1278349FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2236443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-01-19 18:09:21
+-- MySQL dump 10.13  Distrib 8.0.34, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: impulsa
+-- ------------------------------------------------------
+-- Server version	8.0.34-0ubuntu0.20.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE impulsapp COLLATE utf8mb4_general_ci;
 
 USE impulsapp;
 
