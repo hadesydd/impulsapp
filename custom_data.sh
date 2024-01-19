@@ -41,7 +41,7 @@ cd /var/www/html/
 
 # Extract and append specific lines from user-data.txt and execute other playbook
 sudo sed -n '91,112p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
-sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
+sudo sed -n '72p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 sudo sed -n '90p' /var/lib/cloud/instance/user-data.txt >> $IMPULSAPP_PATH/vars.yml
 cd $IMPULSAPP_PATH
 ansible-playbook -i localhost test.yml 
@@ -53,18 +53,20 @@ cd /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/front-end
 sudo sed -n '91,112p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
-sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
+sudo sed -n '72p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 
 # Install ACL
 sudo apt-get update
 sudo apt-get install -y acl
+sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt -y install nodejs npm
 # Install Composer
 cd /var/www/html/back-end 
 sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 #Composer install
-composer install -n
+sudo -u superuser composer install -n
 sudo chown -R superuser:superuser /var/www/html/back-end
 
 

@@ -21,7 +21,7 @@ default:
     - sed -i "90s|.*|admin_password:& $database_password|" custom_data.sh
     - sed -i "91s|.*|DBPASS=$database_password|" custom_data.sh
     - sed -i "92s|.*|URI_FRONT_HOME=${URI_FRONT_HOME}|" custom_data.sh
-    - sed -i "70s|.*|URI_API=${URI_API}|" custom_data.sh
+    - sed -i "72s|.*|URI_API=${URI_API}|" custom_data.sh
     - sed -i "93s|.*|DB_LOGIN=${DB_LOGIN}|" custom_data.sh
     - sed -i "94s|.*|DB_NAME=${DB_NAME}|" custom_data.sh
     - sed -i "95s|.*|CEGID_API_CLIENT_ID=${CEGID_API_CLIENT_ID}|" custom_data.sh
@@ -71,3 +71,4 @@ terraform_plan:
   artifacts:
     paths:
       - plan
+
