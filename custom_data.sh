@@ -55,7 +55,7 @@ sudo chown -R superuser:superuser /var/www/html/front-end
 sudo sed -n '91,112p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
 sudo sed -n '72p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 
-# Install ACL
+# Install ACL and NodeJs
 sudo apt-get update
 sudo apt-get install -y acl
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -66,13 +66,12 @@ sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 #Composer install
-sudo -u superuser composer install -n
+sudo -u superuser composer install 
 sudo chown -R superuser:superuser /var/www/html/back-end
 
 
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
-
 
 
 # Set ACL permissions
