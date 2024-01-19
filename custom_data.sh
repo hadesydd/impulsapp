@@ -86,6 +86,7 @@ npm start
 
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
+
 log "Bootstrap script completed successfully."
 
 
