@@ -80,9 +80,8 @@ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
 # Install front-end dependencies
 cd /var/www/html/front-end
-rm -rf node_modules
-rm package-lock.json
-npm install -f
+
+sudo npm install -f
 npm install @material-ui/core
 npm run build
 npm start
