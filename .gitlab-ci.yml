@@ -14,8 +14,8 @@ default:
     - apk add --update openssl
 
     - database_password=$(openssl rand -base64 12 | tr -dc 'A-Za-z0-9' | head -c 12)
-    - sed -i "43s|.*|git clone https://$git_username:$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
-    - sed -i "44s|.*|git clone https://$git_username:$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
+    - sed -i "39s|.*|git clone https://$git_username:$git_token@github.com/Impulsa-fr/back-end.git|" custom_data.sh
+    - sed -i "40s|.*|git clone https://$git_username:$git_token@github.com/Impulsa-fr/front-end.git|" custom_data.sh
 
     
     - sed -i "90s|.*|admin_password:& $database_password|" custom_data.sh

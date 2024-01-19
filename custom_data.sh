@@ -58,21 +58,22 @@ sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-e
 # Install ACL
 sudo apt-get update
 sudo apt-get install -y acl
+# Install Composer
+cd /var/www/html/back-end 
+
+
+sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+sudo composer self-update
+
 
 
 # Set ACL permissions
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
-# Install Composer
 
 
-
-sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
-sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
-
-sudo composer self-update
 cd /var/www/html/back-end && composer install
 
 # Install front-end dependencies
@@ -83,10 +84,8 @@ npm install
 npm install @material-ui/core
 npm run build
 npm start
-
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
-
 log "Bootstrap script completed successfully."
 
 
