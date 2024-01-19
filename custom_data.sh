@@ -78,13 +78,13 @@ php /var/www/html/back-end/bin/console cache:clear
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:superuser:rwX var
-sudo chown -R superuser:superuser /var/www/html/front-end
 # Install front-end dependencies
 cd /var/www/html/front-end
-npm install 
-npm install @material-ui/core
-npm run build
-npm start
+sudo -u superuser npm install 
+sudo chown -R superuser:superuser /var/www/html/front-end
+sudo -u superuser npm install @material-ui/core
+sudo -u superuser npm run build
+sudo -u superuser npm start
 log "Bootstrap script completed successfully."
 
 
