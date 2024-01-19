@@ -72,6 +72,8 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
+cd /var/www/html/back-end && composer install
+
 
 # Install front-end dependencies
 cd /var/www/html/front-end
