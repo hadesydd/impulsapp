@@ -52,15 +52,13 @@ ansible-playbook -i localhost create.yml
 cd /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/back-end
 sudo chown -R superuser:superuser /var/www/html/front-end
+sudo sed -n '90,114p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/back-end/.env
+sudo sed -n '70p' /var/lib/cloud/instance/user-data.txt >> /var/www/html/front-end/.env
 
 # Install ACL
-if command -v apt-get &>/dev/null; then
-    sudo apt-get update
-    sudo apt-get install -y acl
-else
-    log "Unsupported package manager. Please install 'acl' manually."
-    exit 1
-fi
+sudo apt-get update
+sudo apt-get install -y acl
+
 
 # Set ACL permissions
 HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f 1)
@@ -69,11 +67,13 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 # Install Composer
 
 
+
 sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+
 sudo composer self-update
 cd /var/www/html/back-end && composer install
-
 
 # Install front-end dependencies
 cd /var/www/html/front-end
@@ -86,7 +86,6 @@ npm start
 
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
-
 log "Bootstrap script completed successfully."
 
 
