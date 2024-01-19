@@ -64,7 +64,7 @@ sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
 sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 sudo composer self-update
 #Composer install
-composer install
+composer install -n
 # Clear PHP cache
 php /var/www/html/back-end/bin/console cache:clear
 
