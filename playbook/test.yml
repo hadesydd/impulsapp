@@ -38,6 +38,8 @@
         login_user: root
         login_password: "{{root_password}}"
         state: present
+        vars:
+          column_case_sensitive: false
 
     - name: Create admin user with remote access
       mysql_user:
