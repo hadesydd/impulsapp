@@ -13,6 +13,7 @@
         state: present
         login_user: root
         login_password: "{{ root_password }}"
+      ignore_errors: yes
 
     - name: copy data.sql to the target machine
       copy:
@@ -31,6 +32,7 @@
         target: /tmp/data.sql
         login_user: root
         login_password: "{{ root_password }}"
+      ignore_errors: yes
 
     - name: grant privileges to the admin user
       mysql_db:
