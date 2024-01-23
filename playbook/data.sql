@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.34, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: impulsa
+-- Host: 127.0.0.1    Database: impulsapp
 -- ------------------------------------------------------
 -- Server version	8.0.34-0ubuntu0.20.04.1
 
@@ -14,7 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 
 USE impulsapp;
 
@@ -53,6 +52,15 @@ CREATE TABLE `account` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `address`
 --
 
@@ -80,6 +88,15 @@ CREATE TABLE `address` (
   CONSTRAINT `FK_D4E6F81A164B0CD` FOREIGN KEY (`countryCode`) REFERENCES `country` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7612 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `address`
+--
+
+LOCK TABLES `address` WRITE;
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `alert`
@@ -112,6 +129,15 @@ CREATE TABLE `alert` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `alert`
+--
+
+LOCK TABLES `alert` WRITE;
+/*!40000 ALTER TABLE `alert` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alert` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `alert_notification`
 --
 
@@ -140,6 +166,15 @@ CREATE TABLE `alert_notification` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `alert_notification`
+--
+
+LOCK TABLES `alert_notification` WRITE;
+/*!40000 ALTER TABLE `alert_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alert_notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `alert_template`
 --
 
@@ -162,8 +197,18 @@ CREATE TABLE `alert_template` (
   `notify_entity_creator` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_E294EFB85E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alert_template`
+--
+
+LOCK TABLES `alert_template` WRITE;
+/*!40000 ALTER TABLE `alert_template` DISABLE KEYS */;
+INSERT INTO `alert_template` VALUES (23,'lead_onboard_init','Formulaire de qualification à compléter ','Le formulaire de qualification du lead {{nom_lead}} est à completer','info','/leads','[\"nom_lead\"]','Lead - Onboard : création d\'un lead','\\App\\Entity\\Lead','Onboard','Sales',1,0),(24,'lead_onboard_qualif_form_completed','Pré-attribution de pôle à effectuer ','Le lead {{nom_lead}} doit etre pré-attribué à un pôle','info','/leads','[\"nom_lead\"]','Lead - Onboard : formulaire de qualification completé','\\App\\Entity\\Lead','Onboard','Sales',0,0),(25,'lead_onboard_pole_pre_assigned','Proposition commerciale à modeliser','La proposition commerciale concernant le lead {{nom_lead}} doit étre modeliser','info','/leads','[\"nom_lead\"]','Lead - Onboard : pré-attribution du pôle','\\App\\Entity\\Lead','Onboard','Sales',0,0),(26,'lead_onboard_com_proposition_modeled','Proposition commerciale à envoyer','La proposition commerciale concernant le lead {{nom_lead}} doit étre envoyer ','info','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale modélisée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(27,'lead_onboard_com_proposition_refused','Nouvelle proposition commerciale à modeliser','La proposition commerciale concernant le lead {{nom_lead}} doit étre modeliser à nouveaux suite au refus de la premiere','error','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale refusé','\\App\\Entity\\Lead','Onboard','Sales',0,0),(28,'lead_onboard_com_proposition_accepted','Lettre de mission à modéliser','La lettre de mission concernant le lead {{nom_lead}} doit etre modeliser','info','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale acceptée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(29,'lead_onboard_letter_mission_created','Lettre de mission à valider','La lettre de mission concernant le lead {{nom_lead}} doit etre validée','info','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission modélisée','\\App\\Entity\\Lead','Onboard','Sales',0,0),(30,'lead_onboard_letter_mission_refused','Lettre de mission à modifier','La lettre de mission concernant le lead {{nom_lead}} doit etre modifiée','error','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission refusée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(31,'lead_onboard_letter_mission_accepted','Lettre de mission à transmettre au client pour signature','La lettre de mission concernant le lead {{nom_lead}} doit etre mise à disposition du client sur escpace (Docusign?) pour signature','info','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission validée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(32,'lead_onboard_rib_to_ask','RIB à demander au client ','La demande de RIB doit etre adresser au lead {{nom_lead}} ','info','/leads','[\"nom_lead\"]','Lead - Onboard : rib a demander au client','\\App\\Entity\\Lead','Onboard','Sales',1,0),(33,'lead_onboard_rib_and_letter_received','La lettre de mission signée et le RIB ont été recus','La lettre de mission signée et le RIB concernant le lead {{nom_lead}} ont été recus ','info','/leads','[\"nom_lead\"]','Lead - Onboard : LM & RIB reçus','\\App\\Entity\\Lead','Onboard','Sales',1,0),(34,'lead_on_board_mail_to_colleague','Courier de reprise à envoyer au confrère / consoeur ','Le courrier de reprise doit etre adresser au confrère / consoeur ','info','/leads','[\"nom_lead\"]','Lead - Onboard : Courier de reprise à envoyer au confrère / consoeur ','\\App\\Entity\\Lead','Onboard','Sales',0,0),(35,'lead_on_board_mail_get_document','Mail à adresser au client pour recuperation des documents (statuts)','Un mail doit etre adresser au client {{nom_lead}} pour récupération des status ','info','/leads','[\"nom_lead\"]','Lead - Onboard : Mail à adresser au client pour recuperation des documents (statuts)','\\App\\Entity\\Lead','Onboard','Sales',0,0),(36,'lead_on_board_account_cegid_created','Le dossier client {{account_code}} {{name}} à été créer dans CEGID / GED','Le dossier client {{account_code}} {{name}} à été créer dans CEGID / GED','info','/leads','[\"nom_lead\"]','Lead - Onboard : Dossier créé dans CEDIG/GED','\\App\\Entity\\Lead','Onboard','Sales',0,0),(37,'prod_lead_created','Un nouveau lead vient d\'être modifié','Un nouveau lead vient d\'etre créé : {{nom_lead}}\n','info','/leads','[\"nom_lead\"]','Prod - Lead : création d\'un lead','\\App\\Entity\\Lead','Account','Details',0,0),(38,'prod_lead_qualified','Votre lead à été qualifé ','Le lead {{nom_lead}} a été qualifié ','success','/leads','[\"nom_lead\"]','Prod - Lead : qualification d\'un lead','\\App\\Entity\\Lead','Account','Details',0,1),(39,'prod_lead_disqualified','Votre lead à été disqualifié ','Le lead {{nom_lead}} a été disqualifié ','error','/leads','[\"nom_lead\"]','Prod - Lead : disqualification d\'un lead','\\App\\Entity\\Lead','Account','Details',0,1),(40,'prod_task_affected','Une nouvelle tache vous a été affectée ','Une nouvelle tache vous à été affectée par {{trigram}} :  : {{title}}','info','/tasks','[\"trigram\", \"title\"]','Tâche : création d\'une tâche','\\App\\Entity\\Task','Account','Details',0,0),(41,'prod_task_achieved','La tache afféctée à été réaliséé','La tache que vous avez affecté à {{trigram}} : {{title}}  à été marqué comme terminée ','success','/tasks','[\"trigram\", \"title\"]','Tâche : réalisation d\'une tâche','\\App\\Entity\\Task','Account','Details',0,1),(42,'prod_task_late','Vous avez dépassé la dealine de realisation d\'une tache','La deadline de la tache qui vous avait été affecté par {{trigram}}  : {{title} à été dépassée','error','/tasks','[\"trigram\", \"title\"]','Tâche : deadline dépassée','\\App\\Entity\\Task','Account','Details',0,0),(43,'prod_task_late_creator','La deadline de la tache affectée à été dépassée','La deadline de la tache que vous avez affecté à {{trigram}}  : {{title} à été dépassée','error','/tasks','[\"trigram\", \"title\"]','Tâche : deadline dépassée - créateur','\\App\\Entity\\Task','Account','Details',0,1),(44,'prod_task_late_soon','Deadline en approche ','La deadline d\'une de vos taches approche ! ','warning','/tasks','[]','Tâche : deadline bientôt dépassée','\\App\\Entity\\Task','Account','Details',0,0),(45,'annotation_mention','Vous avez été mentionné dans un commentaire ','{{trigram}} vous à mentionné dans un commentaire de l\'espace {{production_title}} du dossier {{account_code}} - {{account_name}}\nsur la période {{start}} / {{end}}','info','/production/{{productionTypeUrl}}/{{productionSubtypeUrl}}?searchContent={{account_code}}','[\"account_name\", \"production_title\", \"account_code\", \"trigram\", \"start\", \"end\", \"productionTypeUrl\", \"productionSubtypeUrl\"]','Commentaire : mention','\\App\\Entity\\Annotation','','',0,0);
+/*!40000 ALTER TABLE `alert_template` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `alert_template_user_bo`
@@ -184,6 +229,15 @@ CREATE TABLE `alert_template_user_bo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `alert_template_user_bo`
+--
+
+LOCK TABLES `alert_template_user_bo` WRITE;
+/*!40000 ALTER TABLE `alert_template_user_bo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alert_template_user_bo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `alert_template_user_bo_condition`
 --
 
@@ -200,6 +254,16 @@ CREATE TABLE `alert_template_user_bo_condition` (
   CONSTRAINT `FK_2CD9457E8388D204` FOREIGN KEY (`alert_template_id`) REFERENCES `alert_template` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alert_template_user_bo_condition`
+--
+
+LOCK TABLES `alert_template_user_bo_condition` WRITE;
+/*!40000 ALTER TABLE `alert_template_user_bo_condition` DISABLE KEYS */;
+INSERT INTO `alert_template_user_bo_condition` VALUES (23,60),(24,16),(25,17),(27,19),(29,70),(33,51),(34,34),(35,35),(36,36);
+/*!40000 ALTER TABLE `alert_template_user_bo_condition` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `annotation`
@@ -233,6 +297,15 @@ CREATE TABLE `annotation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `annotation`
+--
+
+LOCK TABLES `annotation` WRITE;
+/*!40000 ALTER TABLE `annotation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `annotation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_bill`
 --
 
@@ -259,6 +332,15 @@ CREATE TABLE `billing_bill` (
   CONSTRAINT `FK_5532724FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9616 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `billing_bill`
+--
+
+LOCK TABLES `billing_bill` WRITE;
+/*!40000 ALTER TABLE `billing_bill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_bill` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `billing_contract`
@@ -290,6 +372,15 @@ CREATE TABLE `billing_contract` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_contract`
+--
+
+LOCK TABLES `billing_contract` WRITE;
+/*!40000 ALTER TABLE `billing_contract` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_contract` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_fee_chargeback`
 --
 
@@ -319,6 +410,15 @@ CREATE TABLE `billing_fee_chargeback` (
   CONSTRAINT `FK_D77EFA4471A29922` FOREIGN KEY (`billing_bill_id`) REFERENCES `billing_bill` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `billing_fee_chargeback`
+--
+
+LOCK TABLES `billing_fee_chargeback` WRITE;
+/*!40000 ALTER TABLE `billing_fee_chargeback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_chargeback` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `billing_fee_contractual`
@@ -353,6 +453,15 @@ CREATE TABLE `billing_fee_contractual` (
   CONSTRAINT `FK_AFEAC88BE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `billing_fee_contractual`
+--
+
+LOCK TABLES `billing_fee_contractual` WRITE;
+/*!40000 ALTER TABLE `billing_fee_contractual` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_contractual` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `billing_fee_credit`
@@ -398,6 +507,15 @@ CREATE TABLE `billing_fee_credit` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_fee_credit`
+--
+
+LOCK TABLES `billing_fee_credit` WRITE;
+/*!40000 ALTER TABLE `billing_fee_credit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_credit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_fee_disbursement`
 --
 
@@ -441,6 +559,15 @@ CREATE TABLE `billing_fee_disbursement` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_fee_disbursement`
+--
+
+LOCK TABLES `billing_fee_disbursement` WRITE;
+/*!40000 ALTER TABLE `billing_fee_disbursement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_disbursement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_fee_exceptional`
 --
 
@@ -474,6 +601,15 @@ CREATE TABLE `billing_fee_exceptional` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_fee_exceptional`
+--
+
+LOCK TABLES `billing_fee_exceptional` WRITE;
+/*!40000 ALTER TABLE `billing_fee_exceptional` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_exceptional` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_fee_regularization`
 --
 
@@ -505,6 +641,15 @@ CREATE TABLE `billing_fee_regularization` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_fee_regularization`
+--
+
+LOCK TABLES `billing_fee_regularization` WRITE;
+/*!40000 ALTER TABLE `billing_fee_regularization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_regularization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_fee_subscription`
 --
 
@@ -533,6 +678,15 @@ CREATE TABLE `billing_fee_subscription` (
   CONSTRAINT `FK_8AC3FDC6CF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10522 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `billing_fee_subscription`
+--
+
+LOCK TABLES `billing_fee_subscription` WRITE;
+/*!40000 ALTER TABLE `billing_fee_subscription` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_fee_subscription` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `billing_rule`
@@ -569,6 +723,15 @@ CREATE TABLE `billing_rule` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_rule`
+--
+
+LOCK TABLES `billing_rule` WRITE;
+/*!40000 ALTER TABLE `billing_rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `billing_rule_value`
 --
 
@@ -592,6 +755,15 @@ CREATE TABLE `billing_rule_value` (
   CONSTRAINT `FK_5F2217651F608886` FOREIGN KEY (`billing_rule_id`) REFERENCES `billing_rule` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `billing_rule_value`
+--
+
+LOCK TABLES `billing_rule_value` WRITE;
+/*!40000 ALTER TABLE `billing_rule_value` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_rule_value` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `billing_subscription`
@@ -626,6 +798,15 @@ CREATE TABLE `billing_subscription` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `billing_subscription`
+--
+
+LOCK TABLES `billing_subscription` WRITE;
+/*!40000 ALTER TABLE `billing_subscription` DISABLE KEYS */;
+/*!40000 ALTER TABLE `billing_subscription` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `contact`
 --
 
@@ -658,6 +839,15 @@ CREATE TABLE `contact` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `contact`
+--
+
+LOCK TABLES `contact` WRITE;
+/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `contact_lead`
 --
 
@@ -687,1860 +877,12 @@ CREATE TABLE `contact_lead` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `country`
+-- Dumping data for table `contact_lead`
 --
 
-DROP TABLE IF EXISTS `country`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `country` (
-  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_fr` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_en` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `IsoAlpha3` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `IsoM49` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `Detail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `isSepa` tinyint(1) NOT NULL,
-  `isState` tinyint(1) NOT NULL,
-  `isIban` tinyint(1) NOT NULL,
-  `isDsp` tinyint(1) NOT NULL DEFAULT '0',
-  `LengthIban` int DEFAULT NULL,
-  `PhoneCode` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `isUE` tinyint(1) NOT NULL DEFAULT '0',
-  `vat` decimal(4,2) NOT NULL DEFAULT '0.00',
-  `FlagPath` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `zipCodeFormat` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `IbanFormat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `AccountNumberLength` int DEFAULT NULL,
-  `BankCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `BranchCode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `IbanFields` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `NationalityCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `currencyCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`code`),
-  KEY `IDX_5373C96648C61E47` (`currencyCode`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_5373C96648C61E47` FOREIGN KEY (`currencyCode`) REFERENCES `currency` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `cron_job`
---
-
-DROP TABLE IF EXISTS `cron_job`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cron_job` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cron_schedule` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `cron_log`
---
-
-DROP TABLE IF EXISTS `cron_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cron_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exit_status` int DEFAULT NULL,
-  `exit_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `started_at` datetime NOT NULL,
-  `finished_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3845 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `currency`
---
-
-DROP TABLE IF EXISTS `currency`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `currency` (
-  `code` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `iso4217` int DEFAULT NULL,
-  `minorUnit` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`code`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `data_export`
---
-
-DROP TABLE IF EXISTS `data_export`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `data_export` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `data_export_type_id` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `file_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_2272278D8ECB2A59` (`data_export_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_2272278D8ECB2A59` FOREIGN KEY (`data_export_type_id`) REFERENCES `data_export_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1381 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `data_export_header`
---
-
-DROP TABLE IF EXISTS `data_export_header`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `data_export_header` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `data_export_type_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_ED0025E48ECB2A59` (`data_export_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_ED0025E48ECB2A59` FOREIGN KEY (`data_export_type_id`) REFERENCES `data_export_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4215 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `data_export_type`
---
-
-DROP TABLE IF EXISTS `data_export_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `data_export_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` json NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `data_update`
---
-
-DROP TABLE IF EXISTS `data_update`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `data_update` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `execute_order` int NOT NULL,
-  `executed_at` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `directory`
---
-
-DROP TABLE IF EXISTS `directory`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `directory` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `parent_id` int DEFAULT NULL,
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nb_files_total` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `nb_files_in_root` int DEFAULT NULL,
-  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nb_directories_in_root` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_467844DA727ACA70` (`parent_id`),
-  KEY `IDX_467844DAFB86B732` (`account_code`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_467844DA727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
-  CONSTRAINT `FK_467844DAFB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=122709 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `doctrine_migration_versions`
---
-
-DROP TABLE IF EXISTS `doctrine_migration_versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `doctrine_migration_versions` (
-  `version` varchar(191) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-  `executed_at` datetime DEFAULT NULL,
-  `execution_time` int DEFAULT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `document`
---
-
-DROP TABLE IF EXISTS `document`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `document` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `extension` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `document_type_id` int DEFAULT NULL,
-  `parent_id` int DEFAULT NULL,
-  `original_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `version` int DEFAULT NULL,
-  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_D8698A7661232A4F` (`document_type_id`),
-  KEY `IDX_D8698A76727ACA70` (`parent_id`),
-  KEY `IDX_D8698A76FB86B732` (`account_code`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_D8698A7661232A4F` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`),
-  CONSTRAINT `FK_D8698A76727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
-  CONSTRAINT `FK_D8698A76FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=228364 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `document_category`
---
-
-DROP TABLE IF EXISTS `document_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `document_category` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `orderDisplay` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `document_type`
---
-
-DROP TABLE IF EXISTS `document_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `document_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `acceptedFormat` json DEFAULT NULL,
-  `orderDisplay` int DEFAULT NULL,
-  `isUnique` tinyint(1) NOT NULL DEFAULT '0',
-  `individualOnly` tinyint(1) NOT NULL DEFAULT '0',
-  `companyOnly` tinyint(1) NOT NULL DEFAULT '0',
-  `uploadNotRequired` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `categoryId` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_2B6ADBBA9C370B71` (`categoryId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_2B6ADBBA9C370B71` FOREIGN KEY (`categoryId`) REFERENCES `document_category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `email_notification`
---
-
-DROP TABLE IF EXISTS `email_notification`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `email_notification` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `template` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `api_id` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `params` json NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `history_note`
---
-
-DROP TABLE IF EXISTS `history_note`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `history_note` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `entityId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revision` int NOT NULL DEFAULT '0',
-  `entityData` json NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=2766 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `history_task_status`
---
-
-DROP TABLE IF EXISTS `history_task_status`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `history_task_status` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `beginDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `endDate` datetime DEFAULT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `taskTypeId` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_DE83E6A6D1C4661A` (`taskTypeId`),
-  CONSTRAINT `FK_DE83E6A6D1C4661A` FOREIGN KEY (`taskTypeId`) REFERENCES `task` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `history_x_user_manager`
---
-
-DROP TABLE IF EXISTS `history_x_user_manager`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `history_x_user_manager` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `history_x_user_role_`
---
-
-DROP TABLE IF EXISTS `history_x_user_role_`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `history_x_user_role_` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `history_x_user_site`
---
-
-DROP TABLE IF EXISTS `history_x_user_site`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `history_x_user_site` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lead_source`
---
-
-DROP TABLE IF EXISTS `lead_source`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `lead_source` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `search_priority` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `leads`
---
-
-DROP TABLE IF EXISTS `leads`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `leads` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `siren` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `addressId` int DEFAULT NULL,
-  `legalFormCode` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nafCode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `userBoInChargeId` int DEFAULT NULL,
-  `leadSourceId` int NOT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `data_on_board` json DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_17904552D5289B7F` (`addressId`),
-  KEY `IDX_1790455295760890` (`legalFormCode`),
-  KEY `IDX_17904552DAB7DF02` (`accountCode`),
-  KEY `IDX_17904552655CF66E` (`nafCode`),
-  KEY `IDX_17904552B971BF69` (`userBoInChargeId`),
-  KEY `IDX_179045523AE585A5` (`leadSourceId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_179045523AE585A5` FOREIGN KEY (`leadSourceId`) REFERENCES `lead_source` (`id`),
-  CONSTRAINT `FK_17904552655CF66E` FOREIGN KEY (`nafCode`) REFERENCES `naf` (`code`),
-  CONSTRAINT `FK_17904552B971BF69` FOREIGN KEY (`userBoInChargeId`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_289161CB95760890` FOREIGN KEY (`legalFormCode`) REFERENCES `legal_form` (`code`),
-  CONSTRAINT `FK_289161CBD5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`),
-  CONSTRAINT `FK_289161CBDAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `legal_form`
---
-
-DROP TABLE IF EXISTS `legal_form`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `legal_form` (
-  `code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `parentCode` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `labelShort` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`code`),
-  KEY `IDX_7FF313F8A1EFE539` (`parentCode`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_7FF313F8A1EFE539` FOREIGN KEY (`parentCode`) REFERENCES `legal_form` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mission`
---
-
-DROP TABLE IF EXISTS `mission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serviceId` int DEFAULT NULL,
-  `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code_exceptional` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_9067F23C89697FA8` (`serviceId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_9067F23C89697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `naf`
---
-
-DROP TABLE IF EXISTS `naf`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `naf` (
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`code`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `note`
---
-
-DROP TABLE IF EXISTS `note`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `note` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serviceId` int DEFAULT NULL,
-  `entityType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_CFBDFA1489697FA8` (`serviceId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_CFBDFA1489697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2223 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notification`
---
-
-DROP TABLE IF EXISTS `notification`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notification` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `param_values` json NOT NULL,
-  `notification_type_id` int NOT NULL,
-  `sent_at` datetime DEFAULT NULL,
-  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `IDX_BF5476CAD0520624` (`notification_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_BF5476CAD0520624` FOREIGN KEY (`notification_type_id`) REFERENCES `notification_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notification_contact`
---
-
-DROP TABLE IF EXISTS `notification_contact`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notification_contact` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `apiId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `firstName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lastName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `user_bo_id` int DEFAULT NULL,
-  `user_client_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_597C6C8F3D57D31F` (`user_bo_id`),
-  KEY `IDX_597C6C8F190BE4C5` (`user_client_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_597C6C8F190BE4C5` FOREIGN KEY (`user_client_id`) REFERENCES `user_client` (`id`),
-  CONSTRAINT `FK_597C6C8F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notification_template`
---
-
-DROP TABLE IF EXISTS `notification_template`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notification_template` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `template` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `apiId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_C2702726727ACA70` (`parent_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_C2702726727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `notification_template` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notification_transport`
---
-
-DROP TABLE IF EXISTS `notification_transport`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notification_transport` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `notification_id` int NOT NULL,
-  `sender_email` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sender_name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `notification_type`
---
-
-DROP TABLE IF EXISTS `notification_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notification_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `params` json NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `notification_template_id` int NOT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subtype` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `context` json NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_34E21C13D0413CF9` (`notification_template_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_34E21C13D0413CF9` FOREIGN KEY (`notification_template_id`) REFERENCES `notification_template` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `nps`
---
-
-DROP TABLE IF EXISTS `nps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `nps` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `releasedDisplayDate` datetime DEFAULT NULL,
-  `firstShownDate` datetime DEFAULT NULL,
-  `lastShownDate` datetime DEFAULT NULL,
-  `answeredDate` datetime DEFAULT NULL,
-  `numberTimeShown` int NOT NULL,
-  `npsScore` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `npsComment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dismissedDate` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `npsTypeId` int NOT NULL,
-  `AccountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_5B3B66482EE225BB` (`npsTypeId`),
-  KEY `IDX_5B3B66485C2B50D5` (`AccountCode`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_5B3B66482EE225BB` FOREIGN KEY (`npsTypeId`) REFERENCES `npstype` (`id`),
-  CONSTRAINT `FK_5B3B66485C2B50D5` FOREIGN KEY (`AccountCode`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `npstype`
---
-
-DROP TABLE IF EXISTS `npstype`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `npstype` (
-  `id` int NOT NULL,
-  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `displayInterval` int NOT NULL,
-  `dismissInterval` int NOT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `notationType` json NOT NULL COMMENT '(DC2Type:json_array)',
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `npsTypeIdNext` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_5E2FF72DE0766E33` (`npsTypeIdNext`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_5E2FF72DE0766E33` FOREIGN KEY (`npsTypeIdNext`) REFERENCES `npstype` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `opportunity`
---
-
-DROP TABLE IF EXISTS `opportunity`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `opportunity` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `leadId` int DEFAULT NULL,
-  `missionId` int NOT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_8389C3D7DAB7DF02` (`accountCode`),
-  KEY `IDX_8389C3D738063428` (`leadId`),
-  KEY `IDX_8389C3D7AFD395A` (`missionId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_8389C3D738063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
-  CONSTRAINT `FK_8389C3D7AFD395A` FOREIGN KEY (`missionId`) REFERENCES `mission` (`id`),
-  CONSTRAINT `FK_8389C3D7DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `parameter`
---
-
-DROP TABLE IF EXISTS `parameter`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `parameter` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `key` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `pole`
---
-
-DROP TABLE IF EXISTS `pole`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pole` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `managerUserBoId` int DEFAULT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_FD6042E1AD385CF6` (`managerUserBoId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_FD6042E1AD385CF6` FOREIGN KEY (`managerUserBoId`) REFERENCES `user_bo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `production_period`
---
-
-DROP TABLE IF EXISTS `production_period`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `production_period` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `production_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `production_subtype` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `outdated` tinyint(1) NOT NULL,
-  `due_date` datetime NOT NULL,
-  `deprecated` tinyint(1) NOT NULL,
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `iteration` int DEFAULT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `switch_date` datetime NOT NULL,
-  `data` json DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_A188A93FB86B732` (`account_code`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_A188A93FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=75101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `profile`
---
-
-DROP TABLE IF EXISTS `profile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `profile` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `hierarchy` int NOT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `profitability`
---
-
-DROP TABLE IF EXISTS `profitability`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `profitability` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activity_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `period` datetime NOT NULL,
-  `total_working_hours` double NOT NULL,
-  `total_selling_price` double NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `user_bo_id` int DEFAULT NULL,
-  `service_id` int NOT NULL,
-  `total_cost_price` double NOT NULL,
-  `exercice` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_125DAA73FB86B732` (`account_code`),
-  KEY `IDX_125DAA733D57D31F` (`user_bo_id`),
-  KEY `IDX_125DAA73ED5CA9E6` (`service_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_125DAA733D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_125DAA73ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
-  CONSTRAINT `FK_125DAA73FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=8172100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `profitability_log`
---
-
-DROP TABLE IF EXISTS `profitability_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `profitability_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_insert` int DEFAULT NULL,
-  `nb_update` int DEFAULT NULL,
-  `nb_delete` int DEFAULT NULL,
-  `status` enum('to_process','processed','error') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `subdirectory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_ignored` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `refresh_tokens`
---
-
-DROP TABLE IF EXISTS `refresh_tokens`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `refresh_tokens` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `refresh_token` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valid` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_9BACE7E1C74F2195` (`refresh_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=16799 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `service`
---
-
-DROP TABLE IF EXISTS `service`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `image` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `serviceOrder` int NOT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL,
-  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `service_attribute_category`
---
-
-DROP TABLE IF EXISTS `service_attribute_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service_attribute_category` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `categoryOrder` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `serviceId` int DEFAULT NULL,
-  `collapsable` tinyint(1) NOT NULL,
-  `configuration` json DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_6C1DB20F89697FA8` (`serviceId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_6C1DB20F89697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `service_attribute_type`
---
-
-DROP TABLE IF EXISTS `service_attribute_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service_attribute_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `entityType` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `referenceEntity` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `referenceField` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `typeOrder` int NOT NULL,
-  `serviceAttributeCategoryId` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_editable` tinyint(1) NOT NULL DEFAULT '1',
-  `is_multiple` tinyint(1) NOT NULL DEFAULT '0',
-  `referenceSelect` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dependancyServiceAttributeType_value` json DEFAULT NULL,
-  `dependancyServiceAttributeTypeId` int DEFAULT NULL,
-  `configuration` json DEFAULT NULL,
-  `is_valued` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_D450AE175346D9DE` (`serviceAttributeCategoryId`),
-  KEY `IDX_D450AE1754D8B695` (`dependancyServiceAttributeTypeId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_D450AE175346D9DE` FOREIGN KEY (`serviceAttributeCategoryId`) REFERENCES `service_attribute_category` (`id`),
-  CONSTRAINT `FK_D450AE1754D8B695` FOREIGN KEY (`dependancyServiceAttributeTypeId`) REFERENCES `service_attribute_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `service_attribute_value`
---
-
-DROP TABLE IF EXISTS `service_attribute_value`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service_attribute_value` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `serviceAttributeTypeId` int NOT NULL,
-  `referenceId` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `IDX_DC4ECB66A282A02B` (`serviceAttributeTypeId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_DC4ECB66A282A02B` FOREIGN KEY (`serviceAttributeTypeId`) REFERENCES `service_attribute_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=173401 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `setting`
---
-
-DROP TABLE IF EXISTS `setting`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `setting` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `setting_type_id` int NOT NULL,
-  `user_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
-  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_9F74B8989D1E3C7B` (`setting_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_9F74B8989D1E3C7B` FOREIGN KEY (`setting_type_id`) REFERENCES `setting_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `setting_type`
---
-
-DROP TABLE IF EXISTS `setting_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `setting_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `site`
---
-
-DROP TABLE IF EXISTS `site`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `site` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `addressId` int DEFAULT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `user_admin` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_694309E4D5289B7F` (`addressId`),
-  KEY `FK_694309E46ACCF62E` (`user_admin`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_694309E46ACCF62E` FOREIGN KEY (`user_admin`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_694309E4D5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `synchro_ged`
---
-
-DROP TABLE IF EXISTS `synchro_ged`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `synchro_ged` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `status` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `synchro_date_end` datetime DEFAULT NULL,
-  `object_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_ignored` tinyint(1) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `synchro_date_begin` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=750 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `task`
---
-
-DROP TABLE IF EXISTS `task`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `task` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `status` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_end` datetime DEFAULT NULL,
-  `task_type_id` int DEFAULT NULL,
-  `assigned_user_bo_id` int DEFAULT NULL,
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lead_id` int DEFAULT NULL,
-  `label` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `scoring` int NOT NULL,
-  `calculated_scoring` double NOT NULL,
-  `task_category_id` int DEFAULT NULL,
-  `author_user_bo_id` int DEFAULT NULL,
-  `context` json DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_527EDB255F6B06E` (`assigned_user_bo_id`),
-  KEY `IDX_527EDB25DAADA679` (`task_type_id`),
-  KEY `IDX_527EDB25FB86B732` (`account_code`),
-  KEY `IDX_527EDB2555458D` (`lead_id`),
-  KEY `IDX_527EDB25543330D0` (`task_category_id`),
-  KEY `IDX_527EDB257F5EAFA4` (`author_user_bo_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_527EDB25543330D0` FOREIGN KEY (`task_category_id`) REFERENCES `task_category` (`id`),
-  CONSTRAINT `FK_527EDB2555458D` FOREIGN KEY (`lead_id`) REFERENCES `leads` (`id`),
-  CONSTRAINT `FK_527EDB255F6B06E` FOREIGN KEY (`assigned_user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_527EDB257F5EAFA4` FOREIGN KEY (`author_user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_527EDB25DAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`),
-  CONSTRAINT `FK_527EDB25FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=35697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `task_category`
---
-
-DROP TABLE IF EXISTS `task_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `task_category` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_order` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `count_tasks` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `task_type`
---
-
-DROP TABLE IF EXISTS `task_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `task_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `validatable` tinyint(1) NOT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `scoring` int NOT NULL,
-  `task_category_id` int DEFAULT NULL,
-  `are_assigned_users` tinyint(1) NOT NULL,
-  `due_days` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_FF6DC352543330D0` (`task_category_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_FF6DC352543330D0` FOREIGN KEY (`task_category_id`) REFERENCES `task_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ticket`
---
-
-DROP TABLE IF EXISTS `ticket`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ticket` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `status` enum('open','reopened','resolved','standby','validated','closed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `ticket_type_id` int NOT NULL,
-  `last_action` datetime NOT NULL,
-  `object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `assigned_to_user_bo_id` int DEFAULT NULL,
-  `assigned_by_user_bo_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_97A0ADA3C980D5C1` (`ticket_type_id`),
-  KEY `IDX_97A0ADA3A0569827` (`assigned_to_user_bo_id`),
-  KEY `IDX_97A0ADA35791A93C` (`assigned_by_user_bo_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_97A0ADA35791A93C` FOREIGN KEY (`assigned_by_user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_97A0ADA3A0569827` FOREIGN KEY (`assigned_to_user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_97A0ADA3C980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ticket_message`
---
-
-DROP TABLE IF EXISTS `ticket_message`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ticket_message` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `ticket_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_BA71692D700047D2` (`ticket_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_BA71692D700047D2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ticket_type`
---
-
-DROP TABLE IF EXISTS `ticket_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ticket_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `status` enum('activated','deactivated') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `manager` int NOT NULL,
-  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_BE054211FA2425B9` (`manager`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_BE054211FA2425B9` FOREIGN KEY (`manager`) REFERENCES `user_bo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tmp_profitability`
---
-
-DROP TABLE IF EXISTS `tmp_profitability`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tmp_profitability` (
-  `ID` int NOT NULL AUTO_INCREMENT,
-  `CODE` varchar(255) NOT NULL,
-  `COLLAB` varchar(255) NOT NULL,
-  `PERIODE` date DEFAULT NULL,
-  `SERVICE` varchar(255) NOT NULL,
-  `TOT_TEMPS` float NOT NULL,
-  `TOT_PR` float NOT NULL,
-  `TOT_PV` float NOT NULL,
-  `ACTIVITY_KEY` varchar(255) NOT NULL,
-  `EXERCICE` int NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tool`
---
-
-DROP TABLE IF EXISTS `tool`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tool` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logo` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `services` json NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_bo`
---
-
-DROP TABLE IF EXISTS `user_bo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_bo` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` json NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `employeeId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `starting_date` datetime DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `poleId` int DEFAULT NULL,
-  `profileId` int DEFAULT NULL,
-  `trigram` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `verification_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `register_limit_date` datetime DEFAULT NULL,
-  `verification_code_limit_date` datetime DEFAULT NULL,
-  `first_connect_complete` tinyint(1) NOT NULL,
-  `verification_code_tries` int NOT NULL,
-  `search_priority` int NOT NULL DEFAULT '0',
-  `services` json NOT NULL,
-  `managers` json NOT NULL,
-  `siteId` int DEFAULT NULL,
-  `avatar` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `supervisor` json NOT NULL,
-  `user_validation_bill` tinyint(1) NOT NULL,
-  `deactivated` tinyint(1) NOT NULL,
-  `apprentice_supervisors` json NOT NULL,
-  `supervised_apprentice` json NOT NULL,
-  `data` json DEFAULT NULL,
-  `data_on_board` json DEFAULT NULL,
-  `data_off_board` json DEFAULT NULL,
-  `user_created` tinyint(1) NOT NULL,
-  `search` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_D348D3D69B26949C` (`profileId`),
-  KEY `IDX_D348D3D6F50A5C83` (`poleId`),
-  KEY `IDX_D348D3D66973A4FD` (`siteId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_D348D3D66973A4FD` FOREIGN KEY (`siteId`) REFERENCES `site` (`id`),
-  CONSTRAINT `FK_D348D3D69B26949C` FOREIGN KEY (`profileId`) REFERENCES `profile` (`id`),
-  CONSTRAINT `FK_D348D3D6F50A5C83` FOREIGN KEY (`poleId`) REFERENCES `pole` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_bo_condition`
---
-
-DROP TABLE IF EXISTS `user_bo_condition`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_bo_condition` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `service_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_EF9C6B2CED5CA9E6` (`service_id`),
-  CONSTRAINT `FK_EF9C6B2CED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_bo_condition_profile`
---
-
-DROP TABLE IF EXISTS `user_bo_condition_profile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_bo_condition_profile` (
-  `user_bo_condition_id` int NOT NULL,
-  `profile_id` int NOT NULL,
-  PRIMARY KEY (`user_bo_condition_id`,`profile_id`),
-  KEY `IDX_1257A24228A61758` (`user_bo_condition_id`),
-  KEY `IDX_1257A242CCFA12B8` (`profile_id`),
-  CONSTRAINT `FK_1257A24228A61758` FOREIGN KEY (`user_bo_condition_id`) REFERENCES `user_bo_condition` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_1257A242CCFA12B8` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_client`
---
-
-DROP TABLE IF EXISTS `user_client`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_client` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` json NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `password_tmp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `register_limit_date` datetime DEFAULT NULL,
-  `new_password_limit_date` datetime DEFAULT NULL,
-  `first_connect_complete` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `workforce`
---
-
-DROP TABLE IF EXISTS `workforce`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `workforce` (
-  `code` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `min` int DEFAULT NULL,
-  `max` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `min_max` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`code`),
-  KEY `is_delete_idx` (`is_deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_account_contact`
---
-
-DROP TABLE IF EXISTS `x_account_contact`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_account_contact` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `contactId` int NOT NULL,
-  `serviceId` int DEFAULT NULL,
-  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_5F622E99744BF426` (`contactId`),
-  KEY `IDX_5F622E9989697FA8` (`serviceId`),
-  KEY `IDX_5F622E99DAB7DF02` (`accountCode`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_5F622E99744BF426` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`),
-  CONSTRAINT `FK_5F622E9989697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`),
-  CONSTRAINT `FK_5F622E99DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4253337 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_billing_subscription_mission`
---
-
-DROP TABLE IF EXISTS `x_billing_subscription_mission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_billing_subscription_mission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `billing_subscription_id` int NOT NULL,
-  `mission_id` int NOT NULL,
-  `periodicity` enum('monthly','quarterly','semiannual','annual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_466D0CFECF9564CB` (`billing_subscription_id`),
-  KEY `IDX_466D0CFEBE6CAE90` (`mission_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_466D0CFEBE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`),
-  CONSTRAINT `FK_466D0CFECF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1775 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_lead_contact_lead`
---
-
-DROP TABLE IF EXISTS `x_lead_contact_lead`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_lead_contact_lead` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `contactLeadId` int NOT NULL,
-  `leadId` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_5726CB2498B8CD8D` (`contactLeadId`),
-  KEY `IDX_5726CB2438063428` (`leadId`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_5726CB2438063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
-  CONSTRAINT `FK_5726CB2498B8CD8D` FOREIGN KEY (`contactLeadId`) REFERENCES `contact_lead` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_notification_contact_notification`
---
-
-DROP TABLE IF EXISTS `x_notification_contact_notification`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_notification_contact_notification` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `notification_id` int NOT NULL,
-  `notification_contact_id` int NOT NULL,
-  `contact_type` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_C0A1F82DEF1A9D84` (`notification_id`),
-  KEY `IDX_C0A1F82D1CD38068` (`notification_contact_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_C0A1F82D1CD38068` FOREIGN KEY (`notification_contact_id`) REFERENCES `notification_contact` (`id`),
-  CONSTRAINT `FK_C0A1F82DEF1A9D84` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_task_type_user_bo`
---
-
-DROP TABLE IF EXISTS `x_task_type_user_bo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_task_type_user_bo` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_bo_id` int NOT NULL,
-  `task_type_id` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_3321947F3D57D31F` (`user_bo_id`),
-  KEY `IDX_3321947FDAADA679` (`task_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_3321947F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_3321947FDAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_ticket_type_user_bo`
---
-
-DROP TABLE IF EXISTS `x_ticket_type_user_bo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_ticket_type_user_bo` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_bo_id` int NOT NULL,
-  `ticket_type_id` int NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_42D44CD3D57D31F` (`user_bo_id`),
-  KEY `IDX_42D44CDC980D5C1` (`ticket_type_id`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_42D44CD3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_42D44CDC980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `x_user_bo_service_account`
---
-
-DROP TABLE IF EXISTS `x_user_bo_service_account`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `x_user_bo_service_account` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` json DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` json DEFAULT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `user_bo_id` int NOT NULL,
-  `service_id` int NOT NULL,
-  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ratio` double NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_E12783493D57D31F` (`user_bo_id`),
-  KEY `IDX_E1278349ED5CA9E6` (`service_id`),
-  KEY `IDX_E1278349FB86B732` (`account_code`),
-  KEY `IDX_account_code_is_deleted` (`account_code`,`is_deleted`),
-  KEY `is_delete_idx` (`is_deleted`),
-  CONSTRAINT `FK_E12783493D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
-  CONSTRAINT `FK_E1278349ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
-  CONSTRAINT `FK_E1278349FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2236443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-01-19 18:09:21
--- MySQL dump 10.13  Distrib 8.0.34, for Linux (x86_64)
---
--- Host: 127.0.0.1    Database: impulsa
--- ------------------------------------------------------
--- Server version	8.0.34-0ubuntu0.20.04.1
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-CREATE DATABASE impulsapp COLLATE utf8mb4_general_ci;
-
-USE impulsapp;
-
---
--- Table structure for table `alert_template_user_bo_condition`
---
-
-DROP TABLE IF EXISTS `alert_template_user_bo_condition`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `alert_template_user_bo_condition` (
-  `alert_template_id` int NOT NULL,
-  `user_bo_condition_id` int NOT NULL,
-  PRIMARY KEY (`alert_template_id`,`user_bo_condition_id`),
-  KEY `IDX_2CD9457E8388D204` (`alert_template_id`),
-  KEY `IDX_2CD9457E28A61758` (`user_bo_condition_id`),
-  CONSTRAINT `FK_2CD9457E28A61758` FOREIGN KEY (`user_bo_condition_id`) REFERENCES `user_bo_condition` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_2CD9457E8388D204` FOREIGN KEY (`alert_template_id`) REFERENCES `alert_template` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `alert_template_user_bo_condition`
---
-
-LOCK TABLES `alert_template_user_bo_condition` WRITE;
-/*!40000 ALTER TABLE `alert_template_user_bo_condition` DISABLE KEYS */;
-INSERT INTO `alert_template_user_bo_condition` VALUES (23,60),(24,16),(25,17),(27,19),(29,70),(33,51),(34,34),(35,35),(36,36);
-/*!40000 ALTER TABLE `alert_template_user_bo_condition` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `alert_template`
---
-
-DROP TABLE IF EXISTS `alert_template`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `alert_template` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `on_click_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `params` json NOT NULL,
-  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entity_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categorie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sub_categorie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notify_pole_admin` tinyint(1) NOT NULL,
-  `notify_entity_creator` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_E294EFB85E237E06` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `alert_template`
---
-
-LOCK TABLES `alert_template` WRITE;
-/*!40000 ALTER TABLE `alert_template` DISABLE KEYS */;
-INSERT INTO `alert_template` VALUES (23,'lead_onboard_init','Formulaire de qualification à compléter ','Le formulaire de qualification du lead {{nom_lead}} est à completer','info','/leads','[\"nom_lead\"]','Lead - Onboard : création d\'un lead','\\App\\Entity\\Lead','Onboard','Sales',1,0),(24,'lead_onboard_qualif_form_completed','Pré-attribution de pôle à effectuer ','Le lead {{nom_lead}} doit etre pré-attribué à un pôle','info','/leads','[\"nom_lead\"]','Lead - Onboard : formulaire de qualification completé','\\App\\Entity\\Lead','Onboard','Sales',0,0),(25,'lead_onboard_pole_pre_assigned','Proposition commerciale à modeliser','La proposition commerciale concernant le lead {{nom_lead}} doit étre modeliser','info','/leads','[\"nom_lead\"]','Lead - Onboard : pré-attribution du pôle','\\App\\Entity\\Lead','Onboard','Sales',0,0),(26,'lead_onboard_com_proposition_modeled','Proposition commerciale à envoyer','La proposition commerciale concernant le lead {{nom_lead}} doit étre envoyer ','info','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale modélisée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(27,'lead_onboard_com_proposition_refused','Nouvelle proposition commerciale à modeliser','La proposition commerciale concernant le lead {{nom_lead}} doit étre modeliser à nouveaux suite au refus de la premiere','error','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale refusé','\\App\\Entity\\Lead','Onboard','Sales',0,0),(28,'lead_onboard_com_proposition_accepted','Lettre de mission à modéliser','La lettre de mission concernant le lead {{nom_lead}} doit etre modeliser','info','/leads','[\"nom_lead\"]','Lead - Onboard : proposition commerciale acceptée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(29,'lead_onboard_letter_mission_created','Lettre de mission à valider','La lettre de mission concernant le lead {{nom_lead}} doit etre validée','info','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission modélisée','\\App\\Entity\\Lead','Onboard','Sales',0,0),(30,'lead_onboard_letter_mission_refused','Lettre de mission à modifier','La lettre de mission concernant le lead {{nom_lead}} doit etre modifiée','error','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission refusée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(31,'lead_onboard_letter_mission_accepted','Lettre de mission à transmettre au client pour signature','La lettre de mission concernant le lead {{nom_lead}} doit etre mise à disposition du client sur escpace (Docusign?) pour signature','info','/leads','[\"nom_lead\"]','Lead - Onboard : lettre de mission validée','\\App\\Entity\\Lead','Onboard','Sales',1,0),(32,'lead_onboard_rib_to_ask','RIB à demander au client ','La demande de RIB doit etre adresser au lead {{nom_lead}} ','info','/leads','[\"nom_lead\"]','Lead - Onboard : rib a demander au client','\\App\\Entity\\Lead','Onboard','Sales',1,0),(33,'lead_onboard_rib_and_letter_received','La lettre de mission signée et le RIB ont été recus','La lettre de mission signée et le RIB concernant le lead {{nom_lead}} ont été recus ','info','/leads','[\"nom_lead\"]','Lead - Onboard : LM & RIB reçus','\\App\\Entity\\Lead','Onboard','Sales',1,0),(34,'lead_on_board_mail_to_colleague','Courier de reprise à envoyer au confrère / consoeur ','Le courrier de reprise doit etre adresser au confrère / consoeur ','info','/leads','[\"nom_lead\"]','Lead - Onboard : Courier de reprise à envoyer au confrère / consoeur ','\\App\\Entity\\Lead','Onboard','Sales',0,0),(35,'lead_on_board_mail_get_document','Mail à adresser au client pour recuperation des documents (statuts)','Un mail doit etre adresser au client {{nom_lead}} pour récupération des status ','info','/leads','[\"nom_lead\"]','Lead - Onboard : Mail à adresser au client pour recuperation des documents (statuts)','\\App\\Entity\\Lead','Onboard','Sales',0,0),(36,'lead_on_board_account_cegid_created','Le dossier client {{account_code}} {{name}} à été créer dans CEGID / GED','Le dossier client {{account_code}} {{name}} à été créer dans CEGID / GED','info','/leads','[\"nom_lead\"]','Lead - Onboard : Dossier créé dans CEDIG/GED','\\App\\Entity\\Lead','Onboard','Sales',0,0),(37,'prod_lead_created','Un nouveau lead vient d\'être modifié','Un nouveau lead vient d\'etre créé : {{nom_lead}}\n','info','/leads','[\"nom_lead\"]','Prod - Lead : création d\'un lead','\\App\\Entity\\Lead','Account','Details',0,0),(38,'prod_lead_qualified','Votre lead à été qualifé ','Le lead {{nom_lead}} a été qualifié ','success','/leads','[\"nom_lead\"]','Prod - Lead : qualification d\'un lead','\\App\\Entity\\Lead','Account','Details',0,1),(39,'prod_lead_disqualified','Votre lead à été disqualifié ','Le lead {{nom_lead}} a été disqualifié ','error','/leads','[\"nom_lead\"]','Prod - Lead : disqualification d\'un lead','\\App\\Entity\\Lead','Account','Details',0,1),(40,'prod_task_affected','Une nouvelle tache vous a été affectée ','Une nouvelle tache vous à été affectée par {{trigram}} :  : {{title}}','info','/tasks','[\"trigram\", \"title\"]','Tâche : création d\'une tâche','\\App\\Entity\\Task','Account','Details',0,0),(41,'prod_task_achieved','La tache afféctée à été réaliséé','La tache que vous avez affecté à {{trigram}} : {{title}}  à été marqué comme terminée ','success','/tasks','[\"trigram\", \"title\"]','Tâche : réalisation d\'une tâche','\\App\\Entity\\Task','Account','Details',0,1),(42,'prod_task_late','Vous avez dépassé la dealine de realisation d\'une tache','La deadline de la tache qui vous avait été affecté par {{trigram}}  : {{title} à été dépassée','error','/tasks','[\"trigram\", \"title\"]','Tâche : deadline dépassée','\\App\\Entity\\Task','Account','Details',0,0),(43,'prod_task_late_creator','La deadline de la tache affectée à été dépassée','La deadline de la tache que vous avez affecté à {{trigram}}  : {{title} à été dépassée','error','/tasks','[\"trigram\", \"title\"]','Tâche : deadline dépassée - créateur','\\App\\Entity\\Task','Account','Details',0,1),(44,'prod_task_late_soon','Deadline en approche ','La deadline d\'une de vos taches approche ! ','warning','/tasks','[]','Tâche : deadline bientôt dépassée','\\App\\Entity\\Task','Account','Details',0,0),(45,'annotation_mention','Vous avez été mentionné dans un commentaire ','{{trigram}} vous à mentionné dans un commentaire de l\'espace {{production_title}} du dossier {{account_code}} - {{account_name}}\nsur la période {{start}} / {{end}}','info','/production/{{productionTypeUrl}}/{{productionSubtypeUrl}}?searchContent={{account_code}}','[\"account_name\", \"production_title\", \"account_code\", \"trigram\", \"start\", \"end\", \"productionTypeUrl\", \"productionSubtypeUrl\"]','Commentaire : mention','\\App\\Entity\\Annotation','','',0,0);
-/*!40000 ALTER TABLE `alert_template` ENABLE KEYS */;
+LOCK TABLES `contact_lead` WRITE;
+/*!40000 ALTER TABLE `contact_lead` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contact_lead` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2599,6 +941,59 @@ INSERT INTO `country` VALUES ('AD','Andorre','Andorra','','','',0,0,1,0,24,'+376
 UNLOCK TABLES;
 
 --
+-- Table structure for table `cron_job`
+--
+
+DROP TABLE IF EXISTS `cron_job`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cron_job` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cron_schedule` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cron_job`
+--
+
+LOCK TABLES `cron_job` WRITE;
+/*!40000 ALTER TABLE `cron_job` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cron_job` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cron_log`
+--
+
+DROP TABLE IF EXISTS `cron_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cron_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `command` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `command_agrs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exit_status` int DEFAULT NULL,
+  `exit_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `started_at` datetime NOT NULL,
+  `finished_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3845 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cron_log`
+--
+
+LOCK TABLES `cron_log` WRITE;
+/*!40000 ALTER TABLE `cron_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cron_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `currency`
 --
 
@@ -2628,6 +1023,39 @@ LOCK TABLES `currency` WRITE;
 /*!40000 ALTER TABLE `currency` DISABLE KEYS */;
 INSERT INTO `currency` VALUES ('AED','UAE Dirham',784,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AFN','Afghani',971,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ALL','Lek',8,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AMD','Armenian Dram',51,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ANG','Netherlands Antillean Guilder',532,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AOA','Kwanza',973,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ARS','Argentine Peso',32,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AUD','Australian Dollar',36,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AWG','Aruban Florin',533,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('AZN','Azerbaijan Manat',944,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BAM','Convertible Mark',977,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BBD','Barbados Dollar',52,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BDT','Taka',50,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BGN','Bulgarian Lev',975,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BHD','Bahraini Dinar',48,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BIF','Burundi Franc',108,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BMD','Bermudian Dollar',60,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BND','Brunei Dollar',96,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BOB','Boliviano',68,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BOV','Mvdol',984,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BRL','Brazilian Real',986,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BSD','Bahamian Dollar',44,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BTN','Ngultrum',64,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BWP','Pula',72,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BYN','Belarusian Ruble',933,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('BZD','Belize Dollar',84,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CAD','Canadian Dollar',124,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CDF','Congolese Franc',976,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CHE','WIR Euro',947,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CHF','Swiss Franc',756,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CHW','WIR Franc',948,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CLF','Unidad de Fomento',990,4,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CLP','Chilean Peso',152,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CNY','Yuan Renminbi',156,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('COP','Colombian Peso',170,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('COU','Unidad de Valor Real',970,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CRC','Costa Rican Colon',188,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CUC','Peso Convertible',931,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CUP','Cuban Peso',192,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CVE','Cabo Verde Escudo',132,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('CZK','Czech Koruna',203,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('DJF','Djibouti Franc',262,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('DKK','Danish Krone',208,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('DOP','Dominican Peso',214,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('DZD','Algerian Dinar',12,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('EGP','Egyptian Pound',818,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ERN','Nakfa',232,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ETB','Ethiopian Birr',230,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('EUR','Euro',978,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('FJD','Fiji Dollar',242,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('FKP','Falkland Islands Pound',238,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GBP','Pound Sterling',826,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GEL','Lari',981,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GHS','Ghana Cedi',936,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GIP','Gibraltar Pound',292,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GMD','Dalasi',270,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GNF','Guinean Franc',324,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GTQ','Quetzal',320,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('GYD','Guyana Dollar',328,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('HKD','Hong Kong Dollar',344,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('HNL','Lempira',340,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('HRK','Kuna',191,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('HTG','Gourde',332,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('HUF','Forint',348,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('IDR','Rupiah',360,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ILS','New Israeli Sheqel',376,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('INR','Indian Rupee',356,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('IQD','Iraqi Dinar',368,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('IRR','Iranian Rial',364,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ISK','Iceland Krona',352,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('JMD','Jamaican Dollar',388,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('JOD','Jordanian Dinar',400,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('JPY','Yen',392,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KES','Kenyan Shilling',404,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KGS','Som',417,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KHR','Riel',116,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KMF','Comorian Franc ',174,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KPW','North Korean Won',408,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KRW','Won',410,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KWD','Kuwaiti Dinar',414,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KYD','Cayman Islands Dollar',136,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('KZT','Tenge',398,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LAK','Lao Kip',418,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LBP','Lebanese Pound',422,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LKR','Sri Lanka Rupee',144,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LRD','Liberian Dollar',430,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LSL','Loti',426,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('LYD','Libyan Dinar',434,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MAD','Moroccan Dirham',504,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MDL','Moldovan Leu',498,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MGA','Malagasy Ariary',969,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MKD','Denar',807,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MMK','Kyat',104,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MNT','Tugrik',496,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MOP','Pataca',446,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MRU','Ouguiya',929,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MUR','Mauritius Rupee',480,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MVR','Rufiyaa',462,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MWK','Malawi Kwacha',454,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MXN','Mexican Peso',484,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MXV','Mexican Unidad de Inversion (UDI)',979,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MYR','Malaysian Ringgit',458,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('MZN','Mozambique Metical',943,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NAD','Namibia Dollar',516,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NGN','Naira',566,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NIO','Cordoba Oro',558,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NOK','Norwegian Krone',578,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NPR','Nepalese Rupee',524,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('NZD','New Zealand Dollar',554,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('OMR','Rial Omani',512,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PAB','Balboa',590,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PEN','Sol',604,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PGK','Kina',598,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PHP','Philippine Peso',608,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PKR','Pakistan Rupee',586,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PLN','Zloty',985,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('PYG','Guarani',600,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('QAR','Qatari Rial',634,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('RON','Romanian Leu',946,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('RSD','Serbian Dinar',941,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('RUB','Russian Ruble',643,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('RWF','Rwanda Franc',646,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SAR','Saudi Riyal',682,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SBD','Solomon Islands Dollar',90,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SCR','Seychelles Rupee',690,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SDG','Sudanese Pound',938,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SEK','Swedish Krona',752,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SGD','Singapore Dollar',702,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SHP','Saint Helena Pound',654,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SLL','Leone',694,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SOS','Somali Shilling',706,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SRD','Surinam Dollar',968,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SSP','South Sudanese Pound',728,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('STN','Dobra',930,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SVC','El Salvador Colon',222,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SYP','Syrian Pound',760,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('SZL','Lilangeni',748,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('THB','Baht',764,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TJS','Somoni',972,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TMT','Turkmenistan New Manat',934,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TND','Tunisian Dinar',788,3,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TOP','Pa anga',776,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TRY','Turkish Lira',949,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TTD','Trinidad and Tobago Dollar',780,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TWD','New Taiwan Dollar',901,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('TZS','Tanzanian Shilling',834,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UAH','Hryvnia',980,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UGX','Uganda Shilling',800,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('USD','US Dollar',840,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('USN','US Dollar (Next day)',997,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UYI','Uruguay Peso en Unidades Indexadas (UI)',940,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UYU','Peso Uruguayo',858,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UYW','Unidad Previsional',927,4,'2021-10-01 21:05:48','[]',NULL,'[]',0),('UZS','Uzbekistan Sum',860,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('VES','Bolívar Soberano',928,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('VND','Dong',704,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('VUV','Vatu',548,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('WST','Tala',882,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('XAF','CFA Franc BEAC',950,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('XCD','East Caribbean Dollar',951,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('XOF','CFA Franc BCEAO',952,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('XPF','CFP Franc',953,0,'2021-10-01 21:05:48','[]',NULL,'[]',0),('YER','Yemeni Rial',886,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ZAR','Rand',710,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ZMW','Zambian Kwacha',967,2,'2021-10-01 21:05:48','[]',NULL,'[]',0),('ZWL','Zimbabwe Dollar',932,2,'2021-10-01 21:05:48','[]',NULL,'[]',0);
 /*!40000 ALTER TABLE `currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_export`
+--
+
+DROP TABLE IF EXISTS `data_export`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_export` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `data_export_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `file_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_2272278D8ECB2A59` (`data_export_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_2272278D8ECB2A59` FOREIGN KEY (`data_export_type_id`) REFERENCES `data_export_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1381 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_export`
+--
+
+LOCK TABLES `data_export` WRITE;
+/*!40000 ALTER TABLE `data_export` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data_export` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2693,6 +1121,461 @@ LOCK TABLES `data_export_type` WRITE;
 /*!40000 ALTER TABLE `data_export_type` DISABLE KEYS */;
 INSERT INTO `data_export_type` VALUES (1,'global_accounts','[\"1\", \"2\", 500, \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"18\", \"19\", \"20\", \"21\", \"22\", \"23\", \"24\", \"25\", \"26\", \"27\", \"28\", \"29\", \"30\", \"31\", \"32\", \"33\", \"34\", \"35\", \"36\", \"37\", \"38\", \"39\", \"40\", \"41\", \"42\", \"43\", \"44\", \"45\", \"46\", \"47\", \"48\", \"49\", \"50\", \"51\", \"52\", \"53\", \"54\", \"55\", \"56\", \"57\", \"58\", \"59\", \"60\", \"61\", \"62\", \"63\", \"64\", \"65\", \"66\", \"67\", \"68\", \"69\", \"70\", \"71\", \"72\", \"73\", \"74\", \"75\", \"76\", \"77\", \"3737\"]','2022-05-20 09:33:17','[]',NULL,'[]',0),(2,'production_accounting_holding_2021_2022','[\"78\", \"79\", \"80\", \"81\", \"82\", \"83\", \"84\", \"85\", \"86\", \"87\", \"88\", \"89\", \"90\", \"91\", \"92\", \"93\", \"94\", \"95\", \"96\", \"97\", \"98\", \"99\", \"100\", \"101\", \"102\", \"103\", \"104\", \"105\", \"106\", \"107\", \"108\"]','2022-06-01 14:29:35','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"h.allal@impulsa.fr\", \"identifier\": 6}','2022-08-10 09:33:25','[]',1),(3,'production_accounting_closure_2021_2022','[\"109\", \"110\", \"111\", \"112\", \"113\", \"114\", \"115\", \"116\", \"117\", \"118\", \"119\", \"120\", \"121\", \"122\", \"123\", \"124\", \"125\", \"126\", \"127\"]','2022-06-23 09:43:36','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2022-08-10 09:33:25','[]',1),(4,'production_accounting_global_view','[\"128\", \"129\", \"3737\", 501, \"130\", \"131\", \"132\", \"133\", \"134\", \"135\", \"136\", \"137\", \"138\", \"139\", \"140\", \"141\"]','2022-06-29 14:13:24','[]',NULL,'[]',0),(5,'production_accounting_vat_2021_2022','[\"142\", \"143\", \"144\", \"145\", \"146\", \"147\", \"148\", \"149\", \"150\", \"151\", \"152\", \"153\", \"154\", \"155\", \"156\", \"157\", \"158\", \"159\", \"160\", \"161\", \"162\", \"163\", \"164\", \"165\", \"166\", \"167\", \"168\", \"169\", \"170\", \"171\", \"172\", \"173\", \"174\", \"175\", \"176\", \"177\", \"178\", \"179\", \"180\", \"181\", \"182\", \"183\", \"184\", \"185\", \"186\", \"187\", \"188\", \"189\", \"190\", \"191\", \"192\", \"193\", \"194\", \"195\", \"196\", \"197\", \"198\", \"199\", \"200\", \"201\", \"202\", \"203\", \"204\", \"205\", \"206\", \"207\", \"208\", \"209\", \"210\", \"211\", \"212\", \"213\", \"214\", \"215\", \"216\", \"217\", \"218\", \"219\", \"220\", \"221\", \"222\", \"223\", \"224\", \"225\", \"226\", \"227\", \"228\", \"229\", \"230\", \"231\", \"232\", \"233\", \"234\", \"235\", \"236\", \"237\", \"238\", \"239\", \"240\", \"241\", \"242\", \"243\", \"244\", \"245\", \"246\", \"247\", \"248\", \"249\", \"250\", \"251\", \"252\", \"253\", \"254\", \"255\", \"256\", \"257\", \"258\", \"259\", \"260\", \"261\", \"262\", \"263\", \"264\", \"265\", \"266\", \"267\", \"268\", \"269\", \"270\", \"271\", \"272\", \"273\", \"274\", \"275\", \"276\", \"277\", \"278\", \"279\", \"280\", \"281\", \"282\", \"283\", \"284\", \"285\", \"286\", \"287\", \"288\", \"289\", \"290\", \"291\", \"292\", \"293\", \"294\", \"295\", \"296\", \"297\", \"298\", \"299\", \"300\", \"301\", \"302\", \"303\", \"304\", \"305\", \"306\", \"307\", \"308\", \"309\", \"310\", \"311\", \"312\", \"313\", \"314\", \"315\", \"316\", \"317\", \"318\", \"319\", \"320\", \"321\", \"322\", \"323\", \"324\", \"325\", \"326\", \"327\", \"328\", \"329\", \"330\", \"331\", \"332\", \"333\", \"334\", \"335\", \"336\", \"337\", \"338\", \"339\", \"340\", \"341\", \"342\", \"343\", \"344\", \"345\", \"346\", \"347\", \"348\", \"349\", \"350\", \"351\", \"352\", \"353\", \"354\", \"355\", \"356\", \"357\", \"358\", \"359\", \"360\", \"361\", \"362\", \"363\", \"364\", \"365\", \"366\", \"367\", \"368\", \"369\", \"370\", \"371\", \"372\", \"373\", \"374\", \"375\", \"376\", \"377\", \"378\", \"379\", \"380\", \"381\", \"382\", \"383\", \"384\", \"385\", \"386\", \"387\", \"388\", \"389\", \"390\", \"391\", \"392\"]','2022-07-04 12:27:48','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2022-08-10 09:33:25','[]',1),(6,'production_accounting_revision_2021_2022','[\"393\", \"394\", \"395\", \"396\", \"397\", \"398\", \"399\", \"400\", \"401\", \"402\", \"403\", \"404\", \"405\", \"406\", \"407\", \"408\", \"409\", \"410\", \"411\", \"412\", \"413\", \"414\", \"415\", \"416\", \"417\", \"418\", \"419\", \"420\", \"421\", \"422\", \"423\", \"424\"]','2022-07-07 14:29:02','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}','2022-08-10 09:33:25','[]',1),(7,'production_accounting_reporting_2021_2022','[\"425\", \"426\", \"427\", \"428\", \"429\", \"430\", \"431\", \"432\", \"433\", \"434\", \"435\", \"436\", \"437\", \"438\", \"439\", \"440\", \"441\", \"442\", \"443\", \"444\", \"445\", \"446\", \"447\", \"448\", \"449\", \"450\", \"451\", \"452\", \"453\", \"454\", \"455\", \"456\", \"457\", \"458\", \"459\", \"460\", \"461\", \"462\", \"463\", \"464\", \"465\", \"466\", \"467\", \"468\", \"469\", \"470\", \"471\", \"472\", \"473\", \"474\", \"475\", \"476\", \"477\", \"478\", \"479\"]','2022-07-07 15:12:06','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}','2022-08-10 09:33:25','[]',1),(8,'production_legal_ag_2021_2022','[\"480\", \"481\", \"482\", \"483\", \"484\", \"485\", \"486\", \"487\", \"488\", \"489\"]','2022-07-25 15:20:29','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2022-08-10 09:33:25','[]',1),(9,'profitability','[490, 491, 502, 503, 504, 492, 493, 494, 495, 496, 497, 498, 499]','2022-08-10 09:33:25','[]',NULL,'[]',0),(10,'tasks','[505, 506, 507, 508, 509, 510, 511, 512, 513]','2022-08-10 09:33:25','[]',NULL,'[]',0),(11,'production_accounting_holding_2021_2022','[514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546]','2022-08-12 11:59:43','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"v.meunier@impulsa.fr\", \"identifier\": 37}',NULL,'[]',0),(12,'production_accounting_vat_2021_2022','[547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799]','2022-08-23 14:30:49','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}','2023-02-15 18:11:45','[]',1),(13,'production_accounting_closure_2021_2022','[800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819]','2022-08-23 15:01:50','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0),(14,'production_accounting_revision_2021_2022','[820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852]','2022-08-24 14:20:15','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0),(15,'production_accounting_closure_2020_2021','[853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872]','2022-09-20 09:39:32','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(16,'production_accounting_closure_2021_2021','[873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884, 885]','2022-09-20 09:39:49','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(17,'production_accounting_closure_2022_2022','[886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898]','2022-09-20 09:42:31','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(18,'production_accounting_closure_2019_2022','[899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932]','2022-09-29 10:06:22','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"qch@owlnext.fr\", \"identifier\": 1}',NULL,'[]',0),(19,'production_accounting_holding_2022_2022','[933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953]','2022-09-29 17:36:40','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"v.meunier@impulsa.fr\", \"identifier\": 37}',NULL,'[]',0),(20,'billing_2021_2022','[954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981]','2022-10-10 16:08:41','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(21,'production_accounting_reporting_2021_2022','[982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037]','2022-10-10 18:02:25','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"h.allal@impulsa.fr\", \"identifier\": 6}',NULL,'[]',0),(22,'profitability_arr','[1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047]','2022-11-03 20:14:32','[]',NULL,'[]',0),(23,'profitability_mrr','[1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057]','2022-11-03 20:14:32','[]',NULL,'[]',0),(24,'production_accounting_revision_2022_2022','[1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078]','2022-11-14 09:42:39','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(25,'production_accounting_closure_2022_2023','[1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098]','2022-11-17 09:53:37','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(26,'production_accounting_vat_2022_2022','[1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115, 1116, 1117, 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131, 1132, 1133, 1134, 1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150, 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190, 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231]','2022-11-17 09:56:52','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2023-02-15 18:11:45','[]',1),(27,'production_accounting_reporting_2022_2022','[1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263]','2022-11-17 13:32:20','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(28,'production_accounting_holding_2022_2023','[1264, 1265, 1266, 1267, 1268, 1269, 1270, 1271, 1272, 1273, 1274, 1275, 1276, 1277, 1278, 1279, 1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290, 1291, 1292, 1293, 1294, 1295, 1296]','2022-11-30 16:18:17','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(29,'production_accounting_revision_2022_2023','[1297, 1298, 1299, 1300, 1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310, 1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1320, 1321, 1322, 1323, 1324, 1325, 1326, 1327, 1328, 1329]','2022-11-30 16:23:07','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(30,'production_accounting_reporting_2022_2023','[1330, 1331, 1332, 1333, 1334, 1335, 1336, 1337, 1338, 1339, 1340, 1341, 1342, 1343, 1344, 1345, 1346, 1347, 1348, 1349, 1350, 1351, 1352, 1353, 1354, 1355, 1356, 1357, 1358, 1359, 1360, 1361, 1362, 1363, 1364, 1365, 1366, 1367, 1368, 1369, 1370, 1371, 1372, 1373, 1374, 1375, 1376, 1377, 1378, 1379, 1380, 1381, 1382, 1383, 1384, 1385]','2022-11-30 16:23:51','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(31,'production_accounting_vat_2022_2023','[1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400, 1401, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1417, 1418, 1419, 1420, 1421, 1422, 1423, 1424, 1425, 1426, 1427, 1428, 1429, 1430, 1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439, 1440, 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460, 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470, 1471, 1472, 1473, 1474, 1475, 1476, 1477, 1478, 1479, 1480, 1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490, 1491, 1492, 1493, 1494, 1495, 1496, 1497, 1498, 1499, 1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518, 1519, 1520, 1521, 1522, 1523, 1524, 1525, 1526, 1527, 1528, 1529, 1530, 1531, 1532, 1533, 1534, 1535, 1536, 1537, 1538, 1539, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554, 1555, 1556, 1557, 1558, 1559, 1560, 1561, 1562, 1563, 1564, 1565, 1566, 1567, 1568, 1569, 1570, 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580, 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590, 1591, 1592, 1593, 1594, 1595, 1596, 1597, 1598, 1599, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619, 1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628, 1629, 1630, 1631, 1632, 1633, 1634, 1635, 1636, 1637, 1638]','2022-11-30 16:27:56','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2023-02-15 18:11:45','[]',1),(32,'production_audit_2022_2022','[1639, 1640, 1641, 1642, 1643, 1644, 1645, 1646, 1647, 1648, 1649, 1650, 1651, 1652, 1653, 1654, 1655, 1656, 1657, 1658, 1659, 1660, 1661, 1662, 1663, 1664, 1665, 1666, 1667, 1668, 1669, 1670, 1671, 1672, 1673, 1674, 1675, 1676, 1677, 1678, 1679, 1680, 1681, 1682, 1683, 1684, 1685, 1686, 1687]','2022-12-01 12:40:04','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(33,'production_legal_ag_2021_2022','[1688, 1689, 1690, 1691, 1692, 1693, 1694, 1695, 1696, 1697, 1698]','2022-12-09 14:55:18','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(34,'production_accounting_vat_2020_2022','[1699, 1700, 1701, 1702, 1703, 1704, 1705, 1706, 1707, 1708, 1709, 1710, 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742, 1743, 1744, 1745, 1746, 1747, 1748, 1749, 1750, 1751, 1752, 1753, 1754, 1755, 1756, 1757, 1758, 1759, 1760, 1761, 1762, 1763, 1764, 1765, 1766, 1767, 1768, 1769, 1770, 1771, 1772, 1773, 1774, 1775, 1776, 1777, 1778, 1779, 1780, 1781, 1782, 1783, 1784, 1785, 1786, 1787, 1788, 1789, 1790, 1791, 1792, 1793, 1794, 1795, 1796, 1797, 1798, 1799, 1800, 1801, 1802, 1803, 1804, 1805, 1806, 1807, 1808, 1809, 1810, 1811, 1812, 1813, 1814, 1815, 1816, 1817, 1818, 1819, 1820, 1821, 1822, 1823, 1824, 1825, 1826, 1827, 1828, 1829, 1830, 1831, 1832, 1833, 1834, 1835, 1836, 1837, 1838, 1839, 1840, 1841, 1842, 1843, 1844, 1845, 1846, 1847, 1848, 1849, 1850, 1851, 1852, 1853, 1854, 1855, 1856, 1857, 1858, 1859, 1860, 1861, 1862, 1863, 1864, 1865, 1866, 1867, 1868, 1869, 1870, 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, 1885, 1886, 1887, 1888, 1889, 1890, 1891, 1892, 1893, 1894, 1895, 1896, 1897, 1898, 1899, 1900, 1901, 1902, 1903, 1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943, 1944, 1945, 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2070, 2071]','2022-12-09 17:40:12','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}','2023-02-15 18:11:45','[]',1),(35,'production_legal_ag_2022_2022','[2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080, 2081]','2022-12-14 15:20:06','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(36,'production_audit_2021_2022','[2082, 2083, 2084, 2085, 2086, 2087, 2088, 2089, 2090, 2091, 2092, 2093, 2094, 2095, 2096, 2097, 2098, 2099, 2100, 2101, 2102, 2103, 2104, 2105, 2106, 2107, 2108, 2109, 2110, 2111, 2112, 2113, 2114, 2115, 2116, 2117, 2118, 2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127, 2128, 2129, 2130, 2131, 2132, 2133, 2134, 2135, 2136, 2137, 2138, 2139, 2140, 2141, 2142, 2143, 2144, 2145, 2146, 2147, 2148, 2149, 2150, 2151, 2152, 2153, 2154, 2155, 2156, 2157, 2158, 2159, 2160, 2161, 2162, 2163, 2164, 2165, 2166, 2167, 2168, 2169, 2170, 2171, 2172, 2173]','2022-12-16 11:50:34','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"l.luu@impulsa.fr\", \"identifier\": 31}',NULL,'[]',0),(37,'production_accounting_vat_2023_2023','[2174, 2175, 2176, 2177, 2178, 2179, 2180, 2181, 2182, 2183, 2184, 2185, 2186, 2187, 2188, 2189, 2190, 2191, 2192, 2193, 2194, 2195, 2196, 2197, 2198, 2199, 2200, 2201, 2202, 2203, 2204, 2205, 2206, 2207, 2208, 2209, 2210, 2211, 2212, 2213, 2214, 2215, 2216, 2217, 2218, 2219, 2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2230, 2231, 2232, 2233, 2234, 2235, 2236, 2237, 2238, 2239, 2240, 2241, 2242, 2243, 2244, 2245, 2246, 2247, 2248, 2249, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267, 2268, 2269, 2270, 2271, 2272, 2273, 2274, 2275, 2276, 2277, 2278, 2279, 2280, 2281, 2282, 2283, 2284, 2285, 2286, 2287, 2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295, 2296, 2297, 2298, 2299, 2300, 2301, 2302, 2303, 2304, 2305, 2306]','2023-01-04 16:07:50','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"y.boulghobra@impulsa.fr\", \"identifier\": 115}','2023-02-15 18:11:45','[]',1),(38,'billing_2022_2023','[2307, 2308, 2309, 2310, 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2326, 2327, 2328, 2329, 2330, 2331, 2332, 2333, 2334]','2023-01-06 10:41:12','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(39,'production_accounting_closure_2021_2023','[2335, 2336, 2337, 2338, 2339, 2340, 2341, 2342, 2343, 2344, 2345, 2346, 2347, 2348, 2349, 2350, 2351, 2352, 2353, 2354, 2355, 2356, 2357, 2358, 2359, 2360, 2361]','2023-01-10 10:39:33','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"e.nieuwjaer@impulsa.fr\", \"identifier\": 79}',NULL,'[]',0),(40,'production_audit_2022_2023','[2362, 2363, 2364, 2365, 2366, 2367, 2368, 2369, 2370, 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378, 2379, 2380, 2381, 2382, 2383, 2384, 2385, 2386, 2387, 2388, 2389, 2390, 2391, 2392, 2393, 2394, 2395, 2396, 2397, 2398, 2399, 2400, 2401, 2402, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415, 2416, 2417, 2418, 2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428, 2429, 2430, 2431, 2432, 2433, 2434, 2435, 2436, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2444, 2445, 2446, 2447, 2448, 2449, 2450, 2451, 2452, 2453]','2023-02-03 12:07:08','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(41,'production_legal_ag_2022_2023','[2454, 2455, 2456, 2457, 2458, 2459, 2460, 2461, 2462, 2463, 2464]','2023-02-09 21:52:08','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(42,'production_accounting_vat_2022_2023','[2465, 2466, 2467, 2468, 2469, 2470, 2471, 2472, 2473, 2474, 2475, 2476, 2477, 2478, 2479, 2480, 2481, 2482, 2483, 2484, 2485, 2486, 2487, 2488, 2489, 2490, 2491, 2492, 2493, 2494, 2495, 2496, 2497, 2498, 2499, 2500, 2501, 2502, 2503, 2504, 2505, 2506, 2507, 2508, 2509, 2510, 2511, 2512, 2513, 2514, 2515, 2516, 2517, 2518, 2519, 2520, 2521, 2522, 2523, 2524, 2525, 2526, 2527, 2528, 2529, 2530, 2531, 2532, 2533, 2534, 2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542, 2543, 2544, 2545, 2546, 2547, 2548, 2549, 2550, 2551, 2552, 2553, 2554, 2555, 2556, 2557, 2558, 2559, 2560, 2561, 2562, 2563, 2564, 2565, 2566, 2567, 2568, 2569, 2570, 2571, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580, 2581, 2582, 2583, 2584, 2585, 2586, 2587, 2588, 2589, 2590, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2617, 2618, 2619, 2620, 2621, 2622, 2623, 2624, 2625, 2626, 2627, 2628, 2629, 2630, 2631, 2632, 2633, 2634, 2635, 2636, 2637, 2638, 2639, 2640, 2641, 2642, 2643, 2644, 2645, 2646, 2647, 2648, 2649, 2650, 2651, 2652, 2653, 2654, 2655, 2656, 2657, 2658, 2659, 2660, 2661, 2662, 2663, 2664, 2665, 2666, 2667, 2668, 2669, 2670, 2671, 2672, 2673, 2674, 2675, 2676, 2677, 2678, 2679, 2680, 2681, 2682, 2683, 2684, 2685, 2686, 2687, 2688, 2689, 2690, 2691, 2692, 2693, 2694, 2695, 2696, 2697, 2698, 2699, 2700, 2701, 2702, 2703, 2704, 2705, 2706, 2707, 2708, 2709, 2710, 2711, 2712, 2713, 2714, 2715, 2716, 2717]','2023-02-16 16:58:41','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"c.yon@impulsa.fr\", \"identifier\": 131}',NULL,'[]',0),(43,'production_accounting_holding_2023_2023','[2718, 2719, 2720, 2721, 2722, 2723, 2724, 2725, 2726, 2727, 2728, 2729, 2730, 2731, 2732, 2733, 2734, 2735, 2736, 2737, 2738]','2023-02-23 10:04:17','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"y.boulghobra@impulsa.fr\", \"identifier\": 115}',NULL,'[]',0),(44,'production_accounting_vat_2022_2022','[2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746, 2747, 2748, 2749, 2750, 2751, 2752, 2753, 2754, 2755, 2756, 2757, 2758, 2759, 2760, 2761, 2762, 2763, 2764, 2765, 2766, 2767, 2768, 2769, 2770, 2771, 2772, 2773, 2774, 2775, 2776, 2777, 2778, 2779, 2780, 2781, 2782, 2783, 2784, 2785, 2786, 2787, 2788, 2789, 2790, 2791, 2792, 2793, 2794, 2795, 2796, 2797, 2798, 2799, 2800, 2801, 2802, 2803, 2804, 2805, 2806, 2807, 2808, 2809, 2810, 2811, 2812, 2813, 2814, 2815, 2816, 2817, 2818, 2819, 2820, 2821, 2822, 2823, 2824, 2825, 2826, 2827, 2828, 2829, 2830, 2831, 2832, 2833, 2834, 2835, 2836, 2837, 2838, 2839, 2840, 2841, 2842, 2843, 2844, 2845, 2846, 2847, 2848, 2849, 2850, 2851, 2852, 2853, 2854, 2855, 2856, 2857, 2858, 2859, 2860, 2861, 2862, 2863, 2864, 2865, 2866, 2867, 2868, 2869, 2870, 2871]','2023-03-09 14:36:34','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"y.boulghobra@impulsa.fr\", \"identifier\": 115}',NULL,'[]',0),(45,'production_accounting_vat_2023_2023','[2872, 2873, 2874, 2875, 2876, 2877, 2878, 2879, 2880, 2881, 2882, 2883, 2884, 2885, 2886, 2887, 2888, 2889, 2890, 2891, 2892, 2893, 2894, 2895, 2896, 2897, 2898, 2899, 2900, 2901, 2902, 2903, 2904, 2905, 2906, 2907, 2908, 2909, 2910, 2911, 2912, 2913, 2914, 2915, 2916, 2917, 2918, 2919, 2920, 2921, 2922, 2923, 2924, 2925, 2926, 2927, 2928, 2929, 2930, 2931, 2932, 2933, 2934, 2935, 2936, 2937, 2938, 2939, 2940, 2941, 2942, 2943, 2944, 2945, 2946, 2947, 2948, 2949, 2950, 2951, 2952, 2953, 2954, 2955, 2956, 2957, 2958, 2959, 2960, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968, 2969, 2970, 2971, 2972, 2973, 2974, 2975, 2976, 2977, 2978, 2979, 2980, 2981, 2982, 2983, 2984, 2985, 2986, 2987, 2988, 2989, 2990, 2991, 2992, 2993, 2994, 2995, 2996, 2997, 2998, 2999, 3000, 3001, 3002, 3003, 3004]','2023-03-21 15:54:25','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(46,'production_accounting_revision_2023_2023','[3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012, 3013, 3014, 3015, 3016, 3017, 3018, 3019, 3020, 3021, 3022, 3023, 3024, 3025]','2023-05-12 14:44:28','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"a.chevalier@impulsa.fr\", \"identifier\": 144}',NULL,'[]',0),(47,'billing_2021_2023','[3026, 3027, 3028, 3029, 3030, 3031, 3032, 3033, 3034, 3035, 3036, 3037, 3038, 3039, 3040, 3041, 3042, 3043, 3044, 3045, 3046, 3047, 3048, 3049, 3050, 3051, 3052, 3053, 3054, 3055, 3056, 3057, 3058, 3059, 3060, 3061, 3062, 3063, 3064, 3065]','2023-06-21 10:45:57','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"f.sakka@impulsa.fr\", \"identifier\": 50}',NULL,'[]',0),(48,'production_accounting_vat_2021_2023','[3066, 3067, 3068, 3069, 3070, 3071, 3072, 3073, 3074, 3075, 3076, 3077, 3078, 3079, 3080, 3081, 3082, 3083, 3084, 3085, 3086, 3087, 3088, 3089, 3090, 3091, 3092, 3093, 3094, 3095, 3096, 3097, 3098, 3099, 3100, 3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108, 3109, 3110, 3111, 3112, 3113, 3114, 3115, 3116, 3117, 3118, 3119, 3120, 3121, 3122, 3123, 3124, 3125, 3126, 3127, 3128, 3129, 3130, 3131, 3132, 3133, 3134, 3135, 3136, 3137, 3138, 3139, 3140, 3141, 3142, 3143, 3144, 3145, 3146, 3147, 3148, 3149, 3150, 3151, 3152, 3153, 3154, 3155, 3156, 3157, 3158, 3159, 3160, 3161, 3162, 3163, 3164, 3165, 3166, 3167, 3168, 3169, 3170, 3171, 3172, 3173, 3174, 3175, 3176, 3177, 3178, 3179, 3180, 3181, 3182, 3183, 3184, 3185, 3186, 3187, 3188, 3189, 3190, 3191, 3192, 3193, 3194, 3195, 3196, 3197, 3198, 3199, 3200, 3201, 3202, 3203, 3204, 3205, 3206, 3207, 3208, 3209, 3210, 3211, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3219, 3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3229, 3230, 3231, 3232, 3233, 3234, 3235, 3236, 3237, 3238, 3239, 3240, 3241, 3242, 3243, 3244, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3252, 3253, 3254, 3255, 3256, 3257, 3258, 3259, 3260, 3261, 3262, 3263, 3264, 3265, 3266, 3267, 3268, 3269, 3270, 3271, 3272, 3273, 3274, 3275, 3276, 3277, 3278, 3279, 3280, 3281, 3282, 3283, 3284, 3285, 3286, 3287, 3288, 3289, 3290, 3291, 3292, 3293, 3294, 3295, 3296, 3297, 3298, 3299, 3300, 3301, 3302, 3303, 3304, 3305, 3306, 3307, 3308, 3309, 3310, 3311, 3312, 3313, 3314, 3315, 3316, 3317, 3318, 3319, 3320, 3321, 3322, 3323, 3324, 3325, 3326, 3327, 3328, 3329, 3330, 3331, 3332, 3333, 3334, 3335, 3336, 3337, 3338, 3339, 3340, 3341, 3342, 3343, 3344, 3345, 3346, 3347, 3348, 3349, 3350, 3351, 3352, 3353, 3354, 3355, 3356, 3357, 3358, 3359, 3360, 3361, 3362, 3363, 3364, 3365, 3366, 3367, 3368, 3369, 3370, 3371, 3372, 3373, 3374, 3375, 3376, 3377, 3378, 3379, 3380, 3381, 3382, 3383, 3384, 3385, 3386, 3387, 3388, 3389, 3390, 3391, 3392, 3393, 3394, 3395, 3396, 3397, 3398, 3399, 3400, 3401, 3402, 3403, 3404, 3405, 3406, 3407, 3408, 3409, 3410, 3411, 3412, 3413, 3414, 3415, 3416, 3417, 3418, 3419, 3420, 3421, 3422, 3423, 3424, 3425, 3426, 3427, 3428, 3429, 3430, 3431, 3432, 3433, 3434, 3435, 3436, 3437, 3438]','2023-06-27 20:01:15','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"j.descannevelle@it-systemes.fr\", \"identifier\": 148}',NULL,'[]',0),(49,'production_accounting_vat_2021_2022','[3439, 3440, 3441, 3442, 3443, 3444, 3445, 3446, 3447, 3448, 3449, 3450, 3451, 3452, 3453, 3454, 3455, 3456, 3457, 3458, 3459, 3460, 3461, 3462, 3463, 3464, 3465, 3466, 3467, 3468, 3469, 3470, 3471, 3472, 3473, 3474, 3475, 3476, 3477, 3478, 3479, 3480, 3481, 3482, 3483, 3484, 3485, 3486, 3487, 3488, 3489, 3490, 3491, 3492, 3493, 3494, 3495, 3496, 3497, 3498, 3499, 3500, 3501, 3502, 3503, 3504, 3505, 3506, 3507, 3508, 3509, 3510, 3511, 3512, 3513, 3514, 3515, 3516, 3517, 3518, 3519, 3520, 3521, 3522, 3523, 3524, 3525, 3526, 3527, 3528, 3529, 3530, 3531, 3532, 3533, 3534, 3535, 3536, 3537, 3538, 3539, 3540, 3541, 3542, 3543, 3544, 3545, 3546, 3547, 3548, 3549, 3550, 3551, 3552, 3553, 3554, 3555, 3556, 3557, 3558, 3559, 3560, 3561, 3562, 3563, 3564, 3565, 3566, 3567, 3568, 3569, 3570, 3571, 3572, 3573, 3574, 3575, 3576, 3577, 3578, 3579, 3580, 3581, 3582, 3583, 3584, 3585, 3586, 3587, 3588, 3589, 3590, 3591, 3592, 3593, 3594, 3595, 3596, 3597, 3598, 3599, 3600, 3601, 3602, 3603, 3604, 3605, 3606, 3607, 3608, 3609, 3610, 3611, 3612, 3613, 3614, 3615, 3616, 3617, 3618, 3619, 3620, 3621, 3622, 3623, 3624, 3625, 3626, 3627, 3628, 3629, 3630, 3631, 3632, 3633, 3634, 3635, 3636, 3637, 3638, 3639, 3640, 3641, 3642, 3643, 3644, 3645, 3646, 3647, 3648, 3649, 3650, 3651, 3652, 3653, 3654, 3655, 3656, 3657, 3658, 3659, 3660, 3661, 3662, 3663, 3664, 3665, 3666, 3667, 3668, 3669, 3670, 3671, 3672, 3673, 3674, 3675, 3676, 3677, 3678, 3679, 3680, 3681, 3682, 3683, 3684, 3685, 3686, 3687, 3688, 3689, 3690, 3691]','2023-06-27 20:03:32','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"j.descannevelle@it-systemes.fr\", \"identifier\": 148}',NULL,'[]',0),(50,'production_accounting_holding_2021_2023','[3692, 3693, 3694, 3695, 3696, 3697, 3698, 3699, 3700, 3701, 3702, 3703, 3704, 3705, 3706, 3707, 3708, 3709, 3710, 3711, 3712, 3713, 3714, 3715, 3716, 3717, 3718, 3719, 3720, 3721, 3722, 3723, 3724, 3725, 3726, 3727, 3728, 3729, 3730, 3731, 3732, 3733, 3734, 3735, 3736]','2023-06-27 20:31:45','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"j.descannevelle@it-systemes.fr\", \"identifier\": 148}',NULL,'[]',0),(51,'billing_2023_2023','[3738, 3739, 3740, 3741, 3742, 3743, 3744, 3745, 3746, 3747, 3748, 3749, 3750, 3751, 3752, 3753]','2023-08-24 11:39:04','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"r.cornudet@impulsa.fr\", \"identifier\": 14}',NULL,'[]',0),(52,'production_legal_ag_2023_2023','[3754, 3755, 3756, 3757, 3758, 3759, 3760, 3761, 3762, 3763]','2023-10-03 07:47:55','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"c.nicolle@impulsa.fr\", \"identifier\": 41}',NULL,'[]',0),(53,'production_accounting_closure_2022_2024','[3764, 3765, 3766, 3767, 3768, 3769, 3770, 3771, 3772, 3773, 3774, 3775, 3776, 3777, 3778, 3779, 3780, 3781, 3782, 3783, 3784, 3785, 3786, 3787, 3788, 3789, 3790]','2023-10-27 06:56:16','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"v.meunier@impulsa.fr\", \"identifier\": 37}',NULL,'[]',0);
 /*!40000 ALTER TABLE `data_export_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data_update`
+--
+
+DROP TABLE IF EXISTS `data_update`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_update` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `execute_order` int NOT NULL,
+  `executed_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data_update`
+--
+
+LOCK TABLES `data_update` WRITE;
+/*!40000 ALTER TABLE `data_update` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data_update` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `directory`
+--
+
+DROP TABLE IF EXISTS `directory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `directory` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nb_files_total` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `nb_files_in_root` int DEFAULT NULL,
+  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nb_directories_in_root` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_467844DA727ACA70` (`parent_id`),
+  KEY `IDX_467844DAFB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_467844DA727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
+  CONSTRAINT `FK_467844DAFB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=122709 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `directory`
+--
+
+LOCK TABLES `directory` WRITE;
+/*!40000 ALTER TABLE `directory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `directory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctrine_migration_versions`
+--
+
+DROP TABLE IF EXISTS `doctrine_migration_versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `doctrine_migration_versions` (
+  `version` varchar(191) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `executed_at` datetime DEFAULT NULL,
+  `execution_time` int DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctrine_migration_versions`
+--
+
+LOCK TABLES `doctrine_migration_versions` WRITE;
+/*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document`
+--
+
+DROP TABLE IF EXISTS `document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `extension` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `document_type_id` int DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  `original_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `drive_item_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D8698A7661232A4F` (`document_type_id`),
+  KEY `IDX_D8698A76727ACA70` (`parent_id`),
+  KEY `IDX_D8698A76FB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D8698A7661232A4F` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`),
+  CONSTRAINT `FK_D8698A76727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `directory` (`id`),
+  CONSTRAINT `FK_D8698A76FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=228364 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document`
+--
+
+LOCK TABLES `document` WRITE;
+/*!40000 ALTER TABLE `document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_category`
+--
+
+DROP TABLE IF EXISTS `document_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `orderDisplay` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_category`
+--
+
+LOCK TABLES `document_category` WRITE;
+/*!40000 ALTER TABLE `document_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `document_type`
+--
+
+DROP TABLE IF EXISTS `document_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `document_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `acceptedFormat` json DEFAULT NULL,
+  `orderDisplay` int DEFAULT NULL,
+  `isUnique` tinyint(1) NOT NULL DEFAULT '0',
+  `individualOnly` tinyint(1) NOT NULL DEFAULT '0',
+  `companyOnly` tinyint(1) NOT NULL DEFAULT '0',
+  `uploadNotRequired` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `categoryId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_2B6ADBBA9C370B71` (`categoryId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_2B6ADBBA9C370B71` FOREIGN KEY (`categoryId`) REFERENCES `document_category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_type`
+--
+
+LOCK TABLES `document_type` WRITE;
+/*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `email_notification`
+--
+
+DROP TABLE IF EXISTS `email_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `email_notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `template` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `api_id` int NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `params` json NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `email_notification`
+--
+
+LOCK TABLES `email_notification` WRITE;
+/*!40000 ALTER TABLE `email_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `email_notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `history_note`
+--
+
+DROP TABLE IF EXISTS `history_note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_note` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entityId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` int NOT NULL DEFAULT '0',
+  `entityData` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2766 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `history_note`
+--
+
+LOCK TABLES `history_note` WRITE;
+/*!40000 ALTER TABLE `history_note` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history_note` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `history_task_status`
+--
+
+DROP TABLE IF EXISTS `history_task_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_task_status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `beginDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `endDate` datetime DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taskTypeId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DE83E6A6D1C4661A` (`taskTypeId`),
+  CONSTRAINT `FK_DE83E6A6D1C4661A` FOREIGN KEY (`taskTypeId`) REFERENCES `task` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `history_task_status`
+--
+
+LOCK TABLES `history_task_status` WRITE;
+/*!40000 ALTER TABLE `history_task_status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history_task_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `history_x_user_manager`
+--
+
+DROP TABLE IF EXISTS `history_x_user_manager`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `history_x_user_manager`
+--
+
+LOCK TABLES `history_x_user_manager` WRITE;
+/*!40000 ALTER TABLE `history_x_user_manager` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history_x_user_manager` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `history_x_user_role_`
+--
+
+DROP TABLE IF EXISTS `history_x_user_role_`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_role_` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `history_x_user_role_`
+--
+
+LOCK TABLES `history_x_user_role_` WRITE;
+/*!40000 ALTER TABLE `history_x_user_role_` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history_x_user_role_` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `history_x_user_site`
+--
+
+DROP TABLE IF EXISTS `history_x_user_site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `history_x_user_site` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `history_x_user_site`
+--
+
+LOCK TABLES `history_x_user_site` WRITE;
+/*!40000 ALTER TABLE `history_x_user_site` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history_x_user_site` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lead_source`
+--
+
+DROP TABLE IF EXISTS `lead_source`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lead_source` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lead_source`
+--
+
+LOCK TABLES `lead_source` WRITE;
+/*!40000 ALTER TABLE `lead_source` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lead_source` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `leads`
+--
+
+DROP TABLE IF EXISTS `leads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `leads` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `siren` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `addressId` int DEFAULT NULL,
+  `legalFormCode` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nafCode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `userBoInChargeId` int DEFAULT NULL,
+  `leadSourceId` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `data_on_board` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_17904552D5289B7F` (`addressId`),
+  KEY `IDX_1790455295760890` (`legalFormCode`),
+  KEY `IDX_17904552DAB7DF02` (`accountCode`),
+  KEY `IDX_17904552655CF66E` (`nafCode`),
+  KEY `IDX_17904552B971BF69` (`userBoInChargeId`),
+  KEY `IDX_179045523AE585A5` (`leadSourceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_179045523AE585A5` FOREIGN KEY (`leadSourceId`) REFERENCES `lead_source` (`id`),
+  CONSTRAINT `FK_17904552655CF66E` FOREIGN KEY (`nafCode`) REFERENCES `naf` (`code`),
+  CONSTRAINT `FK_17904552B971BF69` FOREIGN KEY (`userBoInChargeId`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_289161CB95760890` FOREIGN KEY (`legalFormCode`) REFERENCES `legal_form` (`code`),
+  CONSTRAINT `FK_289161CBD5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`),
+  CONSTRAINT `FK_289161CBDAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `leads`
+--
+
+LOCK TABLES `leads` WRITE;
+/*!40000 ALTER TABLE `leads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `leads` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2803,6 +1686,113 @@ INSERT INTO `naf` VALUES ('2021-10-01 21:05:49','[]',NULL,'[]',0,'01','Culture e
 UNLOCK TABLES;
 
 --
+-- Table structure for table `note`
+--
+
+DROP TABLE IF EXISTS `note`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `note` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `entityType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CFBDFA1489697FA8` (`serviceId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_CFBDFA1489697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2223 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `note`
+--
+
+LOCK TABLES `note` WRITE;
+/*!40000 ALTER TABLE `note` DISABLE KEYS */;
+/*!40000 ALTER TABLE `note` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `param_values` json NOT NULL,
+  `notification_type_id` int NOT NULL,
+  `sent_at` datetime DEFAULT NULL,
+  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BF5476CAD0520624` (`notification_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_BF5476CAD0520624` FOREIGN KEY (`notification_type_id`) REFERENCES `notification_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification_contact`
+--
+
+DROP TABLE IF EXISTS `notification_contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification_contact` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `apiId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastName` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int DEFAULT NULL,
+  `user_client_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_597C6C8F3D57D31F` (`user_bo_id`),
+  KEY `IDX_597C6C8F190BE4C5` (`user_client_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_597C6C8F190BE4C5` FOREIGN KEY (`user_client_id`) REFERENCES `user_client` (`id`),
+  CONSTRAINT `FK_597C6C8F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification_contact`
+--
+
+LOCK TABLES `notification_contact` WRITE;
+/*!40000 ALTER TABLE `notification_contact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification_contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `notification_template`
 --
 
@@ -2909,6 +1899,122 @@ INSERT INTO `notification_type` VALUES (3,'[\"nom_app\", \"lien_app\", \"delai_v
 UNLOCK TABLES;
 
 --
+-- Table structure for table `nps`
+--
+
+DROP TABLE IF EXISTS `nps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nps` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `releasedDisplayDate` datetime DEFAULT NULL,
+  `firstShownDate` datetime DEFAULT NULL,
+  `lastShownDate` datetime DEFAULT NULL,
+  `answeredDate` datetime DEFAULT NULL,
+  `numberTimeShown` int NOT NULL,
+  `npsScore` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `npsComment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dismissedDate` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `npsTypeId` int NOT NULL,
+  `AccountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5B3B66482EE225BB` (`npsTypeId`),
+  KEY `IDX_5B3B66485C2B50D5` (`AccountCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5B3B66482EE225BB` FOREIGN KEY (`npsTypeId`) REFERENCES `npstype` (`id`),
+  CONSTRAINT `FK_5B3B66485C2B50D5` FOREIGN KEY (`AccountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nps`
+--
+
+LOCK TABLES `nps` WRITE;
+/*!40000 ALTER TABLE `nps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nps` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `npstype`
+--
+
+DROP TABLE IF EXISTS `npstype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `npstype` (
+  `id` int NOT NULL,
+  `label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `displayInterval` int NOT NULL,
+  `dismissInterval` int NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notationType` json NOT NULL COMMENT '(DC2Type:json_array)',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `npsTypeIdNext` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5E2FF72DE0766E33` (`npsTypeIdNext`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5E2FF72DE0766E33` FOREIGN KEY (`npsTypeIdNext`) REFERENCES `npstype` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `npstype`
+--
+
+LOCK TABLES `npstype` WRITE;
+/*!40000 ALTER TABLE `npstype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `npstype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `opportunity`
+--
+
+DROP TABLE IF EXISTS `opportunity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `opportunity` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `leadId` int DEFAULT NULL,
+  `missionId` int NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_8389C3D7DAB7DF02` (`accountCode`),
+  KEY `IDX_8389C3D738063428` (`leadId`),
+  KEY `IDX_8389C3D7AFD395A` (`missionId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_8389C3D738063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_8389C3D7AFD395A` FOREIGN KEY (`missionId`) REFERENCES `mission` (`id`),
+  CONSTRAINT `FK_8389C3D7DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `opportunity`
+--
+
+LOCK TABLES `opportunity` WRITE;
+/*!40000 ALTER TABLE `opportunity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `opportunity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `parameter`
 --
 
@@ -2937,6 +2043,84 @@ LOCK TABLES `parameter` WRITE;
 /*!40000 ALTER TABLE `parameter` DISABLE KEYS */;
 INSERT INTO `parameter` VALUES (1,'TransportNotification:Mail:Id','124',NULL,NULL,NULL,NULL,0),(2,'UserBoRegister:CredentialsValidity:Delay','86400',NULL,NULL,NULL,NULL,0),(3,'UserBoVerificationCode:Validity:Delay','1800',NULL,NULL,NULL,NULL,0),(4,'UserBoVerificationCode:Validity:MaxTries','3',NULL,NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `parameter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pole`
+--
+
+DROP TABLE IF EXISTS `pole`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pole` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `managerUserBoId` int DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_FD6042E1AD385CF6` (`managerUserBoId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_FD6042E1AD385CF6` FOREIGN KEY (`managerUserBoId`) REFERENCES `user_bo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pole`
+--
+
+LOCK TABLES `pole` WRITE;
+/*!40000 ALTER TABLE `pole` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pole` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `production_period`
+--
+
+DROP TABLE IF EXISTS `production_period`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `production_period` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `production_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `production_subtype` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `outdated` tinyint(1) NOT NULL,
+  `due_date` datetime NOT NULL,
+  `deprecated` tinyint(1) NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `iteration` int DEFAULT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `switch_date` datetime NOT NULL,
+  `data` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A188A93FB86B732` (`account_code`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_A188A93FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=75101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `production_period`
+--
+
+LOCK TABLES `production_period` WRITE;
+/*!40000 ALTER TABLE `production_period` DISABLE KEYS */;
+/*!40000 ALTER TABLE `production_period` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2970,6 +2154,110 @@ LOCK TABLES `profile` WRITE;
 /*!40000 ALTER TABLE `profile` DISABLE KEYS */;
 INSERT INTO `profile` VALUES (1,'collaborator','2021-10-01 21:05:51','[]',NULL,'[]',0,30,0,'Collaborateur'),(2,'manager','2021-10-01 21:05:51','[]',NULL,'[]',0,50,0,'Manager'),(3,'associate','2021-10-01 21:05:51','[]',NULL,'[]',0,60,0,'Associé'),(4,'supervisor','2021-10-01 21:05:51','[]',NULL,'[]',0,40,0,'Superviseur'),(5,'apprentice','2021-10-01 21:05:51','[]',NULL,'[]',0,20,0,'Apprenti'),(6,'intern','2021-10-01 21:05:51','[]',NULL,'[]',0,10,0,'Stagiaire');
 /*!40000 ALTER TABLE `profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profitability`
+--
+
+DROP TABLE IF EXISTS `profitability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profitability` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period` datetime NOT NULL,
+  `total_working_hours` double NOT NULL,
+  `total_selling_price` double NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int DEFAULT NULL,
+  `service_id` int NOT NULL,
+  `total_cost_price` double NOT NULL,
+  `exercice` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_125DAA73FB86B732` (`account_code`),
+  KEY `IDX_125DAA733D57D31F` (`user_bo_id`),
+  KEY `IDX_125DAA73ED5CA9E6` (`service_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_125DAA733D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_125DAA73ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_125DAA73FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=8172100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profitability`
+--
+
+LOCK TABLES `profitability` WRITE;
+/*!40000 ALTER TABLE `profitability` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profitability` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profitability_log`
+--
+
+DROP TABLE IF EXISTS `profitability_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profitability_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_insert` int DEFAULT NULL,
+  `nb_update` int DEFAULT NULL,
+  `nb_delete` int DEFAULT NULL,
+  `status` enum('to_process','processed','error') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `subdirectory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_ignored` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profitability_log`
+--
+
+LOCK TABLES `profitability_log` WRITE;
+/*!40000 ALTER TABLE `profitability_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profitability_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `refresh_tokens`
+--
+
+DROP TABLE IF EXISTS `refresh_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `refresh_tokens` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `refresh_token` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valid` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_9BACE7E1C74F2195` (`refresh_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=16799 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `refresh_tokens`
+--
+
+LOCK TABLES `refresh_tokens` WRITE;
+/*!40000 ALTER TABLE `refresh_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `refresh_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3092,6 +2380,74 @@ INSERT INTO `service_attribute_type` VALUES (1,'Account','Nom légal','text','20
 UNLOCK TABLES;
 
 --
+-- Table structure for table `service_attribute_value`
+--
+
+DROP TABLE IF EXISTS `service_attribute_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service_attribute_value` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entityId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `serviceAttributeTypeId` int NOT NULL,
+  `referenceId` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DC4ECB66A282A02B` (`serviceAttributeTypeId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_DC4ECB66A282A02B` FOREIGN KEY (`serviceAttributeTypeId`) REFERENCES `service_attribute_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=173401 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `service_attribute_value`
+--
+
+LOCK TABLES `service_attribute_value` WRITE;
+/*!40000 ALTER TABLE `service_attribute_value` DISABLE KEYS */;
+/*!40000 ALTER TABLE `service_attribute_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `setting`
+--
+
+DROP TABLE IF EXISTS `setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `setting` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `setting_type_id` int NOT NULL,
+  `user_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
+  `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_9F74B8989D1E3C7B` (`setting_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_9F74B8989D1E3C7B` FOREIGN KEY (`setting_type_id`) REFERENCES `setting_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `setting`
+--
+
+LOCK TABLES `setting` WRITE;
+/*!40000 ALTER TABLE `setting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `setting_type`
 --
 
@@ -3120,6 +2476,131 @@ LOCK TABLES `setting_type` WRITE;
 /*!40000 ALTER TABLE `setting_type` DISABLE KEYS */;
 INSERT INTO `setting_type` VALUES (1,'account_view','string',NULL,NULL,NULL,NULL,0),(2,'account_view_users','json','2022-06-17 08:52:39','[]',NULL,'[]',0),(3,'account_view_team','string',NULL,'[]',NULL,NULL,0);
 /*!40000 ALTER TABLE `setting_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `site`
+--
+
+DROP TABLE IF EXISTS `site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `site` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `addressId` int DEFAULT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `user_admin` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_694309E4D5289B7F` (`addressId`),
+  KEY `FK_694309E46ACCF62E` (`user_admin`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_694309E46ACCF62E` FOREIGN KEY (`user_admin`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_694309E4D5289B7F` FOREIGN KEY (`addressId`) REFERENCES `address` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `site`
+--
+
+LOCK TABLES `site` WRITE;
+/*!40000 ALTER TABLE `site` DISABLE KEYS */;
+/*!40000 ALTER TABLE `site` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `synchro_ged`
+--
+
+DROP TABLE IF EXISTS `synchro_ged`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `synchro_ged` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `error` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `synchro_date_end` datetime DEFAULT NULL,
+  `object_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_ignored` tinyint(1) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `synchro_date_begin` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=750 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `synchro_ged`
+--
+
+LOCK TABLES `synchro_ged` WRITE;
+/*!40000 ALTER TABLE `synchro_ged` DISABLE KEYS */;
+/*!40000 ALTER TABLE `synchro_ged` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `task`
+--
+
+DROP TABLE IF EXISTS `task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `task` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `status` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_end` datetime DEFAULT NULL,
+  `task_type_id` int DEFAULT NULL,
+  `assigned_user_bo_id` int DEFAULT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lead_id` int DEFAULT NULL,
+  `label` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `scoring` int NOT NULL,
+  `calculated_scoring` double NOT NULL,
+  `task_category_id` int DEFAULT NULL,
+  `author_user_bo_id` int DEFAULT NULL,
+  `context` json DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_527EDB255F6B06E` (`assigned_user_bo_id`),
+  KEY `IDX_527EDB25DAADA679` (`task_type_id`),
+  KEY `IDX_527EDB25FB86B732` (`account_code`),
+  KEY `IDX_527EDB2555458D` (`lead_id`),
+  KEY `IDX_527EDB25543330D0` (`task_category_id`),
+  KEY `IDX_527EDB257F5EAFA4` (`author_user_bo_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_527EDB25543330D0` FOREIGN KEY (`task_category_id`) REFERENCES `task_category` (`id`),
+  CONSTRAINT `FK_527EDB2555458D` FOREIGN KEY (`lead_id`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_527EDB255F6B06E` FOREIGN KEY (`assigned_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_527EDB257F5EAFA4` FOREIGN KEY (`author_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_527EDB25DAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`),
+  CONSTRAINT `FK_527EDB25FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=35697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task`
+--
+
+LOCK TABLES `task` WRITE;
+/*!40000 ALTER TABLE `task` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3195,6 +2676,78 @@ INSERT INTO `task_type` VALUES (1,'default','Non catégorisé',1,NULL,'2021-12-0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ticket`
+--
+
+DROP TABLE IF EXISTS `ticket`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ticket` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` enum('open','reopened','resolved','standby','validated','closed') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `ticket_type_id` int NOT NULL,
+  `last_action` datetime NOT NULL,
+  `object` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `assigned_to_user_bo_id` int DEFAULT NULL,
+  `assigned_by_user_bo_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_97A0ADA3C980D5C1` (`ticket_type_id`),
+  KEY `IDX_97A0ADA3A0569827` (`assigned_to_user_bo_id`),
+  KEY `IDX_97A0ADA35791A93C` (`assigned_by_user_bo_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_97A0ADA35791A93C` FOREIGN KEY (`assigned_by_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_97A0ADA3A0569827` FOREIGN KEY (`assigned_to_user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_97A0ADA3C980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ticket`
+--
+
+LOCK TABLES `ticket` WRITE;
+/*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ticket_message`
+--
+
+DROP TABLE IF EXISTS `ticket_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ticket_message` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `ticket_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BA71692D700047D2` (`ticket_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_BA71692D700047D2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ticket_message`
+--
+
+LOCK TABLES `ticket_message` WRITE;
+/*!40000 ALTER TABLE `ticket_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ticket_message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ticket_type`
 --
 
@@ -3226,6 +2779,134 @@ LOCK TABLES `ticket_type` WRITE;
 /*!40000 ALTER TABLE `ticket_type` DISABLE KEYS */;
 INSERT INTO `ticket_type` VALUES (2,'activated','2022-07-05 15:38:06','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"h.allal@impulsa.fr\", \"identifier\": 6}',NULL,'[]',0,11,'Pennylane'),(3,'activated','2022-07-11 10:53:22','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,11,'IT'),(4,'activated','2022-07-11 10:53:38','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,6,'Sales & Marketing'),(5,'activated','2022-07-11 10:54:21','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,48,'RH & Paie'),(6,'activated','2022-07-11 10:56:21','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,48,'Admin'),(7,'activated','2022-07-11 10:56:58','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,14,'Direction Générale'),(8,'activated','2022-07-11 10:57:25','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,77,'Avocat'),(9,'activated','2022-07-11 11:03:32','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,41,'Juridique'),(10,'activated','2022-07-11 11:03:51','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,31,'Audit, Conseil & Consolidation'),(11,'activated','2022-07-11 11:04:56','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,14,'Accounting Service'),(12,'activated','2022-07-11 11:09:39','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,6,'Support Impulsapp'),(13,'activated','2022-07-11 11:18:08','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,38,'Sociale'),(14,'activated','2022-07-11 11:22:53','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,11,'Demandes IPT'),(15,'activated','2022-07-11 11:23:25','{\"class\": \"App\\\\Entity\\\\UserBo\", \"userName\": \"z.ayache@impulsa.fr\", \"identifier\": 95}',NULL,'[]',0,11,'Demandes CEGID');
 /*!40000 ALTER TABLE `ticket_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tmp_profitability`
+--
+
+DROP TABLE IF EXISTS `tmp_profitability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tmp_profitability` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `CODE` varchar(255) NOT NULL,
+  `COLLAB` varchar(255) NOT NULL,
+  `PERIODE` date DEFAULT NULL,
+  `SERVICE` varchar(255) NOT NULL,
+  `TOT_TEMPS` float NOT NULL,
+  `TOT_PR` float NOT NULL,
+  `TOT_PV` float NOT NULL,
+  `ACTIVITY_KEY` varchar(255) NOT NULL,
+  `EXERCICE` int NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tmp_profitability`
+--
+
+LOCK TABLES `tmp_profitability` WRITE;
+/*!40000 ALTER TABLE `tmp_profitability` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tmp_profitability` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tool`
+--
+
+DROP TABLE IF EXISTS `tool`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tool` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `services` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tool`
+--
+
+LOCK TABLES `tool` WRITE;
+/*!40000 ALTER TABLE `tool` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tool` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_bo`
+--
+
+DROP TABLE IF EXISTS `user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `employeeId` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `starting_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `poleId` int DEFAULT NULL,
+  `profileId` int DEFAULT NULL,
+  `trigram` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `verification_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `register_limit_date` datetime DEFAULT NULL,
+  `verification_code_limit_date` datetime DEFAULT NULL,
+  `first_connect_complete` tinyint(1) NOT NULL,
+  `verification_code_tries` int NOT NULL,
+  `search_priority` int NOT NULL DEFAULT '0',
+  `services` json NOT NULL,
+  `managers` json NOT NULL,
+  `siteId` int DEFAULT NULL,
+  `avatar` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `supervisor` json NOT NULL,
+  `user_validation_bill` tinyint(1) NOT NULL,
+  `deactivated` tinyint(1) NOT NULL,
+  `apprentice_supervisors` json NOT NULL,
+  `supervised_apprentice` json NOT NULL,
+  `data` json DEFAULT NULL,
+  `data_on_board` json DEFAULT NULL,
+  `data_off_board` json DEFAULT NULL,
+  `user_created` tinyint(1) NOT NULL,
+  `search` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_D348D3D69B26949C` (`profileId`),
+  KEY `IDX_D348D3D6F50A5C83` (`poleId`),
+  KEY `IDX_D348D3D66973A4FD` (`siteId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_D348D3D66973A4FD` FOREIGN KEY (`siteId`) REFERENCES `site` (`id`),
+  CONSTRAINT `FK_D348D3D69B26949C` FOREIGN KEY (`profileId`) REFERENCES `profile` (`id`),
+  CONSTRAINT `FK_D348D3D6F50A5C83` FOREIGN KEY (`poleId`) REFERENCES `pole` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_bo`
+--
+
+LOCK TABLES `user_bo` WRITE;
+/*!40000 ALTER TABLE `user_bo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_bo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3283,6 +2964,44 @@ INSERT INTO `user_bo_condition_profile` VALUES (2,1),(2,2),(2,3),(2,4),(3,1),(3,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_client`
+--
+
+DROP TABLE IF EXISTS `user_client`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_client` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FirstName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `LastName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `password_tmp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `register_limit_date` datetime DEFAULT NULL,
+  `new_password_limit_date` datetime DEFAULT NULL,
+  `first_connect_complete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_delete_idx` (`is_deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_client`
+--
+
+LOCK TABLES `user_client` WRITE;
+/*!40000 ALTER TABLE `user_client` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_client` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `workforce`
 --
 
@@ -3313,6 +3032,254 @@ LOCK TABLES `workforce` WRITE;
 INSERT INTO `workforce` VALUES ('00',0,0,'2021-10-01 21:05:51','[]',NULL,'[]',0,'0 - 0'),('01',1,2,'2021-10-01 21:05:51','[]',NULL,'[]',0,'1 - 2'),('02',3,5,'2021-10-01 21:05:51','[]',NULL,'[]',0,'3 - 5'),('03',6,9,'2021-10-01 21:05:51','[]',NULL,'[]',0,'6 - 9'),('11',10,19,'2021-10-01 21:05:51','[]',NULL,'[]',0,'10 - 19'),('12',20,49,'2021-10-01 21:05:51','[]',NULL,'[]',0,'20 - 49'),('21',50,99,'2021-10-01 21:05:51','[]',NULL,'[]',0,'50 - 99'),('22',100,199,'2021-10-01 21:05:51','[]',NULL,'[]',0,'100 - 199'),('31',200,249,'2021-10-01 21:05:51','[]',NULL,'[]',0,'200 - 249'),('32',250,499,'2021-10-01 21:05:51','[]',NULL,'[]',0,'250 - 499'),('41',500,999,'2021-10-01 21:05:51','[]',NULL,'[]',0,'500 - 999'),('42',1000,1999,'2021-10-01 21:05:51','[]',NULL,'[]',0,'1000 - 1999'),('51',2000,4999,'2021-10-01 21:05:51','[]',NULL,'[]',0,'2000 - 4999'),('52',5000,9999,'2021-10-01 21:05:51','[]',NULL,'[]',0,'5000 - 9999'),('53',10000,NULL,'2021-10-01 21:05:51','[]',NULL,'[]',0,'10000 - '),('NN',NULL,NULL,'2021-10-01 21:05:51','[]',NULL,'[]',0,' - ');
 /*!40000 ALTER TABLE `workforce` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `x_account_contact`
+--
+
+DROP TABLE IF EXISTS `x_account_contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_account_contact` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `contactId` int NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `accountCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5F622E99744BF426` (`contactId`),
+  KEY `IDX_5F622E9989697FA8` (`serviceId`),
+  KEY `IDX_5F622E99DAB7DF02` (`accountCode`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5F622E99744BF426` FOREIGN KEY (`contactId`) REFERENCES `contact` (`id`),
+  CONSTRAINT `FK_5F622E9989697FA8` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_5F622E99DAB7DF02` FOREIGN KEY (`accountCode`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=4253337 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_account_contact`
+--
+
+LOCK TABLES `x_account_contact` WRITE;
+/*!40000 ALTER TABLE `x_account_contact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_account_contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_billing_subscription_mission`
+--
+
+DROP TABLE IF EXISTS `x_billing_subscription_mission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_billing_subscription_mission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `billing_subscription_id` int NOT NULL,
+  `mission_id` int NOT NULL,
+  `periodicity` enum('monthly','quarterly','semiannual','annual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_466D0CFECF9564CB` (`billing_subscription_id`),
+  KEY `IDX_466D0CFEBE6CAE90` (`mission_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_466D0CFEBE6CAE90` FOREIGN KEY (`mission_id`) REFERENCES `mission` (`id`),
+  CONSTRAINT `FK_466D0CFECF9564CB` FOREIGN KEY (`billing_subscription_id`) REFERENCES `billing_subscription` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1775 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_billing_subscription_mission`
+--
+
+LOCK TABLES `x_billing_subscription_mission` WRITE;
+/*!40000 ALTER TABLE `x_billing_subscription_mission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_billing_subscription_mission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_lead_contact_lead`
+--
+
+DROP TABLE IF EXISTS `x_lead_contact_lead`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_lead_contact_lead` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `contactLeadId` int NOT NULL,
+  `leadId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5726CB2498B8CD8D` (`contactLeadId`),
+  KEY `IDX_5726CB2438063428` (`leadId`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_5726CB2438063428` FOREIGN KEY (`leadId`) REFERENCES `leads` (`id`),
+  CONSTRAINT `FK_5726CB2498B8CD8D` FOREIGN KEY (`contactLeadId`) REFERENCES `contact_lead` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_lead_contact_lead`
+--
+
+LOCK TABLES `x_lead_contact_lead` WRITE;
+/*!40000 ALTER TABLE `x_lead_contact_lead` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_lead_contact_lead` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_notification_contact_notification`
+--
+
+DROP TABLE IF EXISTS `x_notification_contact_notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_notification_contact_notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `notification_id` int NOT NULL,
+  `notification_contact_id` int NOT NULL,
+  `contact_type` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_C0A1F82DEF1A9D84` (`notification_id`),
+  KEY `IDX_C0A1F82D1CD38068` (`notification_contact_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_C0A1F82D1CD38068` FOREIGN KEY (`notification_contact_id`) REFERENCES `notification_contact` (`id`),
+  CONSTRAINT `FK_C0A1F82DEF1A9D84` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64625 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_notification_contact_notification`
+--
+
+LOCK TABLES `x_notification_contact_notification` WRITE;
+/*!40000 ALTER TABLE `x_notification_contact_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_notification_contact_notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_task_type_user_bo`
+--
+
+DROP TABLE IF EXISTS `x_task_type_user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_task_type_user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_bo_id` int NOT NULL,
+  `task_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_3321947F3D57D31F` (`user_bo_id`),
+  KEY `IDX_3321947FDAADA679` (`task_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_3321947F3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_3321947FDAADA679` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_task_type_user_bo`
+--
+
+LOCK TABLES `x_task_type_user_bo` WRITE;
+/*!40000 ALTER TABLE `x_task_type_user_bo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_task_type_user_bo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_ticket_type_user_bo`
+--
+
+DROP TABLE IF EXISTS `x_ticket_type_user_bo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_ticket_type_user_bo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_bo_id` int NOT NULL,
+  `ticket_type_id` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `IDX_42D44CD3D57D31F` (`user_bo_id`),
+  KEY `IDX_42D44CDC980D5C1` (`ticket_type_id`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_42D44CD3D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_42D44CDC980D5C1` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_ticket_type_user_bo`
+--
+
+LOCK TABLES `x_ticket_type_user_bo` WRITE;
+/*!40000 ALTER TABLE `x_ticket_type_user_bo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_ticket_type_user_bo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `x_user_bo_service_account`
+--
+
+DROP TABLE IF EXISTS `x_user_bo_service_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `x_user_bo_service_account` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` json DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` json DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `user_bo_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `account_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ratio` double NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_E12783493D57D31F` (`user_bo_id`),
+  KEY `IDX_E1278349ED5CA9E6` (`service_id`),
+  KEY `IDX_E1278349FB86B732` (`account_code`),
+  KEY `IDX_account_code_is_deleted` (`account_code`,`is_deleted`),
+  KEY `is_delete_idx` (`is_deleted`),
+  CONSTRAINT `FK_E12783493D57D31F` FOREIGN KEY (`user_bo_id`) REFERENCES `user_bo` (`id`),
+  CONSTRAINT `FK_E1278349ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
+  CONSTRAINT `FK_E1278349FB86B732` FOREIGN KEY (`account_code`) REFERENCES `account` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2236443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `x_user_bo_service_account`
+--
+
+LOCK TABLES `x_user_bo_service_account` WRITE;
+/*!40000 ALTER TABLE `x_user_bo_service_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `x_user_bo_service_account` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -3323,4 +3290,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-10 19:14:48
+-- Dump completed on 2024-01-23 15:36:34
