@@ -38,3 +38,4 @@
         - php7.4-opcache
         - php7.4-json
         - php7.4-soap
+        - php7.4-mysql
